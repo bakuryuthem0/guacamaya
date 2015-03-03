@@ -51,12 +51,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/Seldaek/monolog.git",
-            "reference": "bba433ac380c47523fab495a1322368381df0996"
+            "reference": "bd611713edef62f431db0f18685c8aab4082938f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bba433ac380c47523fab495a1322368381df0996",
-            "reference": "bba433ac380c47523fab495a1322368381df0996",
+            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bd611713edef62f431db0f18685c8aab4082938f",
+            "reference": "bd611713edef62f431db0f18685c8aab4082938f",
             "shasum": ""
         },
         "require": {
@@ -86,7 +86,7 @@
             "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
             "videlalvaro/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib"
         },
-        "time": "2015-02-25 16:48:53",
+        "time": "2015-03-03 19:26:21",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -610,12 +610,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/doctrine/common.git",
-            "reference": "0e11c342d167c75f083358fa7825657ea4ab10eb"
+            "reference": "ade7702fb8a0c9c980b22168dd6eb5a55a5b4c2a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/doctrine/common/zipball/0e11c342d167c75f083358fa7825657ea4ab10eb",
-            "reference": "0e11c342d167c75f083358fa7825657ea4ab10eb",
+            "url": "https://api.github.com/repos/doctrine/common/zipball/ade7702fb8a0c9c980b22168dd6eb5a55a5b4c2a",
+            "reference": "ade7702fb8a0c9c980b22168dd6eb5a55a5b4c2a",
             "shasum": ""
         },
         "require": {
@@ -629,7 +629,7 @@
         "require-dev": {
             "phpunit/phpunit": "~3.7"
         },
-        "time": "2015-02-25 13:42:36",
+        "time": "2015-03-02 16:47:59",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1219,62 +1219,6 @@
         "homepage": "http://symfony.com"
     },
     {
-        "name": "symfony/dom-crawler",
-        "version": "2.3.x-dev",
-        "version_normalized": "2.3.9999999.9999999-dev",
-        "target-dir": "Symfony/Component/DomCrawler",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/DomCrawler.git",
-            "reference": "80fd69a8249fe4b49e042f7da70dd815706b5aea"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/80fd69a8249fe4b49e042f7da70dd815706b5aea",
-            "reference": "80fd69a8249fe4b49e042f7da70dd815706b5aea",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "symfony/css-selector": "~2.0,>=2.0.5",
-            "symfony/phpunit-bridge": "~2.7"
-        },
-        "suggest": {
-            "symfony/css-selector": ""
-        },
-        "time": "2015-02-24 10:24:26",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.3-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Symfony\\Component\\DomCrawler\\": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Symfony Community",
-                "homepage": "http://symfony.com/contributors"
-            },
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            }
-        ],
-        "description": "Symfony DomCrawler Component",
-        "homepage": "http://symfony.com"
-    },
-    {
         "name": "symfony/css-selector",
         "version": "2.3.x-dev",
         "version_normalized": "2.3.9999999.9999999-dev",
@@ -1603,54 +1547,6 @@
         ]
     },
     {
-        "name": "nesbot/carbon",
-        "version": "1.14.0",
-        "version_normalized": "1.14.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/briannesbitt/Carbon.git",
-            "reference": "bb87460c995d97fe55b39e65f6ffb7f64b0a941e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/bb87460c995d97fe55b39e65f6ffb7f64b0a941e",
-            "reference": "bb87460c995d97fe55b39e65f6ffb7f64b0a941e",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0"
-        },
-        "time": "2015-02-06 05:07:29",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Carbon": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Brian Nesbitt",
-                "email": "brian@nesbot.com",
-                "homepage": "http://nesbot.com"
-            }
-        ],
-        "description": "A simple API extension for DateTime.",
-        "homepage": "https://github.com/briannesbitt/Carbon",
-        "keywords": [
-            "date",
-            "datetime",
-            "time"
-        ]
-    },
-    {
         "name": "ircmaxell/password-compat",
         "version": "1.0.x-dev",
         "version_normalized": "1.0.9999999.9999999-dev",
@@ -1909,5 +1805,156 @@
             "framework",
             "laravel"
         ]
+    },
+    {
+        "name": "nesbot/carbon",
+        "version": "1.15.0",
+        "version_normalized": "1.15.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/briannesbitt/Carbon.git",
+            "reference": "48cb9ae6d9436e156316a59d198cb1ca797f8cd8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/48cb9ae6d9436e156316a59d198cb1ca797f8cd8",
+            "reference": "48cb9ae6d9436e156316a59d198cb1ca797f8cd8",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.0"
+        },
+        "time": "2015-03-03 03:24:43",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Carbon": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Brian Nesbitt",
+                "email": "brian@nesbot.com",
+                "homepage": "http://nesbot.com"
+            }
+        ],
+        "description": "A simple API extension for DateTime.",
+        "homepage": "http://carbon.nesbot.com",
+        "keywords": [
+            "date",
+            "datetime",
+            "time"
+        ]
+    },
+    {
+        "name": "gloudemans/shoppingcart",
+        "version": "1.2.1",
+        "version_normalized": "1.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Crinsane/LaravelShoppingcart.git",
+            "reference": "1f004b696ab7df255c19d0094b0c765fdb106e39"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Crinsane/LaravelShoppingcart/zipball/1f004b696ab7df255c19d0094b0c765fdb106e39",
+            "reference": "1f004b696ab7df255c19d0094b0c765fdb106e39",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/support": "~4",
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "~0.9",
+            "phpunit/phpunit": "~4.0"
+        },
+        "time": "2014-12-06 14:15:56",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Gloudemans\\Shoppingcart": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Rob Gloudemans",
+                "email": "Rob_Gloudemans@hotmail.com"
+            }
+        ],
+        "description": "Laravel 4 Shoppingcart",
+        "keywords": [
+            "laravel",
+            "shoppingcart"
+        ]
+    },
+    {
+        "name": "symfony/dom-crawler",
+        "version": "2.3.x-dev",
+        "version_normalized": "2.3.9999999.9999999-dev",
+        "target-dir": "Symfony/Component/DomCrawler",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/DomCrawler.git",
+            "reference": "ee6074b736821eb920620fc06891041f79ec3a42"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/ee6074b736821eb920620fc06891041f79ec3a42",
+            "reference": "ee6074b736821eb920620fc06891041f79ec3a42",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "symfony/css-selector": "~2.0,>=2.0.5",
+            "symfony/phpunit-bridge": "~2.7"
+        },
+        "suggest": {
+            "symfony/css-selector": ""
+        },
+        "time": "2015-03-02 14:15:25",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.3-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Symfony\\Component\\DomCrawler\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Symfony Community",
+                "homepage": "http://symfony.com/contributors"
+            },
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            }
+        ],
+        "description": "Symfony DomCrawler Component",
+        "homepage": "http://symfony.com"
     }
 ]

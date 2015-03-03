@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "548cd59e73e06129cd835e6268433703",
+    "hash": "ff0dbcc92447c1f0582444ee8f2488ad",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -263,12 +263,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "0e11c342d167c75f083358fa7825657ea4ab10eb"
+                "reference": "ade7702fb8a0c9c980b22168dd6eb5a55a5b4c2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/0e11c342d167c75f083358fa7825657ea4ab10eb",
-                "reference": "0e11c342d167c75f083358fa7825657ea4ab10eb",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/ade7702fb8a0c9c980b22168dd6eb5a55a5b4c2a",
+                "reference": "ade7702fb8a0c9c980b22168dd6eb5a55a5b4c2a",
                 "shasum": ""
             },
             "require": {
@@ -328,7 +328,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2015-02-25 13:42:36"
+            "time": "2015-03-02 16:47:59"
         },
         {
             "name": "doctrine/dbal",
@@ -566,6 +566,51 @@
             "time": "2013-06-10 12:22:13"
         },
         {
+            "name": "gloudemans/shoppingcart",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Crinsane/LaravelShoppingcart.git",
+                "reference": "1f004b696ab7df255c19d0094b0c765fdb106e39"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Crinsane/LaravelShoppingcart/zipball/1f004b696ab7df255c19d0094b0c765fdb106e39",
+                "reference": "1f004b696ab7df255c19d0094b0c765fdb106e39",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~4",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Gloudemans\\Shoppingcart": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Gloudemans",
+                    "email": "Rob_Gloudemans@hotmail.com"
+                }
+            ],
+            "description": "Laravel 4 Shoppingcart",
+            "keywords": [
+                "laravel",
+                "shoppingcart"
+            ],
+            "time": "2014-12-06 14:15:56"
+        },
+        {
             "name": "ircmaxell/password-compat",
             "version": "1.0.x-dev",
             "source": {
@@ -774,12 +819,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "bba433ac380c47523fab495a1322368381df0996"
+                "reference": "bd611713edef62f431db0f18685c8aab4082938f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bba433ac380c47523fab495a1322368381df0996",
-                "reference": "bba433ac380c47523fab495a1322368381df0996",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bd611713edef62f431db0f18685c8aab4082938f",
+                "reference": "bd611713edef62f431db0f18685c8aab4082938f",
                 "shasum": ""
             },
             "require": {
@@ -838,20 +883,20 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2015-02-25 16:48:53"
+            "time": "2015-03-03 19:26:21"
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.14.0",
+            "version": "1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "bb87460c995d97fe55b39e65f6ffb7f64b0a941e"
+                "reference": "48cb9ae6d9436e156316a59d198cb1ca797f8cd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/bb87460c995d97fe55b39e65f6ffb7f64b0a941e",
-                "reference": "bb87460c995d97fe55b39e65f6ffb7f64b0a941e",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/48cb9ae6d9436e156316a59d198cb1ca797f8cd8",
+                "reference": "48cb9ae6d9436e156316a59d198cb1ca797f8cd8",
                 "shasum": ""
             },
             "require": {
@@ -878,13 +923,13 @@
                 }
             ],
             "description": "A simple API extension for DateTime.",
-            "homepage": "https://github.com/briannesbitt/Carbon",
+            "homepage": "http://carbon.nesbot.com",
             "keywords": [
                 "date",
                 "datetime",
                 "time"
             ],
-            "time": "2015-02-06 05:07:29"
+            "time": "2015-03-03 03:24:43"
         },
         {
             "name": "nikic/php-parser",
@@ -1357,12 +1402,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DomCrawler.git",
-                "reference": "80fd69a8249fe4b49e042f7da70dd815706b5aea"
+                "reference": "ee6074b736821eb920620fc06891041f79ec3a42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/80fd69a8249fe4b49e042f7da70dd815706b5aea",
-                "reference": "80fd69a8249fe4b49e042f7da70dd815706b5aea",
+                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/ee6074b736821eb920620fc06891041f79ec3a42",
+                "reference": "ee6074b736821eb920620fc06891041f79ec3a42",
                 "shasum": ""
             },
             "require": {
@@ -1402,7 +1447,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "http://symfony.com",
-            "time": "2015-02-24 10:24:26"
+            "time": "2015-03-02 14:15:25"
         },
         {
             "name": "symfony/event-dispatcher",
