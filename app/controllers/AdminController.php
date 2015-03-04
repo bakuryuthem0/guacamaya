@@ -1,6 +1,6 @@
 <?php
 
-class HomeController extends BaseController {
+class AdminController extends BaseController {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -17,8 +17,7 @@ class HomeController extends BaseController {
 
 	public function getIndex()
 	{
-		$title = "Inicio";
-		return View::make('indexs.index')->with('title',$title);
+		return View::make('indexs.index');
 	}
 
 }

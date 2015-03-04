@@ -1,22 +1,44 @@
+body,html
+{
+	font-size: 76.66%;
+}
+body
+{
+	padding-top: 15%;
+}
+.bt-buscar
+{
+	background-color: rgba(199, 37, 55, 1);
+	color: white;
+	margin-top: 2em;
+}
 .container
 {
 	width:90% !important;
 }
 .container-fluid
 {
+	top: 0;
 	padding-right: 0px !important;
 	padding-left: 0px !important;
 	box-shadow: 0px 2px 11px -1px black;
 	height: auto;
 }
+.inputBusqueda
+{
+	background-color: rgba(235, 235, 235, 1);
+	margin-top: 2em;
+}
 .logo
 {
-	max-width: 400px;
-	max-height: 150px;
+	padding: 1em;
+	max-height: 165px;
 	width: 100%;
 }
 .navbar-default
 {
 	position: fixed;
 	width: 100%;
+	top: 0;
+	z-index: 100;
 }

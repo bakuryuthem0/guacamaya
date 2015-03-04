@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>{{ $title; }}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -20,10 +20,13 @@
         {{ HTML::style('css/custom.css') }}
     </head>
     <body>
-        <header>
             <nav class="navbar navbar-default">
               <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="col-xs-3">
+                  <a href="#"><img src="{{ asset('images/logo.jpg') }}" class="logo"></a>
+                </div>
+
                 <div class="navbar-header">
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
@@ -31,11 +34,29 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="#"><img src="{{ asset('images/logo.jpg') }}" class="logo"></a>
                 </div>
-
+                <div class="col-xs-6">
+                  <div class="col-xs-10">
+                    <input class="form-control inputBusqueda" placeholder="Busqueda por palabras claves,marcas o productos">
+                  </div>
+                  <div class="col-xs-2">
+                    <button class="btn bt-buscar">Buscar</button>
+                  </div>
+                </div>
+               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1 col-xs-3">
+                  <ul class="nav navbar-nav">
+                      <li><a href="{{ URL::to('registro') }}">Registrarse </a></li>
+                      <li><a href="#">Iniciar sesión</a></li>
+                  </ul>
+                </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                  </form>
                   <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
                     <li><a href="#">Link</a></li>
@@ -52,12 +73,7 @@
                       </ul>
                     </li>
                   </ul>
-                  <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                  </form>
+                  
                   <ul class="nav navbar-nav navbar-right">
                     <li><a href="#">Link</a></li>
                     <li class="dropdown">
@@ -71,10 +87,10 @@
                       </ul>
                     </li>
                   </ul>
-                </div><!-- /.navbar-collapse -->
+                </div>--><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->
             </nav>
-        </header>
+        <div class="clearfix"></div>
         @yield('content')
         {{ HTML::script("http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js") }}
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
