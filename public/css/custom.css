@@ -24,10 +24,31 @@ body
 	box-shadow: 0px 2px 11px -1px black;
 	height: auto;
 }
+.contCentrado
+{
+	float: none;
+	display: block;
+	margin: 0 auto;
+}
+.contdeColor
+{
+	border: 1px solid black;
+	padding: 1em;
+	border-radius: 16px;
+	padding: 1em !important;
+}
+.formulario
+{
+	margin-bottom: 2em;
+}
 .inputBusqueda
 {
 	background-color: rgba(235, 235, 235, 1);
 	margin-top: 2em;
+}
+.inputFondoNegro
+{
+	background-color: rgba(235, 235, 235, 1);
 }
 .logo
 {
@@ -41,4 +62,8 @@ body
 	width: 100%;
 	top: 0;
 	z-index: 100;
+}
+.textoPromedio
+{
+	font-size: 1.5em;
 }

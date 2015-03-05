@@ -46,7 +46,7 @@
                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1 col-xs-3">
                   <ul class="nav navbar-nav">
                       <li><a href="{{ URL::to('registro') }}">Registrarse </a></li>
-                      <li><a href="#">Iniciar sesión</a></li>
+                      <li><a href="{{ URL::to('iniciar-sesion') }}">Iniciar sesión</a></li>
                   </ul>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -92,12 +92,15 @@
             </nav>
         <div class="clearfix"></div>
         @yield('content')
-        {{ HTML::script("http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js") }}
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+
+        {{ HTML::script("http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js") }}
+        <script>window.jQuery || document.write('<script src="js/jquery.js"><\/script>')</script>
         {{ HTML::script('js/bootstrap.min.js') }}
         {{ HTML::script("js/plugins.js") }}
         {{ HTML::script("js/main.js") }}
+        {{ HTML::script('js/jquery.validate.min.js') }}
 
+        {{ HTML::script('js/custom.js') }}
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -109,5 +112,14 @@
           ga('send', 'pageview');
 
         </script>
+        <!--Start of Zopim Live Chat Script-->
+        <script type="text/javascript">
+        window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+        d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+        _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');
+        $.src='//v2.zopim.com/?2qPOZqZ2IaypF8Jd7TLchBaYy0CjQwsP';z.t=+new Date;$.
+        type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
+        </script>
+        <!--End of Zopim Live Chat Script-->
     </body>
 </html>

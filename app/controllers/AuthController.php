@@ -76,9 +76,9 @@ class AuthController extends BaseController {
 			'name'       			 => 'required|min:4',
 			'lastname'   			 => 'required|min:4',
 			'email'      			 => 'required|email|unique:usuario',
-			'id'         			 => 'required|min:5|unique:usuario',
-			'sexo'       			 => 'required|in:f,m',
-			'department' 			 => 'required'
+			'dir' 			 		 => 'required',
+			'estado'				 => 'required',
+			'municipio'				 => 'required'
 
 		);
 		$messages = array(
@@ -89,15 +89,15 @@ class AuthController extends BaseController {
 			'confirmed'=> 'La contraseña no concuerdan'
 		);
 		$custom = array(
-			'username' 			=> 'EL nombre de usuario',
-			'pass'    	 		=> 'La contraseña',
-			'pass_confirmation' => 'la confirmacion de la contraseña',
-			'name'              => 'El nombre',
-			'lastname'          => 'El apellido',
-			'email' 			=> 'El email',
-			'id'				=> 'El carnet de identificacion',
-			'sexo'				=> 'El sexo',
-			'departament'  		=> 'El departamento'
+			'username' 			=> 'EL campo nombre de usuario',
+			'pass'    	 		=> 'El campo contraseña',
+			'pass_confirmation' => 'El campo confirmacion de la contraseña',
+			'name'              => 'El campo nombre',
+			'lastname'          => 'El campo apellido',
+			'email' 			=> 'El campo email',
+			'dir'  			    => 'El campo departamento',
+			'estado'			=> 'El campo estado',
+			'municipio'			=> 'El campo municipio'
 		);
 		$validator = Validator::make($input, $rules, $messages,$custom);
 		if ($validator->fails()) {
@@ -110,17 +110,22 @@ class AuthController extends BaseController {
 		$user->username 	 = $input['username'];
 		$user->password    	 = Hash::make($input['pass']);
 		$user->email    	 = $input['email'];
-		$user->name     	 = $input['name'];
-		$user->lastname 	 = $input['lastname'];
-		$user->id_carnet	 = $input['id'];
-		$user->nit  		 = $input['nit'];
-		$user->state  		 = $input['department'];
+		$user->nombre    	 = $input['name'];
+		$user->apellido 	 = $input['lastname'];
+		$user->estado  		 = $input['estado'];
+		$user->municipio  		 = $input['municipio'];
+		if (!empty($input['parroquia'])) {
+			$user->parroquia  		 = $input['parroquia'];	
+		}
+		if (!empty($input['telefono'])) {
+			$user->telefono = $input['telefono'];
+		}
 		$user->role          = 'Usuario';
 		$user->register_cod = $codigo;
 		$data = array(
 			'link' => $link
 		);
-		Mail::send('emails.enviar', $data, function ($message) use ($input){
+		Mail::send('emails.newUser', $data, function ($message) use ($input){
 		    $message->subject('Correo de registro de usuario en ffasil.com');
 		    $message->to($input['email']);
 		});
@@ -133,8 +138,7 @@ por favor acceda al link');
 		{
 			Session::flash('error','Error al crear el usuario, por favor contacte con el administrador del sitio');
 		}
-		$title = "Activacion de nuevo usuario";
-		return View::make('info')->with('title',$title);
+		return Redirect::to('iniciar-sesion');
 	}
 	public function getCode($username,$codigo)
 	{
@@ -214,6 +218,20 @@ por favor acceda al link');
 			
 		}
 	}
-	
-
+	public function getState()
+	{
+		if (Request::ajax()) {
+			$id = Input::get('id');
+			$municipio = Municipios::where('estado_id','=',$id)->get();
+			return $municipio;
+		}
+	}
+	public function getParroquia()
+	{
+		if (Request::ajax()) {
+			$id = Input::get('id');
+			$parroquia = Parroquias::where('municipio_id','=',$id)->get();
+			return $parroquia;
+		}
+	}
 }

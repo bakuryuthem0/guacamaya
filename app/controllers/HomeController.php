@@ -20,5 +20,12 @@ class HomeController extends BaseController {
 		$title = "Inicio";
 		return View::make('indexs.index')->with('title',$title);
 	}
-
+	public function getLogin()
+	{
+		if (Session::has('success')) {
+			Session::reflash();
+		}
+		$title ="Iniciar sesión";
+		return View::make('indexs.login')->with('title',$title);
+	}
 }

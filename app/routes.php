@@ -12,4 +12,8 @@
 */
 
 Route::get('/', 'HomeController@getIndex');
+Route::get('iniciar-sesion','HomeController@getLogin');
 Route::get('registro', 'AuthController@getRegister');
+Route::post('registro/enviar','AuthController@postRegister');
+Route::post('registro/buscar-municipio','AuthController@getState');
+Route::post('registro/buscar-parroquia','AuthController@getParroquia');
