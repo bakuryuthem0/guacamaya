@@ -50,10 +50,17 @@ body
 {
 	background-color: rgba(235, 235, 235, 1);
 }
+.loading
+{
+	width:25px;
+	height:25px;
+	display: none;
+	opacity: 0;
+}
 .logo
 {
 	padding: 1em;
-	max-height: 165px;
+	max-height: 125px;
 	width: 100%;
 }
 .navbar-default
@@ -63,6 +70,23 @@ body
 	top: 0;
 	z-index: 100;
 }
+.slick-prev, .slick-next
+{
+	background-color: rgba(0,0,0,0.5) !important;
+	border-radius: 50%;
+}
+.slick-prev{
+	left: 0px !important;
+}
+.slick-next
+{
+	right: 0px !important;
+}
+.slick-slide img
+{
+	width: 100%;
+}
+
 .textoPromedio
 {
 	font-size: 1.5em;

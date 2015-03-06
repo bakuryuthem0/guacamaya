@@ -35,9 +35,26 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::guest('login');
+	if (!Auth::check()){ 
+		return Redirect::to('inicio/login');
+	}
+});
+Route::filter('no_auth', function()
+{
+	if (Auth::check()){ 
+		return Redirect::to('inicio');
+	}
 });
 
+if ( (Auth::getUser()['role'] !== 'Administrador') )
+{
+	return Redirect::to('inicio');		
+} 
+
+Route::filter('auth.basic', function()
+{
+	return Auth::basic();
+});
 
 Route::filter('auth.basic', function()
 {

@@ -18,13 +18,14 @@
         {{ HTML::style('css/bootstrap-theme.min.css') }}
         {{ HTML::script("js/vendor/modernizr-2.6.2.min.js") }}
         {{ HTML::style('css/custom.css') }}
+        {{ HTML::style('js/slick/slick.css') }}
     </head>
     <body>
             <nav class="navbar navbar-default">
               <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="col-xs-3">
-                  <a href="#"><img src="{{ asset('images/logo.jpg') }}" class="logo"></a>
+                  <a href="{{ URL::to('inicio') }}"><img src="{{ asset('images/logo.jpg') }}" class="logo"></a>
                 </div>
 
                 <div class="navbar-header">
@@ -45,8 +46,25 @@
                 </div>
                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1 col-xs-3">
                   <ul class="nav navbar-nav">
-                      <li><a href="{{ URL::to('registro') }}">Registrarse </a></li>
-                      <li><a href="{{ URL::to('iniciar-sesion') }}">Iniciar sesión</a></li>
+                    @if(!Auth::check())
+                      <li class="textoPromedio"><a href="{{ URL::to('registro') }}">Registrarse </a></li>
+                      <li class="textoPromedio"><a href="{{ URL::to('iniciar-sesion') }}">Iniciar sesión</a></li>
+                    @else
+                      <li class="dropdown myMenu">
+                        <a href="#" class="dropdown-toggle textoPromedio" data-toggle="dropdown" role="button" aria-expanded="false">
+                          <i class="fa fa-user"></i>
+                            {{ Auth::user()->username }}
+                          <span class="caret"></span></a>
+                          <ul class="dropdown-menu multi-level" role="menu">
+                            <li>
+                              <a href="{{ URL::to('usuario/perfil') }}">
+                                <span class="fa fa-cog"></span> Perfil
+                              </a>
+                            </li>
+                          </ul>
+                        </li>
+                      <li class="textoPromedio"><a href="{{ URL::to('cerrar-sesion') }}">Cerrar sesión</a></li>
+                    @endif
                   </ul>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -98,8 +116,7 @@
         {{ HTML::script('js/bootstrap.min.js') }}
         {{ HTML::script("js/plugins.js") }}
         {{ HTML::script("js/main.js") }}
-        {{ HTML::script('js/jquery.validate.min.js') }}
-
+        {{ HTML::script('js/slick/slick.min.js') }}
         {{ HTML::script('js/custom.js') }}
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
@@ -121,5 +138,6 @@
         type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
         </script>
         <!--End of Zopim Live Chat Script-->
+       @yield('postscript')
     </body>
 </html>

@@ -81,19 +81,16 @@ fieldset[disabled] .btn-success.active {
    <body style="font-family:'Roboto','san serif';padding:2em 4em;">
       <img src="http://localhost/prueba/guacamaya/public/images/logo2.png" style="width:40%;">
       <div>
-      	<legend>Estimado usuario</legend>
+         <legend>Estimado usuario</legend>
+         
+         <p class="bg-primary" style="padding:1em;">Este mensaje fue enviado por guacamayastores.com.ve debido a su solicitud de {{ $title }} a continuacion se le mostrara su nueva contraña.</p>
+          <p class="bg-primary" style="padding:1em;">{{ $pass }}</p>
+
          <ul>
-            <li>Este mensaje le fue enviado debido a su solicitud de inscripción en <strong>guacamayastores.com.ve</strong>. Para completar el proceso de registro en nuestro portal sólo necesita hacer click en el siguiente botón.</li>
+            <li>Si usted no solicitó recuperar su contraseña en <strong>guacamayastores.com.ve</strong>, contáctenos mediante nuestro portal.</li>
+            <li>Si tiene alguna duda o necesita mas información. llámenos al teléfono (x)xxx-xxxx o escríbanos a los correos electrónicos <span class="bg-primary" style="padding:0px 0.5em;">123456789@hotmail.com</span> o <span class="bg-primary" style="padding:0px 0.5em;">123456789@hotmail.com</span> será un placer atenderle</li>
          </ul>
-	     
-	      <a href="{{ $link }}" class="btn btn-success" style="margin:2em auto;display:block;width: 150px;">Confirma tu cuenta</a>
-         <p>Si no puedes ver el botón, copia este enlace en tu navegador</p>
-         <p class="bg-primary" style="padding:1em;">{{ $link }}</p>
-         <ul>
-            <li>Si usted no solicitó el registro en <strong>guacamayastores.com.ve</strong>, por favor ignore o borre este mensaje</li>
-            <li>Si tiene alguna duda o necesita mas información. llámenos al teléfono (x)xxx-xxxx, escribanos mediante el chat en el portal, o escríbanos a los correos electrónicos <span class="bg-primary" style="padding:0px 0.5em;">123456789@hotmail.com</span> o <span class="bg-primary" style="padding:0px 0.5em;">xxxxxxxx@hotmail.com</span> sera un placer atenderle</li>
-         </ul>
-	      <p  style="text-align:center;">Gracias por unirse a nuestra comunidad. Atentamente <span class="bg-primary" style="color:white;">guacamayastores.com.ve</span></p>
-	  </div>
+         <p  style="text-align:center;">Gracias por unirse a nuestra comunidad. Atentamente <span class="bg-primary" style="color:white;">ffasil.com</span></p>
+     </div>
    </body>
 </html>

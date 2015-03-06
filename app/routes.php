@@ -11,8 +11,20 @@
 |
 */
 
-Route::get('/', 'HomeController@getIndex');
-Route::get('iniciar-sesion','HomeController@getLogin');
+Route::get('inicio', 'HomeController@getIndex');
+Route::group(array('before' =>'no_auth'),function()
+{
+	Route::get('iniciar-sesion','HomeController@getLogin');
+	Route::post('iniciar-sesion/autenticar','AuthController@postLogin');
+});
+
+Route::group(array('before' =>'auth'),function()
+{
+
+});
+
+Route::post('chequear/email','AuthController@postEmailCheck');
+Route::get('cerrar-sesion','AuthController@logOut');
 Route::get('registro', 'AuthController@getRegister');
 Route::post('registro/enviar','AuthController@postRegister');
 Route::post('registro/buscar-municipio','AuthController@getState');

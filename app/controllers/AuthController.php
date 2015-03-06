@@ -39,19 +39,20 @@ class AuthController extends BaseController {
 		$find = User::where('username','=',$input['username'])->pluck('user_deleted');
 		if ($find == 1) {
 			Session::flash('error', 'Su usuario ha sido eliminado, para más información contáctenos desde nuestro módulo de contacto.');
-			return Redirect::to('inicio/login');
+			return Redirect::to('iniciar-sesion');
 		}
 		$userdata = array(
 			'username' 	=> $input['username'],
-			'password' 	=> $input['pass']
+			'password' 	=> $input['password']
 
 		);
+		$pass = User::where('username','=',$input['username'])->pluck('password');
 		if (Auth::attempt($userdata,$valor)) {
 			return Redirect::to('inicio');
 		}else
 		{
 			Session::flash('error', 'Usuario o contraseña incorrectos');
-			return Redirect::to('inicio/login');
+			return Redirect::to('iniciar-sesion');
 		}
 		
 	}

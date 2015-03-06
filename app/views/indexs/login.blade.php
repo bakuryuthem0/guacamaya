@@ -29,7 +29,7 @@
 		<div class="col-xs-12">
 			
 			<div class="contCentrado col-xs-6 contdeColor" style="margin-top:2em;">
-				<form action="{{ URL::to('inicio/login/auth') }}" method="POST">
+				<form action="{{ URL::to('iniciar-sesion/autenticar') }}" method="POST">
 					@if (Session::has('error'))
 					<div class="col-xs-12">
 						<div class="alert alert-danger">
@@ -46,7 +46,7 @@
 					<div class="clearfix"></div>
 					<div class="col-xs-12">
 						<label for="pass" class="textoPromedio">Contraseña</label>
-						<input type="password" name="pass" class="form-control" required>
+						<input type="password" name="password" class="form-control" required>
 					</div>
 					<div class="col-xs-12">
 						<label for="pass" class="textoPromedio"><a href="#" class="forgot" data-toggle="modal" data-target="#changePass">¿Olvidó su contraseña?</a></label>
