@@ -15,6 +15,11 @@ class HomeController extends BaseController {
 	|
 	*/
 
+	public function getFront()
+	{
+		$title = "Portada";
+		return View::make('indexs.portada')->with('title',$title); 
+	}
 	public function getIndex()
 	{
 		$title = "Inicio";

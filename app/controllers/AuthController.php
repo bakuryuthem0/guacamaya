@@ -48,7 +48,12 @@ class AuthController extends BaseController {
 		);
 		$pass = User::where('username','=',$input['username'])->pluck('password');
 		if (Auth::attempt($userdata,$valor)) {
-			return Redirect::to('inicio');
+			if (Auth::user()->role == 1) {
+				return Redirect::to('administrador/inicio');	
+			}else
+			{
+				return Redirect::to('inicio');
+			}
 		}else
 		{
 			Session::flash('error', 'Usuario o contraseña incorrectos');
@@ -114,7 +119,8 @@ class AuthController extends BaseController {
 		$user->nombre    	 = $input['name'];
 		$user->apellido 	 = $input['lastname'];
 		$user->estado  		 = $input['estado'];
-		$user->municipio  		 = $input['municipio'];
+		$user->municipio     = $input['municipio'];
+		$user->role 		 = 3;
 		if (!empty($input['parroquia'])) {
 			$user->parroquia  		 = $input['parroquia'];	
 		}

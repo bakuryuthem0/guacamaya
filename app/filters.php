@@ -45,11 +45,14 @@ Route::filter('no_auth', function()
 		return Redirect::to('inicio');
 	}
 });
-
-if ( (Auth::getUser()['role'] !== 'Administrador') )
+Route::filter('check_role', function()
 {
-	return Redirect::to('inicio');		
-} 
+	if ( (Auth::getUser()->role != 1) )
+	{
+		return Redirect::to('inicio');		
+	} 
+});
+
 
 Route::filter('auth.basic', function()
 {

@@ -19,8 +19,9 @@
         {{ HTML::script("js/vendor/modernizr-2.6.2.min.js") }}
         {{ HTML::style('css/custom.css') }}
         {{ HTML::style('js/slick/slick.css') }}
+        {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') }}
     </head>
-    <body>
+    <body id="body">
             <nav class="navbar navbar-default">
               <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -110,7 +111,35 @@
             </nav>
         <div class="clearfix"></div>
         @yield('content')
-
+        <footer>
+          <div class="row">
+            <div class="container">
+              <div class="col-xs-8 contCentrado">
+                <div class="col-xs-6 textoPromedio">
+                  <label>Acerca de guacamaya</label>
+                  <ul class="ulNoStyle">
+                    <li>Quiénes somos</li>
+                    <li>Términos y Condiciones</li>
+                    <li>Cupones y Códigos de Promoción</li>
+                    <li>Politicas de protección de datos</li>
+                    <li>Formas de pago</li>
+                    <li>Contacto</li>
+                  </ul>
+                </div>
+                <div class="col-xs-6">
+                  <i class="fa fa-facebook redes" id="facebook"></i>
+                  <i class="fa fa-twitter redes"></i>
+                  <i class="fa fa-instagram redes"></i>
+                  <i class="fa fa-google-plus redes"></i>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="col-xs-12 footerTerm">
+                <p class="textoPromedio">terminos y condiciones blah blah blah</p>
+              </div>
+            </div>
+          </div>
+        </footer>
         {{ HTML::script("http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js") }}
         <script>window.jQuery || document.write('<script src="js/jquery.js"><\/script>')</script>
         {{ HTML::script('js/bootstrap.min.js') }}

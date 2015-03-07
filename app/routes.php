@@ -10,7 +10,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-
+Route::get('/', 'HomeController@getFront');
 Route::get('inicio', 'HomeController@getIndex');
 Route::group(array('before' =>'no_auth'),function()
 {
@@ -18,8 +18,15 @@ Route::group(array('before' =>'no_auth'),function()
 	Route::post('iniciar-sesion/autenticar','AuthController@postLogin');
 });
 
+Route::get('administrador', 'AdminController@getLogin');
+Route::post('administrador/iniciar-sesion/autenticar','AdminController@postLogin');
 Route::group(array('before' =>'auth'),function()
 {
+
+	Route::group(array('before' => 'check_role'), function(){
+		Route::get('administrador/inicio','AdminController@getIndex');
+		Route::get('administrador/nuevo-articulo','AdminController@getNewItem');
+	});
 
 });
 
