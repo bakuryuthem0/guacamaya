@@ -55,6 +55,7 @@
                                 Nuevo articulo
                               </a>
                             </li>
+                           
                           </ul>
                         </li>
                       <li class="textoPromedio"><a href="{{ URL::to('cerrar-sesion') }}">Cerrar sesión</a></li>

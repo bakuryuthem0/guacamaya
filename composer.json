@@ -1,7 +1,8 @@
 {
 	"require": {
 		"laravel/framework": "4.0.*",
-		"gloudemans/shoppingcart": "~1.2"
+		"gloudemans/shoppingcart": "~1.2",
+		"intervention/image": "~2.1"
 	},
 
 	"autoload": {

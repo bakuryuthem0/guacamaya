@@ -1,38 +1,68 @@
 @extends('layouts.admin')
 
 @section('content')
-{{ HTML::style('https://rawgit.com/enyo/dropzone/master/dist/dropzone.css') }}
 <div class="row">
 	<div class="container">
 		<div class="col-xs-12 contCentrado contdeColor">
+			<form method="POST" action="{{ URL::to('administrador/nuevo-articulo/enviar') }}">
 			<legend>Nuevo articulo</legend>
 			<p class="textoPromedio">(*) Campo obligatorio</p>
 			<hr>
 			<div class="col-xs-6 inputForm">
 				<label class="textoPromedio">(*) Código del artículo</label>
-				{{ Form::text('item_id', Input::old('item_id'), array('class' => 'form-control','placeholder' => 'Código del artículo')) }}
+				{{ Form::text('item_cod', Input::old('item_cod'), array('class' => 'form-control','placeholder' => 'Código del artículo')) }}
+				@if ($errors->has('item_cod'))
+					 @foreach($errors->get('item_cod') as $err)
+					 	<div class="alert alert-danger">
+					 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					 		<p class="textoPromedio">{{ $err }}</p>
+					 	</div>
+					 @endforeach
+				@endif
 			</div>
 			<div class="col-xs-6 inputForm">	
 				<label class="textoPromedio">(*) Nombre del artículo</label>
 				{{ Form::text('item_nomb', Input::old('item_nomb'), array('class' => 'form-control','placeholder' => 'Nombre del artículo')) }}
+				@if ($errors->has('item_nomb'))
+					 @foreach($errors->get('item_nomb') as $err)
+					 	<div class="alert alert-danger">
+					 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					 		<p class="textoPromedio">{{ $err }}</p>
+					 	</div>
+					 @endforeach
+				@endif
 			</div>
 			<div class="col-xs-12 inputForm">	
 				<label class="textoPromedio">(*) Descripción del artículo</label>
 				<textarea class="form-control editor" name="item_desc" placeholder="Descripción del artículo">{{ Input::old('item_desc') }}</textarea>
+				@if ($errors->has('item_desc'))
+					 @foreach($errors->get('item_desc') as $err)
+					 	<div class="alert alert-danger">
+					 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					 		<p class="textoPromedio">{{ $err }}</p>
+					 	</div>
+					 @endforeach
+				@endif
 			</div>
 			<div class="col-xs-12 inputForm">	
 				<label class="textoPromedio">(*) Cantidad de artículos</label>
-				{{ Form::text('item_nomb', Input::old('item_nomb'), array('class' => 'form-control','placeholder' => 'Nombre del artículo')) }}
+				{{ Form::text('item_stock', Input::old('item_nomb'), array('class' => 'form-control','placeholder' => 'Nombre del artículo')) }}
+				@if ($errors->has('item_stock'))
+					 @foreach($errors->get('item_stock') as $err)
+					 	<div class="alert alert-danger">
+					 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					 		<p class="textoPromedio ">{{ $err }}</p>
+					 	</div>
+					 @endforeach
+				@endif
 			</div>
-			<div class="col-xs-12 inputForm">
-				<label class="textoPromedio">Seleccione las imagenes para su artículo</label>
-				<p class="bg-info textoPromedio" style="padding:0.5em;text-align:center;">Posee un máximo de 8 imágenes</p>
-				 <form action="{{ URL::to('publicacion/habitual/enviar/imagenes/procesar') }}" method="POST" class="dropzone textoPromedio" id="my-awesome-dropzone">
-                    <div class="dz-message">
-                        Arrastre o presione aquí para subir su imagen.
-                    </div>
-                </form>
+			<div class="col-xs-12">
+				<p class="bg-info textoPromedio" style="padding:0.5em;">Una vez que haga click en continuar, el artículo se creara y podrá agregar los detalles</p>
+				<button class="btn btn-success">Continuar</button>
 			</div>
+			</form>
+
+			
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -50,35 +80,5 @@
 	} );
 
 </script>
-{{ HTML::script('js/dropzone.js') }}
-<script type="text/javascript">
-    Dropzone.autoDiscover = false;
-// or disable for specific dropzone:
-// Dropzone.options.myDropzone = false;
-    var myDropzone = new Dropzone("#my-awesome-dropzone");
 
-    myDropzone.on("removedfile", function(file) {
-        if(file.xhr){
-
-            $(function() {
-              // Now that the DOM is fully loaded, create the dropzone, and setup the
-              // event listeners
-                var url = JSON.parse(file.xhr.response);
-                var imagepath = url.url;
-                $.ajax({
-                    url: 'publicacion/habitual/enviar/imagenes/eliminar',
-                    type: 'POST)',
-                    dataType: 'json',
-                    data: {name :  file.name},
-                    success:function(response)
-                    {
-                        console.log(response)
-                    }
-                })
-
-                
-                })
-            }
-    })
-</script>
 @stop

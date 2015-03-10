@@ -36,7 +36,7 @@ App::after(function($request, $response)
 Route::filter('auth', function()
 {
 	if (!Auth::check()){ 
-		return Redirect::to('inicio/login');
+		return Redirect::to('iniciar-sesion');
 	}
 });
 Route::filter('no_auth', function()

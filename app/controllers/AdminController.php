@@ -70,6 +70,67 @@ class AdminController extends BaseController {
 		$title = "Nuevo articulo | guacamayastores.com.ve";
 		return View::make('admin.newItem')->with('title',$title);
 	}
+	public function postNewItem()
+	{
+		$input = Input::all();
+		$rules = array(
+			'item_cod' => 'required|unique:item',
+			'item_nomb' => 'required|min:4',
+			'item_desc' => 'required|min:4',
+			'item_stock'=> 'required|min:1'
+		);
+		$msg = array(
+			'required' => ':attribute es obligatorio',
+			'min'	   => ':attribute es muy corto(a)',
+			'unique'   => ':attribute debe ser unico'
+		);
+		$custom = array(
+			'item_cod'   => 'El código del artículo',
+			'item_nomb'  => 'El nombre del artículo',
+			'item_desc'  => 'La descripción del artículo',
+			'item_stock' => 'La cantidad de artículos'
+		);
+		$validation = Validator::make($input, $rules, $msg, $custom);
+		if ($validation->fails()) {
+			return Redirect::to('administrador/nuevo-articulo')->withErrors($validation)->withInput();
+		}else
+		{
+			$item = new Items;
+			$item->item_cod   = $input['item_cod'];
+			$item->item_nomb  = $input['item_nomb'];
+			$item->item_desc  = $input['item_desc'];
+			$item->item_stock = $input['item_stock'];
+			$item->save();
+			$id = $item->id;
+			$misc = new Misc;
+			$misc->item_id = $id;
+			$misc->save();
+			$misc_id = $misc->id;
+			mkdir('images/items/'.$id);
+			return Redirect::to('administrador/nuevo-articulo/continuar/'.$id.'/'.$misc_id);	
+		}
+	}
+	public function getContinueNew($id,$misc_id)
+	{
+		$title = "Colores y tallas";
+		$tallas = Tallas::get();
+		$colors = Colores::get();
+		return View::make('admin.continueNew')
+		->with('title',$title)
+		->with('id',$id)
+		->with('misc_id',$misc_id)
+		->with('tallas',$tallas)
+		->with('colores',$colors);
+		
+	}
+	public function getImagesNew($id)
+	{
+		$title = "Cargar imagenes";
+		return View::make('admin.newImage')
+		->with('title',$title)
+		->with('id',$id);
+		;
+	}
 	public function post_upload(){
 
 		$input = Input::all();
@@ -86,40 +147,44 @@ class AdminController extends BaseController {
 		{
 			return Response::make($validation)->withErrors($validation);
 		}
-		$id = Input::get('pub_id');
-		$pub = Publicaciones::find($id);
+		$id = Input::get('art_id');
+		$misc_id = Input::get('misc_id');
 		$file = Input::file('file');
+		$misc = Misc::find($misc_id);
 		$campo = "";
-		if (empty($pub->img_2)) {
-			$pub->img_2 = Auth::user()['username'].'/'.$file->getClientOriginalName();
+		if (empty($misc->img_1)) {
+			$misc->img_1 = $id.'/'.$file->getClientOriginalName();
+			$campo = 'img_1';
+		}elseif (empty($misc->img_2)) {
+			$misc->img_2 = $id.'/'.$file->getClientOriginalName();
 			$campo = 'img_2';
-		}elseif(empty($pub->img_3))
+		}elseif(empty($misc->img_3))
 		{
-			$pub->img_3 = Auth::user()['username'].'/'.$file->getClientOriginalName();
+			$misc->img_3 = $id.'/'.$file->getClientOriginalName();
 			$campo = 'img_3';
-		}elseif(empty($pub->img_4))
+		}elseif(empty($misc->img_4))
 		{
-			$pub->img_4 = Auth::user()['username'].'/'.$file->getClientOriginalName();
+			$misc->img_4 = $id.'/'.$file->getClientOriginalName();
 			$campo = 'img_4';
-		}elseif(empty($pub->img_5))
+		}elseif(empty($misc->img_5))
 		{
-			$pub->img_5 = Auth::user()['username'].'/'.$file->getClientOriginalName();
+			$misc->img_5 = $id.'/'.$file->getClientOriginalName();
 			$campo = 'img_5';
-		}elseif(empty($pub->img_6))
+		}elseif(empty($misc->img_6))
 		{
-			$pub->img_6 = Auth::user()['username'].'/'.$file->getClientOriginalName();
+			$misc->img_6 = $id.'/'.$file->getClientOriginalName();
 			$campo = 'img_6';
-		}elseif(empty($pub->img_7))
+		}elseif(empty($misc->img_7))
 		{
-			$pub->img_7 = Auth::user()['username'].'/'.$file->getClientOriginalName();
+			$misc->img_7 = $id.'/'.$file->getClientOriginalName();
 			$campo = 'img_7';
-		}elseif(empty($pub->img_8))
+		}elseif(empty($misc->img_8))
 		{
-			$pub->img_8 = Auth::user()['username'].'/'.$file->getClientOriginalName();
+			$misc->img_8 = $id.'/'.$file->getClientOriginalName();
 			$campo = 'img_8';
 		}
-
-		if (file_exists('images/pubImages/'.Auth::user()['username'].'/'.$file->getClientOriginalName())) {
+		
+		if (file_exists('images/items/'.$id.'/'.$file->getClientOriginalName())) {
 			//guardamos la imagen en public/imgs con el nombre original
             $i = 0;//indice para el while
             //separamos el nombre de la img y la extensión
@@ -127,48 +192,48 @@ class AdminController extends BaseController {
             //asignamos de nuevo el nombre de la imagen completo
             $miImg = $file->getClientOriginalName();
             //mientras el archivo exista iteramos y aumentamos i
-            while(file_exists('images/pubImages/'.Auth::user()['username'].'/'. $miImg)){
+            while(file_exists('images/items/'.$id.'/'. $miImg)){
                 $i++;
                 $miImg = $info[0]."(".$i.")".".".$info[1];              
             }
             //guardamos la imagen con otro nombre ej foto(1).jpg || foto(2).jpg etc
-            $file->move("images/pubImages/".Auth::user()['username'],$miImg);
-            $img = Image::make('images/pubImages/'.Auth::user()['username'].'/'.$miImg)
+            $file->move("images/items/".$id,$miImg);
+            $img = Image::make('images/items/'.$id.'/'.$miImg)
 	           ->heighten(180)
-	           ->insert('images/logo.png')
-	           ->save('images/pubImages/'.Auth::user()['username'].'/'.$miImg);
+	           ->save('images/items/'.$id.'/'.$miImg);
             if($miImg != $file->getClientOriginalName()){
-                if ($campo == 'img_2') {
-					$pub->img_2 = Auth::user()['username'].'/'.$miImg;
-				}elseif(empty($pub->img_3))
+                if ($campo == 'img_1') {
+					$misc->img_1 = $id.'/'.$miImg;
+				}elseif ($campo == 'img_2') {
+					$misc->img_2 = $id.'/'.$miImg;
+				}elseif(empty($misc->img_3))
 				{
-					$pub->img_3 = Auth::user()['username'].'/'.$miImg;
+					$misc->img_3 = $id.'/'.$miImg;
 				}elseif($campo == 'img_4')
 				{
-					$pub->img_4 = Auth::user()['username'].'/'.$miImg;
+					$misc->img_4 = $id.'/'.$miImg;
 				}elseif($campo == 'img_5')
 				{
-					$pub->img_5 = Auth::user()['username'].'/'.$miImg;
+					$misc->img_5 = $id.'/'.$miImg;
 				}elseif($campo == 'img_6')
 				{
-					$pub->img_6 = Auth::user()['username'].'/'.$miImg;
+					$misc->img_6 = $id.'/'.$miImg;
 				}elseif($campo == 'img_7')
 				{
-					$pub->img_7 = Auth::user()['username'].'/'.$miImg;
+					$misc->img_7 = $id.'/'.$miImg;
 				}elseif($campo == 'img_8')
 				{
-					$pub->img_8 = Auth::user()['username'].'/'.$miImg;
+					$misc->img_8 = $id.'/'.$miImg;
 				}
             }
 		}else
 		{
-			$file->move("images/pubImages/".Auth::user()['username'],$file->getClientOriginalName());
-			 $img = Image::make('images/pubImages/'.Auth::user()['username'].'/'.$file->getClientOriginalName())
-	            ->heighten(180)
-	            ->insert('images/logo.png')
-	            ->save('images/pubImages/'.Auth::user()['username'].'/'.$file->getClientOriginalName());
+			$file->move("images/items/".$id,$file->getClientOriginalName());
+			$img = Image::make('images/items/'.$id.'/'.$file->getClientOriginalName())
+            ->heighten(180)
+            ->save('images/items/'.$id.'/'.$file->getClientOriginalName());
 		}
-		$pub->save();
+		$misc->save();
         return Response::json(array('esto' => $file->getClientOriginalName()));
 
         if( $upload_success ) {
