@@ -143,15 +143,16 @@ jQuery(document).ready(function($) {
 
 jQuery(document).ready(function($) {
 	var id = $('.art_id').val(),misc = $('.misc_id').val();
+	$('.contNew').click(function(event) {
+		$('.formCart').prop({
+			'action': '../enviar/'+id+'/'+misc,
+		})
+		$('.formCart').submit();
+	});
 	$('.contSave').click(function(event) {
 		$('.formCart').prop({
-			'action': 'administrador/nuevo-articulo/enviar/'+id+'/'+misc,
+			'action': '../guardar-cerrar/'+id+'/'+misc,
 		})
-	});
-	$('.contNew').click(function(event) {
-		console.log(id+' '+misc)
-		$('.formCart').prop({
-			'action': 'administrador/nuevo-articulo/continuar/nuevo/'+id+'/'+misc,
-		})
+		$('.formCart').submit();
 	});
 });

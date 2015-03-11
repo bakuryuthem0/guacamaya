@@ -242,4 +242,58 @@ class AdminController extends BaseController {
         	return Response::json('error', 400);
         }
 	}
+	public function postContinueNew()
+	{
+		$input = Input::all();
+		$rules = array(
+			'talla' => 'required',
+			'color' => 'required'
+		);
+		$msg = array('required' => 'El campo :attribute es obligatorio');
+		$validator = Validator::make($input, $rules,$msg);
+		if ($validator->fails()) {
+			return Redirect::to('administrador/nuevo-articulo/continuar/'.$input['art'].'/'.$input['misc'])->withErrors($Validator);
+		}
+		$misc = Misc::find($input['misc']);
+		$misc->item_talla = $input['talla'];
+		$misc->item_color = $input['color'];
+		if ($misc->save()) {
+			$misc = new Misc;
+			$misc->item_id = $input['art'];
+			$misc->save();
+			return Redirect::to('administrador/nuevo-articulo/continuar/'.$input['art'].'/'.$misc->id);
+		}
+	}
+	public function postSaveNew(){
+		$input = Input::all();
+		$rules = array(
+			'talla' => 'required',
+			'color' => 'required'
+		);
+		$msg = array('required' => 'El campo :attribute es obligatorio');
+		$validator = Validator::make($input, $rules,$msg);
+		if ($validator->fails()) {
+			return Redirect::to('administrador/nuevo-articulo/continuar/'.$input['art'].'/'.$input['misc'])->withErrors($Validator);
+		}
+		$misc = Misc::find($input['misc']);
+		$misc->item_talla = $input['talla'];
+		$misc->item_color = $input['color'];
+		if ($misc->save()) {
+			Session::flash('success', 'Articulo creado correctamente.');
+			return Redirect::to('administrador/inicio');
+		}
+	}
+	public function getShowArt()
+	{
+		$title = "Articulos";
+		$art = Items::get(array(
+			'item.item_cod',
+			'item.item_nomb',
+			'item.item_stock',
+			'item.id'
+		));
+		return View::make('admin.showArt')
+		->with('title',$title)
+		->with('art',$art);
+	}
 }

@@ -53,6 +53,14 @@ footer
 {
 	margin-bottom: 2em;
 }
+.imgMini
+{
+	width: 100px;
+}
+.imgPrinc
+{
+	width: 100%;
+}
 .inputBusqueda
 {
 	background-color: rgba(235, 235, 235, 1);

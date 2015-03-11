@@ -25,11 +25,18 @@ Route::group(array('before' =>'auth'),function()
 
 	Route::group(array('before' => 'check_role'), function(){
 		Route::get('administrador/inicio','AdminController@getIndex');
+		/*Nuevos articulos*/
 		Route::get('administrador/nuevo-articulo','AdminController@getNewItem');
 		Route::post('administrador/nuevo-articulo/enviar','AdminController@postNewItem');
 		Route::get('administrador/nuevo-articulo/continuar/{id}/{misc_id}','AdminController@getContinueNew');
-		Route::get('administrador/nuevo-articulo/continuar/nuevo/{id}/{misc_id}','AdminController@postContinueNew');
+		Route::post('administrador/nuevo-articulo/continuar/enviar/{id}/{misc_id}','AdminController@postContinueNew');
+		Route::post('administrador/nuevo-articulo/continuar/guardar-cerrar/{id}/{misc_id}','AdminController@postSaveNew');
 		Route::post('administrador/nuevo-articulo/imagenes/procesar','AdminController@post_upload');
+		/**/
+		/*Ver articulos*/
+		Route::get('administrador/ver-articulo', 'AdminController@getShowArt');
+
+		Route::get('administrador/ver-articulo/{id}','HomeController@getShowItem');
 	});
 
 });

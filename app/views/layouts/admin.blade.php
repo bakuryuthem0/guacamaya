@@ -40,8 +40,7 @@
                
                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1 col-xs-3">
                 @if(!Auth::check())
-                <h3 style="text-align:right;vertical-align:middle;">Sistema de administracion de guacamaya -
-                    +stores</h3>
+                <h3 style="text-align:right;vertical-align:middle;">Sistema de administracion de guacamayastores</h3>
                 @else
                   <ul class="nav navbar-nav">
                       <li class="dropdown myMenu">
@@ -55,7 +54,11 @@
                                 Nuevo articulo
                               </a>
                             </li>
-                           
+                            <li>
+                              <a href="{{ URL::to('administrador/ver-articulo') }}">
+                                Ver articulos
+                              </a>
+                            </li>
                           </ul>
                         </li>
                       <li class="textoPromedio"><a href="{{ URL::to('cerrar-sesion') }}">Cerrar sesión</a></li>
