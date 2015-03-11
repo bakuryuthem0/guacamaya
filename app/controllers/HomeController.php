@@ -35,15 +35,34 @@ class HomeController extends BaseController {
 	}
 	public function getShowItem($id)
 	{
-		$art = Items::join('miscelanias as m','m.item_id','=','item.id')
-		->join('tallas','tallas.id','=','m.item_talla')
-		->join('colores','colores.id','=','m.item_color')
-		->where('item.id','=',$id)
-		->get();
-		foreach ($art as  $value) {
-			echo $art.'<br>';
+		$art = Items::find($id);
+		$a = new stdClass;
+		$a->id = $art->id;
+		$a->item_nomb = $art->item_nomb;
+		$a->item_stock= $art->item_stock;
+		$a->item_desc = $art->item_desc;
+		$a->item_cod  = $art->item_cod;
+		$a->talla = array();
+		$a->color = array();
+		$misc = Misc::where('item_id','=',$a->id)->get();
+		$a->img = array();
+		foreach ($misc as $i => $m) {
+			$talla = Tallas::find($m->item_talla);
+			$color = Colores::find($m->item_color);
+			$a->talla[$m->id] = $talla->talla_nomb.' - '.$talla->talla_desc;
+			$a->color[$m->id] = $color->color_desc;
+			$a->img[$m->id] = array(
+				'img_1' => $m->img_1,
+				'img_2' => $m->img_2,
+				'img_3' => $m->img_3,
+				'img_4' => $m->img_4,
+				'img_5' => $m->img_5,
+				'img_6' => $m->img_6,
+				'img_7' => $m->img_7,
+				'img_8' => $m->img_8,
+			);
 		}
-		die();
+		
 		$title = $art->nombre;
 		if (Auth::user()->role == 1) {
 			$layout = 'admin';
@@ -53,7 +72,7 @@ class HomeController extends BaseController {
 		}
 		return View::make('indexs.artSelf')
 		->with('title',$title)
-		->with('art',$art)
+		->with('art',$a)
 		->with('layout',$layout);
 	}
 }
