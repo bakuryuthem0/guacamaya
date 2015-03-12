@@ -38,6 +38,13 @@
 						</div>
 					</div>
 					<div class="clearfix"></div>
+					@elseif(Session::has('success'))
+					<div class="col-xs-12">
+						<div class="alert alert-success">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							<p class="textoPromedio">{{ Session::get('success') }}</p>
+						</div>
+					</div>
 					@endif
 					<div class="col-xs-12">
 						<label for="username" class="textoPromedio">Nombre de usuario:</label>

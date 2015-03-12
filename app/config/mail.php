@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'prueba@ffasil.com', 'name' => 'ffasil.com'),
+	'from' => array('address' => 'prueba@guacamayastores.com.ve', 'name' => 'guacamayastores.com.ve'),
 
 	/*
 	|--------------------------------------------------------------------------

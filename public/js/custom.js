@@ -156,3 +156,78 @@ jQuery(document).ready(function($) {
 		$('.formCart').submit();
 	});
 });
+
+jQuery(document).ready(function($) {
+	var imgPrinc = $('.imgPrinc').attr('src');
+	$('.imgMini').on('mouseover',function() {
+		var imgHover = $(this).attr('src');
+		$('.imgPrinc').attr('src',imgHover);
+	});
+});
+jQuery(document).ready(function($) {
+	$('#enviar').click(function(event) {
+		event.preventDefault();
+		$('.errorText').remove();
+		function alerta(esto){
+			esto.css({
+				'box-shadow': '0px 0px 1px 1px red'
+			});
+			esto.after('<p class="textoPromedio errorText">Debe llenar este campo</p>')
+		}
+		$('.inputForm').click(function(event) {
+			$(this).css({
+				'box-shadow': '0px 0px 1px 1px rgba(0,0,0,0)'
+			});
+			$(this).next('p').remove()
+		});
+		$('.inputForm').each(function(){
+			if ($(this).val() == "") {
+				alerta($(this))
+			}
+
+		})
+		if ($('.cat_nomb').val() != "" && $('.cat_desc').val() != "") {
+			$('#formRegister').submit();
+		}
+	});
+});
+
+jQuery(document).ready(function($) {
+	$('.elimCat').click(function(event) {
+
+		$('.modal-backdrop').click(function(event) {
+			$('.responseDanger').removeClass('alert-danger');
+			$('.responseDanger').removeClass('alert-success');
+			$('.responseDanger').css({
+				'display': 'none',
+				'opacity': 0
+			});
+			$('.enviarRespuesta').prop('disabled',false);
+		});
+		$('.close').click(function(event) {
+			$('.responseDanger').removeClass('alert-danger');
+			$('.responseDanger').removeClass('alert-success');	
+			$('.responseDanger').css({
+				'display': 'none',
+				'opacity': 0
+			});
+			$('.enviarRespuesta').prop('disabled',false)
+		});
+		$('.envElim').val($(this).val());
+		$('.envElim').click(function(event) {
+			$('.envElim').unbind('click');
+			$.ajax({
+				url: 'eliminar',
+				type: 'POST',
+				dataType: 'json',
+				data: {id: $(this).val()},
+				success:function(response)
+				{
+					console.log(response)
+				}
+			})
+			
+			
+		});
+	});
+});

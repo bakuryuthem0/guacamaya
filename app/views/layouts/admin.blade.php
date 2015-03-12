@@ -49,16 +49,42 @@
                             {{ Auth::user()->username }}
                           <span class="caret"></span></a>
                           <ul class="dropdown-menu multi-level" role="menu">
-                            <li>
-                              <a href="{{ URL::to('administrador/nuevo-articulo') }}">
-                                Nuevo articulo
+                            <li class="dropdown-submenu">
+                              <a href="#" >
+                                Categorías
                               </a>
+                              <ul class="dropdown-menu" role="menu">
+                                <li>
+                                  <a href="{{ URL::to('categoria/nueva') }}">
+                                    <i class="fa fa-plus"></i> Nueva
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="{{ URL::to('categoria/ver-categorias') }}">
+                                    <i class="fa fa-money"></i>
+                                    Modificar
+                                  </a>
+                                </li>
+                              </ul>
                             </li>
-                            <li>
-                              <a href="{{ URL::to('administrador/ver-articulo') }}">
-                                Ver articulos
+                            <li class="dropdown-submenu">
+                              <a href="#" >
+                                Articulos
                               </a>
+                              <ul class="dropdown-menu" role="menu">
+                                <li>
+                                  <a href="{{ URL::to('administrador/nuevo-articulo') }}">
+                                    Nuevo articulo
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="{{ URL::to('administrador/ver-articulo') }}">
+                                    Ver articulos
+                                  </a>
+                                </li>
+                              </ul>
                             </li>
+                            
                           </ul>
                         </li>
                       <li class="textoPromedio"><a href="{{ URL::to('cerrar-sesion') }}">Cerrar sesión</a></li>

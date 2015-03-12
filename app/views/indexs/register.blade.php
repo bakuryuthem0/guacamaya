@@ -17,7 +17,7 @@
 				<div class="col-xs-12">
 					<div class="col-xs-12">
 						<legend>Formulario de registro</legend>
-						<p class="textoPromedio">Llene el siguiente formulario para registrarse en ffasil.com.</p>
+						<p class="textoPromedio">Llene el siguiente formulario para registrarse en guacamastores.com.ve.</p>
 						<p class="textoPromedio">(*) Campos obligatorios.</p>
 						<hr>
 					</div>						
@@ -122,7 +122,7 @@
 					
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-6 inputRegister">
-							<p class="textoPromedio">Dirección</p>
+							<p class="textoPromedio">(*)Dirección</p>
 						</div>
 						<div class="col-xs-6 inputRegister">
 							<textarea class="form-control inputFondoNegro" placeholder="Dirección" name="dir">{{ Input::old('dir') }}</textarea>
@@ -165,7 +165,7 @@
 							@foreach ($estados as $estado)
 								<?php $arr = $arr+array($estado->id => $estado->nombre);  ?>
 							@endforeach
-							{{ Form::select('estado',$arr,Input::old('estado'),array('class' => 'form-control inputFondoNegro','id' => 'estado','requied' => 'required')
+							{{ Form::select('estado',$arr,'',array('class' => 'form-control inputFondoNegro','id' => 'estado','requied' => 'required')
 								)}}
 							
 							@if ($errors->has('estado'))
@@ -204,7 +204,7 @@
 						</div>
 						<div class="col-xs-6 inputRegister">
 							
-							<select name="parroquia" class="form-control inputFondoNegro" id="parroquia" required>
+							<select name="parroquia" class="form-control inputFondoNegro" id="parroquia">
 								<option value="">Seleccione un departamento</option>
 								
 							</select>

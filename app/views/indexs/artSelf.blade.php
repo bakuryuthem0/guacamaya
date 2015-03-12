@@ -8,8 +8,8 @@
 				<legend>{{ $art->item_nomb.' - '.$art->item_cod }}</legend>
 				<div class="col-xs-8">
 					<div class="col-xs-12 imgProd">
-						
 
+						<img src="{{ asset('images/items/'.$art->img[$art->misc]['img_1']) }}" class="imgPrinc">
 					</div>
 					<div class="col-xs-12 minis">
 						@foreach($art->img as $img)
@@ -29,15 +29,32 @@
 
 					<div class="col-xs-12">
 						<label>Talla</label>
-						{{ Form::select('talla',$art->talla,Input::old('talla'), array('class' => 'form-control talla')) }}
+						<select class="form-control talla">
+							@foreach($tallas as $t)
+								@if($t->talla_nomb.' - '.$t->talla_desc == $art->talla[$art->misc])
+									<option value="{{ $t->id }}" selected>{{ $t->talla_nomb.' - '.$t->talla_desc }}</option>
+								@else
+									<option value="{{ $t->id }}">{{ $t->talla_nomb.' - '.$t->talla_desc }}</option>
+								@endif
+							@endforeach
+						</select>
 					</div>
 					<div class="col-xs-12">
 						<label>Color</label>
-						{{ Form::select('color',$art->color,Input::old('color'), array('class' => 'form-control color')) }}
+						<select class="form-control color">
+							@foreach($colores as $c)
+								@if($c->color_desc == $art->color[$art->misc])
+									<option value="{{ $c->id }}" selected> {{$c->color_desc }} </option>
+								@else
+									<option value="{{ $c->id }}">{{$c->color_desc }}</option>
+								@endif
+							@endforeach
+						</select>
 					</div>
 					<div class="col-xs-12">
 						<label>Cantidad</label>
 						{{ $art->item_stock }}
+						<input type="hidden" class="values" data-art-id="{{ $art->id }}" data-misc-id="{{ $art->misc }}">
 					</div>
 				</div>
 				<div class="clearfix"></div>

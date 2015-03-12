@@ -17,6 +17,7 @@ class AuthController extends BaseController {
 
 	public function getLogin()
 	{
+
 		$title = "Inicio de Sesión";
 		if (Auth::check())
         {
@@ -107,11 +108,11 @@ class AuthController extends BaseController {
 		);
 		$validator = Validator::make($input, $rules, $messages,$custom);
 		if ($validator->fails()) {
-			return Redirect::to('inicio/registro')->withErrors($validator)->withInput();
+			return Redirect::to('registro')->withErrors($validator)->withInput();
 		}
 		$codigo = md5(rand());
-		$url = 'inicio/registro/codigo/'.$input['username'].'/'.$codigo;
-		$link = 'http://localhost/car2/public/'.$url;
+		$url = 'registro/verificar-codigo/'.$input['username'].'/'.$codigo;
+		$link = 'http://localhost/prueba/guacamaya/public/'.$url;
 		$user = new User;
 		$user->username 	 = $input['username'];
 		$user->password    	 = Hash::make($input['pass']);
@@ -133,27 +134,29 @@ class AuthController extends BaseController {
 			'link' => $link
 		);
 		Mail::send('emails.newUser', $data, function ($message) use ($input){
-		    $message->subject('Correo de registro de usuario en ffasil.com');
+		    $message->subject('Correo de registro de usuario en guacamayastores.com.ev');
 		    $message->to($input['email']);
 		});
 		if ($user->save()) {
 			Session::flash('success', 'Hemos enviado un link de activación a su correo electrónico, para completar su registro
 
 por favor acceda al link');
+			return Redirect::to('iniciar-sesion');
 			
 		}else
 		{
 			Session::flash('error','Error al crear el usuario, por favor contacte con el administrador del sitio');
+			return Redirect::to('registro');
+
 		}
-		return Redirect::to('iniciar-sesion');
 	}
 	public function getCode($username,$codigo)
 	{
 		$user = User::where('username','=',$username)->get(array('id','register_cod','register_cod_active'));
 		if ($user[0]->register_cod_active == 0) {
 			$title = "Link usado";
-			Session::flash('error','El link al que accedio ya fue usado o ha caducado, de ser así llene el formulario nuevamente');
-			return View::make('login')->with('title',$title);
+			Session::flash('error','El link al que accedio ya fue usado o ha caducado, de ser así llene el formulario nuevamente, o inicie sesión');
+			return View::make('indexs.login')->with('title',$title);
 		}
 		if ($user[0]->register_cod == $codigo) {
 			$up = User::find($user[0]->id);
@@ -166,12 +169,12 @@ por favor acceda al link');
 			}
 			$title ="Activación de nuevo usuario completa";
 			
-			return View::make('info')->with('title',$title);
+			return View::make('indexs.login')->with('title',$title);
 		}else
 		{
 			$title = "Activación fallida";
 			Session::flash('error','Codigo incorrecto');
-			return View::make('info')->with('title',$title);
+			return View::make('indexs.login')->with('title',$title);
 		}
 	}
 	public function postEmailCheck()
@@ -210,7 +213,7 @@ por favor acceda al link');
 
 			  	if ($user[0]->save()) {
 			  		Mail::send('emails.passNew', $data, function ($message) use ($pass,$email){
-					    $message->subject('Correo de restablecimiento de contraseña ffasil.com');
+					    $message->subject('Correo de restablecimiento de contraseña guacamayastores.com.ve');
 					    $message->to($email);
 					});
 					return Response::json(array('type' => 'success','msg' => 'Se ha enviado un email con una clave provisional.'));

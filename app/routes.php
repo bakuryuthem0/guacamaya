@@ -35,8 +35,18 @@ Route::group(array('before' =>'auth'),function()
 		/**/
 		/*Ver articulos*/
 		Route::get('administrador/ver-articulo', 'AdminController@getShowArt');
-
 		Route::get('administrador/ver-articulo/{id}','HomeController@getShowItem');
+
+		/*Categorias*/
+		/*nueva*/
+		Route::get('categoria/nueva','AdminController@getNewCat');
+		Route::post('categoria/nueva/enviar', 'AdminController@postNewCat');
+		/*Modificar*/
+		Route::get('categoria/ver-categorias','AdminController@getModifyCat');
+		Route::get('administrador/ver-categoria/{id}','AdminController@getModifyCatById');
+		Route::post('administrador/ver-categoria/modificar/{id}','AdminController@postModifyCatById');
+		/*Eliminar*/
+		Route::post('categoria/eliminar','AdminController@postElimCat');
 	});
 
 });
@@ -44,6 +54,7 @@ Route::group(array('before' =>'auth'),function()
 Route::post('chequear/email','AuthController@postEmailCheck');
 Route::get('cerrar-sesion','AuthController@logOut');
 Route::get('registro', 'AuthController@getRegister');
+Route::get('registro/verificar-codigo/{username}/{codigo}', 'AuthController@getCode');
 Route::post('registro/enviar','AuthController@postRegister');
 Route::post('registro/buscar-municipio','AuthController@getState');
 Route::post('registro/buscar-parroquia','AuthController@getParroquia');

@@ -296,4 +296,83 @@ class AdminController extends BaseController {
 		->with('title',$title)
 		->with('art',$art);
 	}
+	public function getNewCat()
+	{
+		$title ="Nueva Categoria";
+		return View::make('admin.newCat')
+		->with('title',$title);
+	}
+	public function postNewCat()
+	{
+		$input = Input::all();
+		$rules = array(
+			'name_cat' => 'required',
+			'desc_cat' => 'required'
+		);
+		$msg = array('required' => 'El campo :attribute es obligatorio');
+		$attr = array('name_cat' => 'nombre','desc_cat' =>'titulo');
+		$validator = Validator::make($input, $rules, $msg, $attr);
+		if ($validator->fails()) {
+			return Redirect::to('categoria/nueva')->withErrors($validator)->withInput();
+		}
+		$cat = new Cat;
+		$cat->cat_nomb = $input['name_cat'];
+		$cat->cat_desc = $input['desc_cat'];
+		if ($cat->save()) {
+			Session::flash('success', 'Categoría creada satisfactoriamente.');
+			return Redirect::to('administrador/inicio');
+		}else
+		{
+			Session::flash('error', 'Error al guardar la nueva categoría.');
+			return Redirect::to('categoria/nueva');
+		}
+	}
+	public function getModifyCat()
+	{
+		$title = "Ver categorías";
+		$cat = Cat::get();
+		return View::make('admin.showCat')
+		->with('title',$title)
+		->with('cat',$cat);
+	}
+	public function getModifyCatById($id)
+	{
+		$cat = Cat::find($id);
+		$title ="Modificar categoria: ".$cat->cat_nomb;
+		return View::make('admin.mdfCat')
+		->with('title',$title)
+		->with('cat',$cat);
+	}
+	public function postModifyCatById($id)
+	{
+		$input = Input::all();
+		$rules = array(
+			'name_cat' => 'required',
+			'desc_cat' => 'required'
+		);
+		$msg = array('required' => 'El campo :attribute es obligatorio');
+		$attr = array('name_cat' => 'nombre','desc_cat' =>'titulo');
+		$validator = Validator::make($input, $rules, $msg, $attr);
+		if ($validator->fails()) {
+			return Redirect::to('administrador/ver-categoria/'.$id)->withErrors($validator)->withInput();
+		}
+		$cat = Cat::find($id);
+		$cat->cat_nomb = $input['name_cat'];
+		$cat->cat_desc = $input['desc_cat'];
+		if ($cat->save()) {
+			Session::flash('success', 'Categoría modificada satisfactoriamente.');
+			return Redirect::to('administrador/inicio');
+		}else
+		{
+			Session::flash('error', 'Error al modificar la nueva categoría.');
+			return Redirect::to('administrador/ver-categoria/'.$id);
+		}
+	}
+	public function postElimCat()
+	{
+		if (Request::ajax()) {
+			$id = Input::get('id');
+			return Response::json(array('success' => $id));
+		}
+	}
 }

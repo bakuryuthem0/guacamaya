@@ -23,7 +23,29 @@ class HomeController extends BaseController {
 	public function getIndex()
 	{
 		$title = "Inicio";
-		return View::make('indexs.index')->with('title',$title);
+		$cat = Cat::get(array('categorias.id','categorias.cat_nomb'));
+		$i = 0;
+		$subcat = array();
+		foreach($cat as $c)
+		{
+			$aux = SubCat::where('cat_id','=',$c->id)->get();
+			$subcat[$c->id] = $aux->toArray();
+		}
+		$art = Items::leftJoin('miscelanias as m','m.item_id','=','item.id')
+		
+		->groupBy('item.id')
+		->get(array(
+			'item.item_nomb',
+			'item.item_cod',
+			'item.item_stock',
+			'm.img_1',
+		));
+		
+		return View::make('indexs.index')
+		->with('title',$title)
+		->with('art',$art)
+		->with('cat',$cat)
+		->with('subcat',$subcat);
 	}
 	public function getLogin()
 	{
@@ -42,26 +64,29 @@ class HomeController extends BaseController {
 		$a->item_stock= $art->item_stock;
 		$a->item_desc = $art->item_desc;
 		$a->item_cod  = $art->item_cod;
+
 		$a->talla = array();
 		$a->color = array();
-		$misc = Misc::where('item_id','=',$a->id)->get();
+
+		$misc = Misc::where('item_id','=',$a->id)->first();
 		$a->img = array();
-		foreach ($misc as $i => $m) {
-			$talla = Tallas::find($m->item_talla);
-			$color = Colores::find($m->item_color);
-			$a->talla[$m->id] = $talla->talla_nomb.' - '.$talla->talla_desc;
-			$a->color[$m->id] = $color->color_desc;
-			$a->img[$m->id] = array(
-				'img_1' => $m->img_1,
-				'img_2' => $m->img_2,
-				'img_3' => $m->img_3,
-				'img_4' => $m->img_4,
-				'img_5' => $m->img_5,
-				'img_6' => $m->img_6,
-				'img_7' => $m->img_7,
-				'img_8' => $m->img_8,
-			);
-		}
+		$a->misc = $misc->id;
+
+		$talla = Tallas::find($misc->item_talla);
+		$color = Colores::find($misc->item_color);
+		$misc2 = Misc::where('item_id','=',$a->id)->where('id','!=',$misc->id)->get();
+		$a->talla[$misc->id] = $talla->talla_nomb.' - '.$talla->talla_desc;
+		$a->color[$misc->id] = $color->color_desc;
+		$a->img[$misc->id] = array(
+			'img_1' => $misc->img_1,
+			'img_2' => $misc->img_2,
+			'img_3' => $misc->img_3,
+			'img_4' => $misc->img_4,
+			'img_5' => $misc->img_5,
+			'img_6' => $misc->img_6,
+			'img_7' => $misc->img_7,
+			'img_8' => $misc->img_8,
+		);
 		
 		$title = $art->nombre;
 		if (Auth::user()->role == 1) {
@@ -70,9 +95,14 @@ class HomeController extends BaseController {
 		{
 			$layout = 'default';
 		}
+		$option = array();
+		$tallas = Tallas::get();
+		$colores = Colores::get();		
 		return View::make('indexs.artSelf')
 		->with('title',$title)
 		->with('art',$a)
-		->with('layout',$layout);
+		->with('layout',$layout)
+		->with('tallas',$tallas)
+		->with('colores',$colores);
 	}
 }

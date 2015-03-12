@@ -90,7 +90,7 @@ fieldset[disabled] .btn-success.active {
             <li>Si usted no solicitó recuperar su contraseña en <strong>guacamayastores.com.ve</strong>, contáctenos mediante nuestro portal.</li>
             <li>Si tiene alguna duda o necesita mas información. llámenos al teléfono (x)xxx-xxxx o escríbanos a los correos electrónicos <span class="bg-primary" style="padding:0px 0.5em;">123456789@hotmail.com</span> o <span class="bg-primary" style="padding:0px 0.5em;">123456789@hotmail.com</span> será un placer atenderle</li>
          </ul>
-         <p  style="text-align:center;">Gracias por unirse a nuestra comunidad. Atentamente <span class="bg-primary" style="color:white;">ffasil.com</span></p>
+         <p  style="text-align:center;">Gracias por unirse a nuestra comunidad. Atentamente <span class="bg-primary" style="color:white;">guacamayastores.com.ve</span></p>
      </div>
    </body>
 </html>
