@@ -23,7 +23,7 @@
 							<td>{{ ucfirst(strtolower($c->cat_nomb)) }}</td>
 							<td>{{ ucfirst(strtolower($c->cat_desc)) }}</td>
 							<td><a class="btn btn-xs btn-warning" href="{{ URL::to('administrador/ver-categoria/'.$c->id) }}">Modificar</a></td>
-							<td><button class="btn btn-xs btn-danger elimCat" value="{{ $c->id }}" data-toggle="modal" data-target="#elimModal">Eliminar</button></td>
+							<td><button class="btn btn-xs btn-danger elimBtn" value="{{ $c->id }}" data-toggle="modal" data-target="#elimModal">Eliminar</button></td>
 						</tr>
 						@endforeach
 					</tbody>

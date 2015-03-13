@@ -56,6 +56,17 @@
 						{{ $art->item_stock }}
 						<input type="hidden" class="values" data-art-id="{{ $art->id }}" data-misc-id="{{ $art->misc }}">
 					</div>
+					@if(Auth::check() && Auth::user()->role != 1)
+					<div class="col-xs-12">
+						<form method="POST" action="{{ URL::to('agregar-al-carrito') }}">
+							<button class="btn btn-warning">Agregar al carrito.</button>
+							<input type="hidden" name="id" value="{{ $art->id }}">
+							<input type="hidden" name="nombre" value="{{ $art->item_nomb}}">
+							<input type="hidden" name="precio" value="{{ $art->item_precio}}">
+							<input type="hidden" name="stock" value="{{ $art->item_stock }}">
+						</form>
+					</div>
+					@endif
 				</div>
 				<div class="clearfix"></div>
 			</div>

@@ -68,53 +68,77 @@ class AdminController extends BaseController {
 	public function getNewItem()
 	{
 		$title = "Nuevo articulo | guacamayastores.com.ve";
-		return View::make('admin.newItem')->with('title',$title);
+		$cat = Cat::where('deleted','=',0)
+		->get();
+		return View::make('admin.newItem')
+		->with('title',$title)
+		->with('cat',$cat);
+	}
+	public function postCatSubCat()
+	{
+		if (Request::ajax()) {
+			$id = Input::get('id');
+			$subcat = SubCat::where('cat_id','=',$id)->where('deleted','=',0)->get();
+			return $subcat;
+		}
 	}
 	public function postNewItem()
 	{
 		$input = Input::all();
 		$rules = array(
-			'item_cod' => 'required|unique:item',
+			'cat'    	=> 'required',
+			'item_precio'=> 'required',
+			'item_cod'  => 'required|unique:item',
 			'item_nomb' => 'required|min:4',
 			'item_desc' => 'required|min:4',
 			'item_stock'=> 'required|min:1'
 		);
 		$msg = array(
-			'required' => ':attribute es obligatorio',
-			'min'	   => ':attribute es muy corto(a)',
-			'unique'   => ':attribute debe ser unico'
+			'required' => 'El campo :attribute es obligatorio',
+			'min'	   => 'El campo :attribute es muy corto(a)',
+			'unique'   => 'El campo :attribute debe ser unico'
 		);
-		$custom = array(
-			'item_cod'   => 'El código del artículo',
-			'item_nomb'  => 'El nombre del artículo',
-			'item_desc'  => 'La descripción del artículo',
-			'item_stock' => 'La cantidad de artículos'
+		$attr = array(
+			'cat'        => 'categoría',
+			'item_precio'=> 'precio',
+			'item_cod'   => 'artículo',
+			'item_nomb'  => 'artículo',
+			'item_desc'  => 'artículo',
+			'item_stock' => 'cantidad de artículos'
 		);
-		$validation = Validator::make($input, $rules, $msg, $custom);
+		$validation = Validator::make($input, $rules, $msg, $attr);
 		if ($validation->fails()) {
 			return Redirect::to('administrador/nuevo-articulo')->withErrors($validation)->withInput();
 		}else
 		{
 			$item = new Items;
+			$item->item_cat   = $input['cat']; 
+			if (!empty($input['subcat'])) {
+				$item->item_subcat= $input['subcat'];
+
+			}
 			$item->item_cod   = $input['item_cod'];
 			$item->item_nomb  = $input['item_nomb'];
 			$item->item_desc  = $input['item_desc'];
 			$item->item_stock = $input['item_stock'];
+			$item->item_precio= $input['item_precio'];
 			$item->save();
 			$id = $item->id;
 			$misc = new Misc;
 			$misc->item_id = $id;
 			$misc->save();
 			$misc_id = $misc->id;
-			mkdir('images/items/'.$id);
+			if (!file_exists('images/items/'.$id)) {
+				mkdir('images/items/'.$id);
+			}
 			return Redirect::to('administrador/nuevo-articulo/continuar/'.$id.'/'.$misc_id);	
 		}
 	}
 	public function getContinueNew($id,$misc_id)
 	{
 		$title = "Colores y tallas";
-		$tallas = Tallas::get();
-		$colors = Colores::get();
+		$tallas = Tallas::where('deleted','=',0)->get();
+		$colors = Colores::where('deleted','=',0)->get();
 		return View::make('admin.continueNew')
 		->with('title',$title)
 		->with('id',$id)
@@ -198,8 +222,18 @@ class AdminController extends BaseController {
             }
             //guardamos la imagen con otro nombre ej foto(1).jpg || foto(2).jpg etc
             $file->move("images/items/".$id,$miImg);
-            $img = Image::make('images/items/'.$id.'/'.$miImg)
-	           ->heighten(180)
+            $blank = Image::make('images/blank.jpg');
+
+            $img = Image::make('images/items/'.$id.'/'.$miImg);
+            if ($img->width() > $img->height()) {
+            	$img->widen(225);
+            }else
+            {
+            	$img->heighten(300);
+            }
+            
+	        $blank->insert($img,'center')
+	           ->interlace()
 	           ->save('images/items/'.$id.'/'.$miImg);
             if($miImg != $file->getClientOriginalName()){
                 if ($campo == 'img_1') {
@@ -229,8 +263,15 @@ class AdminController extends BaseController {
 		}else
 		{
 			$file->move("images/items/".$id,$file->getClientOriginalName());
-			$img = Image::make('images/items/'.$id.'/'.$file->getClientOriginalName())
-            ->heighten(180)
+			$img = Image::make('images/items/'.$id.'/'.$file->getClientOriginalName());
+            if ($img->width() > $img->height()) {
+            	$img->widen(225);
+            }else
+            {
+            	$img->heighten(300);
+            }
+            $blank->insert($img,'center')
+            ->interlace()
             ->save('images/items/'.$id.'/'.$file->getClientOriginalName());
 		}
 		$misc->save();
@@ -310,7 +351,7 @@ class AdminController extends BaseController {
 			'desc_cat' => 'required'
 		);
 		$msg = array('required' => 'El campo :attribute es obligatorio');
-		$attr = array('name_cat' => 'nombre','desc_cat' =>'titulo');
+		$attr = array('name_cat' => 'nombre','desc_cat' =>'título');
 		$validator = Validator::make($input, $rules, $msg, $attr);
 		if ($validator->fails()) {
 			return Redirect::to('categoria/nueva')->withErrors($validator)->withInput();
@@ -351,7 +392,7 @@ class AdminController extends BaseController {
 			'desc_cat' => 'required'
 		);
 		$msg = array('required' => 'El campo :attribute es obligatorio');
-		$attr = array('name_cat' => 'nombre','desc_cat' =>'titulo');
+		$attr = array('name_cat' => 'nombre','desc_cat' =>'título');
 		$validator = Validator::make($input, $rules, $msg, $attr);
 		if ($validator->fails()) {
 			return Redirect::to('administrador/ver-categoria/'.$id)->withErrors($validator)->withInput();
@@ -392,7 +433,7 @@ class AdminController extends BaseController {
 			'desc_color' => 'required'
 		);
 		$msg = array('required' => 'El campo :attribute es obligatorio');
-		$attr = array('name_color' => 'nombre','desc_color' =>'titulo');
+		$attr = array('name_color' => 'nombre','desc_color' =>'título');
 		$validator = Validator::make($input, $rules, $msg, $attr);
 		if ($validator->fails()) {
 			return Redirect::to('color/nuevo')->withErrors($validator)->withInput();
@@ -433,7 +474,7 @@ class AdminController extends BaseController {
 			'desc_color' => 'required'
 		);
 		$msg = array('required' => 'El campo :attribute es obligatorio');
-		$attr = array('name_color' => 'nombre','desc_color' =>'titulo');
+		$attr = array('name_color' => 'nombre','desc_color' =>'título');
 		$validator = Validator::make($input, $rules, $msg, $attr);
 		if ($validator->fails()) {
 			return Redirect::to('administrador/ver-color/'.$id)->withErrors($validator)->withInput();
@@ -478,7 +519,7 @@ class AdminController extends BaseController {
 			'desc_subcat' => 'required'
 		);
 		$msg = array('required' => 'El campo :attribute es obligatorio');
-		$attr = array('cat' => 'categoría','name_subcat' => 'nombre','desc_subcat' =>'titulo');
+		$attr = array('cat' => 'categoría','name_subcat' => 'nombre','desc_subcat' =>'título');
 		$validator = Validator::make($input, $rules, $msg, $attr);
 		if ($validator->fails()) {
 			return Redirect::to('categoria/nueva-sub-categoria')->withErrors($validator)->withInput();
@@ -499,9 +540,66 @@ class AdminController extends BaseController {
 	public function getModifySubCat()
 	{
 		$title = "Ver sub-categorías";
-		$subcat = SubCat::join('categorias as c','c.id','=','subcat.cat_id')->where('c.deleted','=',0)->where('subcat.deleted','=',0)->get();
+		$subcat = SubCat::join('categorias as c','c.id','=','subcat.cat_id')
+		->where('c.deleted','=',0)
+		->where('subcat.deleted','=',0)
+		->get(array(
+			'c.id as cat_id',
+			'c.cat_desc',
+			'subcat.sub_nomb',
+			'subcat.sub_desc',
+			'subcat.id'
+
+		));
 		return View::make('admin.showSubCat')
 		->with('title',$title)
 		->with('subcat',$subcat);
+	}
+	public function getModifySubCatById($id)
+	{
+		$subcat = SubCat::find($id);
+		$cat    = Cat::where('deleted','=',0)->get();
+		$title ="Modificar color: ".$subcat->sub_nomb;
+		return View::make('admin.mdfSubCat')
+		->with('title',$title)
+		->with('subcat',$subcat)
+		->with('cat',$cat);
+	}
+	public function postModifySubCatById($id)
+	{
+		$input = Input::all();
+		$rules = array(
+			'cat'		  => 'required',
+			'name_subcat' => 'required',
+			'desc_subcat' => 'required'
+		);
+		$msg = array('required' => 'El campo :attribute es obligatorio');
+		$attr = array('cat' => 'categoría','name_color' => 'nombre','desc_color' =>'título');
+		$validator = Validator::make($input, $rules, $msg, $attr);
+		if ($validator->fails()) {
+			return Redirect::to('administrador/ver-sub-categoria/'.$id)->withErrors($validator)->withInput();
+		}
+		$subcat = SubCat::find($id);
+		$subcat->cat_id   = $input['cat'];
+		$subcat->sub_nomb = $input['name_subcat'];
+		$subcat->sub_desc = $input['desc_subcat'];
+		if ($subcat->save()) {
+			Session::flash('success', 'Sub-categoría modificada satisfactoriamente.');
+			return Redirect::to('administrador/inicio');
+		}else
+		{
+			Session::flash('error', 'Error al modificar la sub-categoría.');
+			return Redirect::to('administrador/ver-sub-categoria/'.$id);
+		}
+	}
+	public function postElimSubCat()
+	{
+		if (Request::ajax()) {
+			$id = Input::get('id');
+			$subcat = SubCat::find($id);
+			$subcat->deleted = 1;
+			$subcat->save();
+			return Response::json(array('type' => 'success','msg' => 'Categoría eliminada correctamente'));
+		}
 	}
 }

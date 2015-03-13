@@ -44,9 +44,56 @@
 					 @endforeach
 				@endif
 			</div>
-			<div class="col-xs-12 inputForm">	
+			<div class="col-xs-6 inputForm">	
+				<label class="textoPromedio">(*) Categoría del artículo</label>
+				<?php $arr = array(
+							'' => 'Seleccione la Categoría');
+							 ?>
+					@foreach ($cat as $c)
+						<?php $arr = $arr+array($c->id => $c->cat_desc);  ?>
+					@endforeach
+					
+					{{ Form::select('cat',$arr,Input::old('cat'),array('class' => 'form-control cat','requied' => 'required')
+						)}}
+					
+				@if ($errors->has('cat'))
+					 @foreach($errors->get('cat') as $err)
+					 	<div class="alert alert-danger">
+					 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					 		<p class="textoPromedio ">{{ $err }}</p>
+					 	</div>
+					 @endforeach
+				@endif
+			</div>
+			<div class="col-xs-6 inputForm">	
+				<label class="textoPromedio">Sub-categoría del artículo</label>
+				<select name="subcat" class="form-control subcat">
+					<option value="">Seleccione la sub-categoria</option>
+				</select>					
+				@if ($errors->has('subcat'))
+					 @foreach($errors->get('subcat') as $err)
+					 	<div class="alert alert-danger">
+					 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					 		<p class="textoPromedio ">{{ $err }}</p>
+					 	</div>
+					 @endforeach
+				@endif
+			</div>
+			<div class="col-xs-6 inputForm">	
+				<label class="textoPromedio">(*) Precio del artículo</label>
+				{{ Form::text('item_precio', Input::old('item_precio'), array('class' => 'form-control','placeholder' => 'Precio del artículo')) }}
+				@if ($errors->has('item_precio'))
+					 @foreach($errors->get('item_precio') as $err)
+					 	<div class="alert alert-danger">
+					 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					 		<p class="textoPromedio ">{{ $err }}</p>
+					 	</div>
+					 @endforeach
+				@endif
+			</div>
+			<div class="col-xs-6 inputForm">	
 				<label class="textoPromedio">(*) Cantidad de artículos</label>
-				{{ Form::text('item_stock', Input::old('item_nomb'), array('class' => 'form-control','placeholder' => 'Nombre del artículo')) }}
+				{{ Form::text('item_stock', Input::old('item_nomb'), array('class' => 'form-control','placeholder' => 'Cantidad de artículos')) }}
 				@if ($errors->has('item_stock'))
 					 @foreach($errors->get('item_stock') as $err)
 					 	<div class="alert alert-danger">

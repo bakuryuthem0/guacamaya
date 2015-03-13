@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-03-2015 a las 22:34:17
+-- Tiempo de generación: 13-03-2015 a las 22:31:44
 -- Versión del servidor: 5.5.39
 -- Versión de PHP: 5.4.31
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL,
   `deleted` int(11) DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `categorias`
@@ -43,8 +43,9 @@ INSERT INTO `categorias` (`id`, `cat_nomb`, `cat_desc`, `created_at`, `updated_a
 (1, 'DAMAS', 'Damas', '2015-03-12', '2015-03-12', 0),
 (2, 'CABALLEROS', 'Caballeros', '2015-03-12', '2015-03-12', 0),
 (3, 'ACCESORIOS', 'Accesorios', '2015-03-12', '2015-03-12', 0),
-(4, 'Trajes de baño', 'trajes de baño', '2015-03-12', '2015-03-12', 0),
-(5, 'DAMAS', 'Damas', '2015-03-12', '2015-03-12', 0);
+(4, 'Trajes de baño', 'trajes de baño', '2015-03-12', '2015-03-13', 1),
+(5, 'DAMxS', 'Damas', '2015-03-12', '2015-03-13', 1),
+(6, 'asfsfasf', 'safasfasf', '2015-03-13', '2015-03-13', 1);
 
 -- --------------------------------------------------------
 
@@ -59,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `colores` (
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
   `deleted` int(11) DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `colores`
@@ -68,7 +69,8 @@ CREATE TABLE IF NOT EXISTS `colores` (
 INSERT INTO `colores` (`id`, `color_nomb`, `color_desc`, `created_at`, `updated_at`, `deleted`) VALUES
 (1, 'amarillo', 'Amarillo', '2015-03-08', '2015-03-08', 0),
 (2, 'azul', 'Azul', '2015-03-08', '2015-03-08', 0),
-(3, 'rojo', 'Rojo', '2015-03-08', '2015-03-08', 0);
+(3, 'rojo', 'Rojo', '2015-03-08', '2015-03-08', 0),
+(4, 'safasf', 'asffsas', '2015-03-13', '2015-03-13', 1);
 
 -- --------------------------------------------------------
 
@@ -128,16 +130,22 @@ CREATE TABLE IF NOT EXISTS `item` (
   `item_prov` int(11) NOT NULL,
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL,
-  `deleted` int(11) DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+  `deleted` int(11) DEFAULT '0',
+  `item_cat` int(11) DEFAULT NULL,
+  `item_subcat` int(11) DEFAULT NULL,
+  `item_precio` float DEFAULT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Volcado de datos para la tabla `item`
 --
 
-INSERT INTO `item` (`id`, `item_cod`, `item_nomb`, `item_desc`, `item_stock`, `item_prov`, `created_at`, `updated_at`, `deleted`) VALUES
-(7, '0001', 'Articulo primero', '<p>dfafefewfwfwefwefewfwefefewfefewf</p>\r\n', 50, 0, '2015-03-11', '2015-03-11', NULL),
-(8, '0002', 'Articulo segundo', '<p>dkafkafksfkaskfk</p>\r\n\r\n<p>afksfksafk&nbsp;</p>\r\n', 100, 0, '2015-03-11', '2015-03-11', NULL);
+INSERT INTO `item` (`id`, `item_cod`, `item_nomb`, `item_desc`, `item_stock`, `item_prov`, `created_at`, `updated_at`, `deleted`, `item_cat`, `item_subcat`, `item_precio`) VALUES
+(1, '001', 'Camisota', '<p>bbfhfdhdfhdfhfdhd</p>\r\n', 50, 0, '2015-03-13', '2015-03-13', 0, 1, 2, 100),
+(2, '002', 'Camisota', '<p>dgdfgdfgdfgdfgdfgf</p>\r\n', 50, 0, '2015-03-13', '2015-03-13', 0, 2, 7, 250),
+(3, '003', 'Camisota3', '<p>sfafsfsfsafasfsafsaf</p>\r\n', 50, 0, '2015-03-13', '2015-03-13', 0, 3, NULL, 3000),
+(4, '004', 'Camisota4', '<p>fsafasfasfafsa</p>\r\n', 50, 0, '2015-03-13', '2015-03-13', 0, 1, 1, 50),
+(5, '', '', '', 0, 0, '0000-00-00', '0000-00-00', 0, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -161,18 +169,17 @@ CREATE TABLE IF NOT EXISTS `miscelanias` (
   `updated_at` date DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `deleted` int(11) DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `miscelanias`
 --
 
 INSERT INTO `miscelanias` (`id`, `item_id`, `item_talla`, `item_color`, `img_1`, `img_2`, `img_3`, `img_4`, `img_5`, `img_6`, `img_7`, `img_8`, `updated_at`, `created_at`, `deleted`) VALUES
-(4, 7, '2', '2', '7/maxresdefault.jpg', '7/portada.png', NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-11', '2015-03-11', 0),
-(5, 7, '2', '3', '7/logo-01.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-11', '2015-03-11', 0),
-(6, 7, '3', '2', '7/pronto.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-11', '2015-03-11', 0),
-(7, 8, '1', '3', '8/portada.png', '8/casual-01.png', NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-11', '2015-03-11', 0),
-(8, 8, '3', '2', '8/logo2.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-11', '2015-03-11', 0);
+(1, 1, '1', '2', '1/ejemplo4(1).jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-13', '2015-03-13', 0),
+(2, 2, '2', '2', '2/ejemplo3(2).jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-13', '2015-03-13', 0),
+(3, 3, '3', '3', '3/ejemplo(1).jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-13', '2015-03-13', 0),
+(4, 4, '2', '2', '4/ejemplo2(1).jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-13', '2015-03-13', 0);
 
 -- --------------------------------------------------------
 
@@ -1714,7 +1721,7 @@ CREATE TABLE IF NOT EXISTS `subcat` (
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL,
   `deleted` int(11) DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Volcado de datos para la tabla `subcat`
@@ -1727,7 +1734,8 @@ INSERT INTO `subcat` (`id`, `cat_id`, `sub_nomb`, `sub_desc`, `created_at`, `upd
 (4, 1, 'pantalon', 'pantalón', '2015-03-12', '2015-03-12', 0),
 (5, 1, 'ropa deportiva', 'ropa deportiva', '2015-03-12', '2015-03-12', 0),
 (6, 2, 'franelas', 'franelas', '2015-03-12', '2015-03-12', 0),
-(7, 2, 'chemises', 'chemises', '2015-03-12', '2015-03-12', 0);
+(7, 2, 'chemises', 'chemises', '2015-03-12', '2015-03-12', 0),
+(8, 3, 'Anillo', 'Anillo', '2015-03-13', '2015-03-13', 1);
 
 -- --------------------------------------------------------
 
@@ -1786,7 +1794,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `username`, `password`, `dir`, `email`, `telefono`, `cedula`, `created_at`, `updated_at`, `nombre`, `apellido`, `parroquia`, `municipio`, `estado`, `role`, `user_deleted`, `register_cod`, `register_cod_active`, `remember_token`) VALUES
-(1, 'admin', '$2y$08$EiGNW.dQp1X2X0/4GvWgGuGXLPUwWdsqe3zhZarOV8e1tkKcnV96m', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, 1, 0, '', 0, 'BEIv2FzNWdoe46e7WbKb38Vcq5fgI2OzzrH4MoR6qnie4XUjQAepvyk4axdi'),
+(1, 'admin', '$2y$08$EiGNW.dQp1X2X0/4GvWgGuGXLPUwWdsqe3zhZarOV8e1tkKcnV96m', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, 1, 0, '', 0, 'dCwjqBIGITfBNCdvOVtmNzk7U3XEMkzrIg7DOnaurtQpXuEGumzHBdfzv3yp'),
 (2, 'carlos', '$2y$08$3WEbQLhnWV4nlIXgGp4H6.XJ834Tv1vvcqbSqLCR3.Tx00CG0puy.', NULL, 'shenlong_12@hotmail.com', NULL, NULL, '2015-03-12', '2015-03-12', 'carlos', 'salazar', '263', '75', '7', 0, 0, '9b26f36e3f37a5d1841d3599a226e087', 0, ''),
 (3, 'pepe', '$2y$08$8ZykLDy/Xx2K5lweVstBK.3izd2oFxpyNzLxKnznGxGLZ2TeK3a6S', NULL, 'pepe@pepe.com', NULL, NULL, '2015-03-12', '2015-03-12', 'pepe', 'pepe', '1', '1', '1', 0, 0, '31fc7f18e6dc5f5d7cb09a40d1fa7115', 0, 'W754R9johJkDrVA0GbjejJNT0itE8YkT3gma6uIHwXc5mb35RwdAJh84ighZ');
 
@@ -1868,12 +1876,12 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `colores`
 --
 ALTER TABLE `colores`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `estado`
 --
@@ -1883,12 +1891,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la tabla E
 -- AUTO_INCREMENT de la tabla `item`
 --
 ALTER TABLE `item`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `miscelanias`
 --
 ALTER TABLE `miscelanias`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `municipio`
 --
@@ -1908,7 +1916,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la parroqu
 -- AUTO_INCREMENT de la tabla `subcat`
 --
 ALTER TABLE `subcat`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `tallas`
 --

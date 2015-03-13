@@ -17,8 +17,8 @@
         <div class="col-xs-12 contdeColor">
           <legend>Categorías</legend>
           @foreach($cat as $c)
-            <label class="textoPromedio">{{ $c->cat_nomb }}</label>
-            <ul class="ulNoStyle textoPromedio">
+            <label class="textoPromedio"><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#expand{{ $c->id }}"></i> {{ $c->cat_nomb }}</label>
+            <ul class="collapse textoPromedio" id="expand{{ $c->id }}">
               @foreach($subcat[$c->id] as $j => $s)
                 @if(isset($subcat[$c->id][$j]))
                   <li>{{ $subcat[$c->id][$j]['sub_nomb'] }}</li>
@@ -27,39 +27,24 @@
               
             </ul>
           @endforeach
-          <!--
-          <label class="textoPromedio">DAMAS</label>
-          <ul class="textoPromedio">
-            <li>Camisa</li>
-            <li>Blusa</li>
-            <li>Vestido</li>
-            <li>Pantalones</li>
-            <li>Ropa deportiva</li>
-          </ul>
-          <label class="textoPromedio" style="margin-top:2em;">CABALLEROS</label>
-          <ul class="textoPromedio">
-            <li>Franelas</li>
-            <li>Chemises</li>
-          </ul>
-          <label class="textoPromedio" style="margin-top:2em;">ACCESORIOS</label> -->
         </div>
      
       </div>
       <div class="col-xs-10 contdeColor" style="padding-right: 0px;">
         @foreach($art as $a)
-          
-          <div class="col-xs-3">
-            <img src="{{ asset('images/items/'.$a->img_1) }}" class="imgPrinc">
-            <ul class="textoPromedio ulNoStyle">
-              <li>
-                {{ $a->item_nomb.' - Cod: '.$a->item_cod }}
-              </li>
-              <li>
-                
-              </li>
-            </ul>
-          </div>
-
+          <a href="{{ URL::to('articulo/'.$a->id) }}">
+            <div class="col-xs-3 contArtPrinc">
+              <img src="{{ asset('images/items/'.$a->img_1) }}" class="imgArtPrinc imgPrinc">
+              <ul class="textoPromedio ulNoStyle">
+                <li>
+                  <label style="color:black;">{{ $a->item_nomb.' - Cod: '.$a->item_cod }}</label>
+                </li>
+                <li>
+                  <p style="color:red;">Bs.{{ $a->item_precio }}</p>
+                </li>
+              </ul>
+            </div>
+          </a>
         @endforeach
       </div>
     </div>

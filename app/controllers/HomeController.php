@@ -23,24 +23,26 @@ class HomeController extends BaseController {
 	public function getIndex()
 	{
 		$title = "Inicio";
-		$cat = Cat::get(array('categorias.id','categorias.cat_nomb'));
+		$cat = Cat::where('deleted','=',0)->get(array('categorias.id','categorias.cat_nomb'));
 		$i = 0;
 		$subcat = array();
 		foreach($cat as $c)
 		{
-			$aux = SubCat::where('cat_id','=',$c->id)->get();
+			$aux = SubCat::where('cat_id','=',$c->id)->where('deleted','=',0)->get();
 			$subcat[$c->id] = $aux->toArray();
 		}
 		$art = Items::leftJoin('miscelanias as m','m.item_id','=','item.id')
 		
 		->groupBy('item.id')
+		->where('item.deleted','=',0)
 		->get(array(
+			'item.id',
 			'item.item_nomb',
 			'item.item_cod',
 			'item.item_stock',
+			'item.item_precio',
 			'm.img_1',
 		));
-		
 		return View::make('indexs.index')
 		->with('title',$title)
 		->with('art',$art)
@@ -64,7 +66,7 @@ class HomeController extends BaseController {
 		$a->item_stock= $art->item_stock;
 		$a->item_desc = $art->item_desc;
 		$a->item_cod  = $art->item_cod;
-
+		$a->item_precio = $art->item_precio;
 		$a->talla = array();
 		$a->color = array();
 
@@ -89,7 +91,7 @@ class HomeController extends BaseController {
 		);
 		
 		$title = $art->nombre;
-		if (Auth::user()->role == 1) {
+		if (Auth::check() && Auth::user()->role == 1) {
 			$layout = 'admin';
 		}else
 		{

@@ -45,12 +45,13 @@
                     <button class="btn bt-buscar">Buscar</button>
                   </div>
                 </div>
-               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1 col-xs-3">
+               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1 col-xs-3" style="display:inline-block !important;">
                   <ul class="nav navbar-nav">
                     @if(!Auth::check())
                       <li class="textoPromedio"><a href="{{ URL::to('registro') }}">Registrarse </a></li>
                       <li class="textoPromedio"><a href="{{ URL::to('iniciar-sesion') }}">Iniciar sesión</a></li>
                     @else
+                    @if(Auth::user()->role != 1)
                       <li class="dropdown myMenu">
                         <a href="#" class="dropdown-toggle textoPromedio" data-toggle="dropdown" role="button" aria-expanded="false">
                           <i class="fa fa-user"></i>
@@ -64,9 +65,20 @@
                             </li>
                           </ul>
                         </li>
+                      @else
+                      <li class="dropdown myMenu">
+                        <a href="{{ URL::to('administrador/inicio') }}" class="dropdown-toggle textoPromedio">
+                          <i class="fa fa-user"></i>
+                            {{ Auth::user()->username }}
+                          <span class="caret"></span></a>
+                        </li>
+                      @endif
                       <li class="textoPromedio"><a href="{{ URL::to('cerrar-sesion') }}">Cerrar sesión</a></li>
                     @endif
                   </ul>
+                  <div class="carrito">
+                    <label>Cantidad de artículos: </label>
+                  </div>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

@@ -18,15 +18,20 @@ Route::group(array('before' =>'no_auth'),function()
 	Route::post('iniciar-sesion/autenticar','AuthController@postLogin');
 });
 
+Route::get('articulo/{id}','HomeController@getShowItem');
+
 Route::get('administrador', 'AdminController@getLogin');
 Route::post('administrador/iniciar-sesion/autenticar','AdminController@postLogin');
 Route::group(array('before' =>'auth'),function()
 {
+	Route::post('agregar-al-carrito','ItemController@getItem');
+
 
 	Route::group(array('before' => 'check_role'), function(){
 		Route::get('administrador/inicio','AdminController@getIndex');
 		/*Nuevos articulos*/
 		Route::get('administrador/nuevo-articulo','AdminController@getNewItem');
+		Route::post('administrador/categoria/buscar-sub-categoria','AdminController@postCatSubCat');
 		Route::post('administrador/nuevo-articulo/enviar','AdminController@postNewItem');
 		Route::get('administrador/nuevo-articulo/continuar/{id}/{misc_id}','AdminController@getContinueNew');
 		Route::post('administrador/nuevo-articulo/continuar/enviar/{id}/{misc_id}','AdminController@postContinueNew');
@@ -52,6 +57,10 @@ Route::group(array('before' =>'auth'),function()
 		Route::post('sub-categoria/nueva/enviar','AdminController@postNewSubCat');
 		//ver
 		Route::get('sub-categoria/ver-sub-categorias', 'AdminController@getModifySubCat');
+		Route::get('administrador/ver-sub-categoria/{id}','AdminController@getModifySubCatById');
+		Route::post('administrador/ver-sub-categoria/modificar/{id}','AdminController@postModifySubCatById');
+		//eliminar
+		Route::post('sub-categoria/eliminar','AdminController@postElimSubCat');
 		/**/
 		/*Colores*/
 		//nuevo
@@ -62,6 +71,7 @@ Route::group(array('before' =>'auth'),function()
 		//Modificar
 		Route::get('administrador/ver-color/{id}','AdminController@getModifyColorById');
 		Route::post('administrador/ver-color/modificar/{id}','AdminController@postModifyColorById');
+
 		//eliminar
 		Route::post('colores/eliminar','AdminController@postElimColor');
 	});
