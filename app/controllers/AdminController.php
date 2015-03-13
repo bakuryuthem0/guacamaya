@@ -330,7 +330,7 @@ class AdminController extends BaseController {
 	public function getModifyCat()
 	{
 		$title = "Ver categorías";
-		$cat = Cat::get();
+		$cat = Cat::where('deleted','=',0)->get();
 		return View::make('admin.showCat')
 		->with('title',$title)
 		->with('cat',$cat);
@@ -364,7 +364,7 @@ class AdminController extends BaseController {
 			return Redirect::to('administrador/inicio');
 		}else
 		{
-			Session::flash('error', 'Error al modificar la nueva categoría.');
+			Session::flash('error', 'Error al modificar la categoría.');
 			return Redirect::to('administrador/ver-categoria/'.$id);
 		}
 	}
@@ -372,7 +372,136 @@ class AdminController extends BaseController {
 	{
 		if (Request::ajax()) {
 			$id = Input::get('id');
-			return Response::json(array('success' => $id));
+			$cat = Cat::find($id);
+			$cat->deleted = 1;
+			$cat->save();
+			return Response::json(array('type' => 'success','msg' => 'Categoría eliminada correctamente'));
 		}
+	}
+	public function getNewColor()
+	{
+		$title = "Nuevo color";
+		return View::make('admin.newColor')
+		->with('title',$title);
+	}
+	public function postNewColor()
+	{
+		$input = Input::all();
+		$rules = array(
+			'name_color' => 'required',
+			'desc_color' => 'required'
+		);
+		$msg = array('required' => 'El campo :attribute es obligatorio');
+		$attr = array('name_color' => 'nombre','desc_color' =>'titulo');
+		$validator = Validator::make($input, $rules, $msg, $attr);
+		if ($validator->fails()) {
+			return Redirect::to('color/nuevo')->withErrors($validator)->withInput();
+		}
+		$color = new Colores;
+		$color->color_nomb = $input['name_color'];
+		$color->color_desc = $input['desc_color'];
+		if ($color->save()) {
+			Session::flash('success', 'Color creado satisfactoriamente.');
+			return Redirect::to('administrador/inicio');
+		}else
+		{
+			Session::flash('error', 'Error al guardar el nuevo color.');
+			return Redirect::to('color/nuevo');
+		}
+	}
+	public function getModifyColor()
+	{
+		$title = "Ver categorías";
+		$color = Colores::where('deleted','=',0)->get();
+		return View::make('admin.showColor')
+		->with('title',$title)
+		->with('color',$color);
+	}
+	public function getModifyColorById($id)
+	{
+		$color = Colores::find($id);
+		$title ="Modificar color: ".$color->color_nomb;
+		return View::make('admin.mdfColor')
+		->with('title',$title)
+		->with('color',$color);
+	}
+	public function postModifyColorById($id)
+	{
+		$input = Input::all();
+		$rules = array(
+			'name_color' => 'required',
+			'desc_color' => 'required'
+		);
+		$msg = array('required' => 'El campo :attribute es obligatorio');
+		$attr = array('name_color' => 'nombre','desc_color' =>'titulo');
+		$validator = Validator::make($input, $rules, $msg, $attr);
+		if ($validator->fails()) {
+			return Redirect::to('administrador/ver-color/'.$id)->withErrors($validator)->withInput();
+		}
+		$color = Colores::find($id);
+		$color->color_nomb = $input['name_color'];
+		$color->color_desc = $input['desc_color'];
+		if ($color->save()) {
+			Session::flash('success', 'Color modificado satisfactoriamente.');
+			return Redirect::to('administrador/inicio');
+		}else
+		{
+			Session::flash('error', 'Error al modificar el color.');
+			return Redirect::to('administrador/ver-color/'.$id);
+		}
+	}
+	public function postElimColor()
+	{
+		if (Request::ajax()) {
+			$id = Input::get('id');
+			$color = Colores::find($id);
+			$color->deleted = 1;
+			$color->save();
+			return Response::json(array('type' => 'success','msg' => 'Categoría eliminada correctamente'));
+		}
+	}
+	public function getNewSubCat()
+	{
+		$title = "Nueva sub-categoria";
+		$cat = Cat::where('deleted','=',0)
+		->get();
+		return View::make('admin.newSubCat')
+		->with('title',$title)
+		->with('cat',$cat);
+	}
+	public function postNewSubCat()
+	{
+		$input = Input::all();
+		$rules = array(
+			'cat' 		  => 'required',
+			'name_subcat'  => 'required',
+			'desc_subcat' => 'required'
+		);
+		$msg = array('required' => 'El campo :attribute es obligatorio');
+		$attr = array('cat' => 'categoría','name_subcat' => 'nombre','desc_subcat' =>'titulo');
+		$validator = Validator::make($input, $rules, $msg, $attr);
+		if ($validator->fails()) {
+			return Redirect::to('categoria/nueva-sub-categoria')->withErrors($validator)->withInput();
+		}
+		$subcat = new SubCat;
+		$subcat->cat_id 	= $input['cat'];
+		$subcat->sub_nomb = $input['name_subcat'];
+		$subcat->sub_desc = $input['desc_subcat'];
+		if ($subcat->save()) {
+			Session::flash('success', 'Sub-categoría creada satisfactoriamente.');
+			return Redirect::to('administrador/inicio');
+		}else
+		{
+			Session::flash('error', 'Error al guardar la nueva sub-categoría.');
+			return Redirect::to('categoria/nueva-sub-categoria');
+		}
+	}
+	public function getModifySubCat()
+	{
+		$title = "Ver sub-categorías";
+		$subcat = SubCat::join('categorias as c','c.id','=','subcat.cat_id')->where('c.deleted','=',0)->where('subcat.deleted','=',0)->get();
+		return View::make('admin.showSubCat')
+		->with('title',$title)
+		->with('subcat',$subcat);
 	}
 }

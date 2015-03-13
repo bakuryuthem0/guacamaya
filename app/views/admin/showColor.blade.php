@@ -17,13 +17,13 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($cat as $c)
+						@foreach($color as $c)
 						<tr>
 							<td>{{ $c->id }}</td>
-							<td>{{ ucfirst(strtolower($c->cat_nomb)) }}</td>
-							<td>{{ ucfirst(strtolower($c->cat_desc)) }}</td>
-							<td><a class="btn btn-xs btn-warning" href="{{ URL::to('administrador/ver-categoria/'.$c->id) }}">Modificar</a></td>
-							<td><button class="btn btn-xs btn-danger elimCat" value="{{ $c->id }}" data-toggle="modal" data-target="#elimModal">Eliminar</button></td>
+							<td>{{ ucfirst(strtolower($c->color_nomb)) }}</td>
+							<td>{{ ucfirst(strtolower($c->color_desc)) }}</td>
+							<td><a class="btn btn-xs btn-warning" href="{{ URL::to('administrador/ver-color/'.$c->id) }}">Modificar</a></td>
+							<td><button class="btn btn-xs btn-danger elimColor" value="{{ $c->id }}" data-toggle="modal" data-target="#elimModal">Eliminar</button></td>
 						</tr>
 						@endforeach
 					</tbody>

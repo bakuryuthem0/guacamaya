@@ -194,15 +194,12 @@ jQuery(document).ready(function($) {
 
 jQuery(document).ready(function($) {
 	$('.elimCat').click(function(event) {
-
-		$('.modal-backdrop').click(function(event) {
-			$('.responseDanger').removeClass('alert-danger');
-			$('.responseDanger').removeClass('alert-success');
-			$('.responseDanger').css({
-				'display': 'none',
-				'opacity': 0
-			});
-			$('.enviarRespuesta').prop('disabled',false);
+		var boton = $(this);
+		$('.responseDanger').removeClass('alert-danger');
+		$('.responseDanger').removeClass('alert-success');
+		$('.responseDanger').css({
+			'display': 'none',
+			'opacity': 0
 		});
 		$('.close').click(function(event) {
 			$('.responseDanger').removeClass('alert-danger');
@@ -211,18 +208,108 @@ jQuery(document).ready(function($) {
 				'display': 'none',
 				'opacity': 0
 			});
-			$('.enviarRespuesta').prop('disabled',false)
+			$('.envElim').removeClass('disabled')
 		});
 		$('.envElim').val($(this).val());
 		$('.envElim').click(function(event) {
-			$('.envElim').unbind('click');
+
+			$(this).unbind('click');
 			$.ajax({
 				url: 'eliminar',
 				type: 'POST',
 				dataType: 'json',
 				data: {id: $(this).val()},
+				beforeSend:function()
+				{
+					$('.envElim').before('<img src="../images/loading.gif" class="loading">');
+					$('.loading').css({
+						'display': 'block',
+						'margin': '2em auto'
+					}).animate({
+						'opacity': 1},
+						500);
+					$('.envElim').addClass('disabled');
+				},
 				success:function(response)
 				{
+					$('.envElim').removeClass('disabled');
+					$('.loading').animate({
+						'opacity': 0},
+						500,function(){
+							$(this).remove();
+						});
+					if (response.type == 'success') {
+
+						boton.parent().parent().remove();
+					};
+					$('.responseDanger').addClass('alert-'+response.type).html(response.msg).css({
+						'display': 'block'
+					}).animate({
+						'opacity': 1},
+						500);
+					console.log(response)
+				}
+			})
+			
+			
+		});
+	});
+});
+jQuery(document).ready(function($) {
+	$('.elimColor').click(function(event) {
+		var boton = $(this);
+		$('.responseDanger').removeClass('alert-danger');
+		$('.responseDanger').removeClass('alert-success');
+		$('.responseDanger').css({
+			'display': 'none',
+			'opacity': 0
+		});
+		$('.close').click(function(event) {
+			$('.responseDanger').removeClass('alert-danger');
+			$('.responseDanger').removeClass('alert-success');	
+			$('.responseDanger').css({
+				'display': 'none',
+				'opacity': 0
+			});
+			$('.envElim').removeClass('disabled')
+		});
+		$('.envElim').val($(this).val());
+		$('.envElim').click(function(event) {
+
+			$(this).unbind('click');
+			$.ajax({
+				url: 'eliminar',
+				type: 'POST',
+				dataType: 'json',
+				data: {id: $(this).val()},
+				beforeSend:function()
+				{
+					$('.envElim').before('<img src="../images/loading.gif" class="loading">');
+					$('.loading').css({
+						'display': 'block',
+						'margin': '2em auto'
+					}).animate({
+						'opacity': 1},
+						500);
+					$('.envElim').addClass('disabled');
+				},
+				success:function(response)
+				{
+					$('.envElim').removeClass('disabled');
+					$('.loading').animate({
+						'opacity': 0},
+						500,function(){
+							$(this).remove();
+						});
+					if (response.type == 'success') {
+
+						boton.parent().parent().remove();
+					};
+					$('.responseDanger').addClass('alert-'+response.type).html(response.msg).css({
+						'display': 'block'
+					}).animate({
+						'opacity': 1},
+						500);
 					console.log(response)
 				}
 			})

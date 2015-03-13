@@ -56,11 +56,39 @@
                               <ul class="dropdown-menu" role="menu">
                                 <li>
                                   <a href="{{ URL::to('categoria/nueva') }}">
-                                    <i class="fa fa-plus"></i> Nueva
+                                    <i class="fa fa-plus"></i> Nueva categoría
                                   </a>
                                 </li>
                                 <li>
                                   <a href="{{ URL::to('categoria/ver-categorias') }}">
+                                    
+                                    Modificar categoría
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="{{ URL::to('categoria/nueva-sub-categoria') }}">
+                                    Nueva Sub-categoría
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="{{ URL::to('sub-categoria/ver-sub-categorias') }}">
+                                    Modificar Sub-categoría
+                                  </a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                              <a href="#" >
+                                Colores
+                              </a>
+                              <ul class="dropdown-menu" role="menu">
+                                <li>
+                                  <a href="{{ URL::to('color/nuevo') }}">
+                                    <i class="fa fa-plus"></i> Nuevo
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="{{ URL::to('colores/ver-colores') }}">
                                     <i class="fa fa-money"></i>
                                     Modificar
                                   </a>

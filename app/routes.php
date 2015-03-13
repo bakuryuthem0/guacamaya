@@ -47,6 +47,23 @@ Route::group(array('before' =>'auth'),function()
 		Route::post('administrador/ver-categoria/modificar/{id}','AdminController@postModifyCatById');
 		/*Eliminar*/
 		Route::post('categoria/eliminar','AdminController@postElimCat');
+		//nueva sub-categoria
+		Route::get('categoria/nueva-sub-categoria','AdminController@getNewSubCat');
+		Route::post('sub-categoria/nueva/enviar','AdminController@postNewSubCat');
+		//ver
+		Route::get('sub-categoria/ver-sub-categorias', 'AdminController@getModifySubCat');
+		/**/
+		/*Colores*/
+		//nuevo
+		Route::get('color/nuevo', 'AdminController@getNewColor');
+		Route::post('color/nuevo/enviar','AdminController@postNewColor');
+		//ver
+		Route::get('colores/ver-colores', 'AdminController@getModifyColor');
+		//Modificar
+		Route::get('administrador/ver-color/{id}','AdminController@getModifyColorById');
+		Route::post('administrador/ver-color/modificar/{id}','AdminController@postModifyColorById');
+		//eliminar
+		Route::post('colores/eliminar','AdminController@postElimColor');
 	});
 
 });

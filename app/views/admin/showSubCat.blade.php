@@ -10,6 +10,7 @@
 					<thead>
 						<tr>
 							<th>Código</th>
+							<th>Categoría</th>
 							<th>Nombre</th>
 							<th>Título</th>
 							<th>Modificar</th>
@@ -17,11 +18,12 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($cat as $c)
+						@foreach($subcat as $c)
 						<tr>
 							<td>{{ $c->id }}</td>
 							<td>{{ ucfirst(strtolower($c->cat_nomb)) }}</td>
-							<td>{{ ucfirst(strtolower($c->cat_desc)) }}</td>
+							<td>{{ ucfirst(strtolower($c->sub_nomb)) }}</td>
+							<td>{{ ucfirst(strtolower($c->sub_desc)) }}</td>
 							<td><a class="btn btn-xs btn-warning" href="{{ URL::to('administrador/ver-categoria/'.$c->id) }}">Modificar</a></td>
 							<td><button class="btn btn-xs btn-danger elimCat" value="{{ $c->id }}" data-toggle="modal" data-target="#elimModal">Eliminar</button></td>
 						</tr>

@@ -18,8 +18,8 @@
 				@endif
 				<div class="col-xs-12">
 					<div class="col-xs-12">
-						<legend>Nueva categoria</legend>
-						<p class="textoPromedio">Llene el siguiente formulario para registrar una nueva categorias.</p>
+						<legend>Modificación de la categoría</legend>
+						<p class="textoPromedio">Llene el siguiente formulario para modificar la categorías.</p>
 						<hr>
 					</div>						
 				</div>
