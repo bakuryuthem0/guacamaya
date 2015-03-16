@@ -41,7 +41,10 @@ footer
 	  height: 65px;
 	  display: inline-block;
 }
-
+.carImg
+{
+	max-width: 100px;
+}
 .container
 {
 	width:90% !important;

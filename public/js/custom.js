@@ -358,7 +358,10 @@ jQuery(document).ready(function($) {
 jQuery(document).ready(function($) {
 	$('.btnVaciar').click(function(event) {
 		$.ajax({
-			url: '/prueba/guacamaya/public/vaciar-carrito',
+			//casa
+			url: '/guacamaya/public/vaciar-carrito',
+			//trabajo
+			//url: '/prueba/guacamaya/public/vaciar-carrito',
 			type: 'POST',
 			dataType: 'json',
 			beforeSend:function()
@@ -383,11 +386,11 @@ jQuery(document).ready(function($) {
 						500,function(){
 							$(this).remove();
 						});
-				if (response.type == 'success') {
-					$('.carItems').remove();
-					$('.catnArt').html(0)
-					$('.total').html(0)
-				}
+				
+				$('.carItems').remove();
+				$('.catnArt').html(0)
+				$('.total').html(0)
+				
 			}
 		})
 	});
