@@ -8,11 +8,26 @@ footer
 }
 #body
 {
-	padding-top: 12%;
+	padding-top: 13%;
+}
+#contCarrito
+{
+	position: fixed;
+	z-index: 100;
+	background: white;
+	overflow: hidden;
+	width: 50%;
+	left: 50%;
+	height: 0px;
 }
 #facebook
 {
 	padding: 0.5em 0.7em !important;
+}
+.in
+{
+	height: auto !important;
+	overflow: auto !important;
 }
 .bt-buscar
 {
@@ -36,23 +51,23 @@ footer
 	top: 0;
 	padding-right: 0px !important;
 	padding-left: 0px !important;
-	box-shadow: 0px 2px 11px -1px black;
 	height: auto;
 }
 .contArtPrinc
 {
-	border-left: 1px dashed black;
-	-webkit-transition: all .25s ease-in-out;
+ 		-webkit-transition: all .25s ease-in-out;
 	   -moz-transition: all .25s ease-in-out;
 	    -ms-transition: all .25s ease-in-out;
 	     -o-transition: all .25s ease-in-out;
 	        transition: all .25s ease-in-out;
+	margin-bottom: 2em;
 }
 .contArtPrinc:hover
 {
 	border-left: none;
-	box-shadow: 1px 7px 20px 2px black;
+	box-shadow: 2px 5px 20px 0px black;
 }
+
 .contCentrado
 {
 	float: none;
@@ -181,16 +196,26 @@ footer
 	width: 100%;
 	padding: 1em;
 }
+.miniBanner
+{
+	width: 100%;
+	overflow: auto;
+	background: rgb(227, 240, 218);
+	padding: 0px;
+	box-shadow: 0px 7px 10px -3px;
+}
 .navbar-default
 {
 	position: fixed;
 	width: 100%;
 	top: 0;
 	z-index: 100;
+	background-image: linear-gradient(to bottom,#fff 0,#FFFFFF 100%) !important;
 }
 .navbar-collapse
 {
 	display: inline-block !important;
+	width: 23% !important;
 }
 .redes
 {
@@ -231,6 +256,9 @@ footer
 .textoPromedio
 {
 	font-size: 1.5em;
+}
+.table-striped>tbody>tr:nth-of-type(odd) {
+	background-color: #E3F0DA !important;
 }
 .ulNoStyle
 {

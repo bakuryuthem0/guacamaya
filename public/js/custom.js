@@ -1,3 +1,4 @@
+
 jQuery(document).ready(function($) {
 	/*-------------------------------------------registro de usuario-------------------------------------------*/
 	var estado = $('#estado');
@@ -272,6 +273,115 @@ jQuery(document).ready(function($) {
 					$('.subcat').append('<option class="optionModelParr" value="'+response[i].id+'">'+response[i].sub_desc+'</option>');
 				};
 			
+			}
+		})
+	});
+});
+
+
+jQuery(document).ready(function($) {
+	
+	if ($(window).scrollTop()>0) {
+		$('.miniBanner').stop().animate({
+			'height':0},
+			250);
+		$('#contCarrito').stop().animate({
+			'top': 140},
+			250);
+	}else
+	{
+		$('.miniBanner').stop().animate({
+			'height':50},
+			250);
+		$('#contCarrito').stop().animate({
+			'top': 195},
+			250);
+	}
+	$(window).scroll(function(event) {
+		if ($(window).scrollTop()>0) {
+			$('.miniBanner').stop().animate({
+				'height':0},
+				250);
+			$('#contCarrito').stop().animate({
+				'top': 140},
+				250);
+		}else
+		{
+			$('.miniBanner').stop().animate({
+				'height':50},
+				250);
+			$('#contCarrito').stop().animate({
+				'top': 195},
+				250);
+		}
+	});
+});
+
+jQuery(document).ready(function($) {
+	$('.btnAgg').click(function(event) {
+		var dataPost = {
+			'id'	: $(this).val(),
+			'name'  : $(this).attr('data-name-value'),
+			'price' : $(this).attr('data-price-value')
+		}
+		$.ajax({
+			url: 'agregar-al-carrito',
+			type: 'POST',
+			dataType: 'json',
+			data: dataPost,
+			beforeSend:function()
+			{
+				$('.btnAgg').addClass('disabled');
+				$('.btnAgg').after('<img src="../images/loading.gif" class="loading">');
+				$('.loading').css({
+						'display': 'inline-block'
+					}).animate({
+						'opacity': 1},
+						500);
+			},
+			success:function(response)
+			{
+				$('.btnAgg').removeClass('disabled');
+				$('.loading').animate({
+						'opacity': 0},
+						500,function(){
+							$(this).remove();
+						});
+				$('.catnArt').html(response.cantArt);
+				$('.total').html(response.total);
+			}
+		})
+		
+	});
+});
+
+jQuery(document).ready(function($) {
+	$('.btnVaciar').click(function(event) {
+		$.ajax({
+			url: 'vaciar-carrito',
+			type: 'POST',
+			dataType: 'json',
+			data: dataPost,
+			beforeSend:function()
+			{
+				$('.btnAgg').addClass('disabled');
+				$('.btnAgg').after('<img src="../images/loading.gif" class="loading">');
+				$('.loading').css({
+						'display': 'inline-block'
+					}).animate({
+						'opacity': 1},
+						500);
+			},
+			success:function(response)
+			{
+				$('.btnAgg').removeClass('disabled');
+				$('.loading').animate({
+						'opacity': 0},
+						500,function(){
+							$(this).remove();
+						});
+				$('.catnArt').html(response.cantArt);
+				$('.total').html(response.total);
 			}
 		})
 	});

@@ -45,8 +45,48 @@
                     <button class="btn bt-buscar">Buscar</button>
                   </div>
                 </div>
-               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1 col-xs-3" style="display:inline-block !important;">
-                  <ul class="nav navbar-nav">
+               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="display:inline-block !important;">
+                <table class="nav navbar-nav table table-striped table-hover textoPromedio nav navbar-nav">
+                   @if(!Auth::check())
+                    <tr>
+                      <td style="text-align:center;"><a href="{{ URL::to('iniciar-sesion') }}">Iniciar sesión</a></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:center;"><a href="{{ URL::to('registro') }}">Registrarse </a></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:center;"><a href="{{ URL::to('') }}">Contactenos</a></td>
+                    </tr>
+                  @else
+                    <tr>
+                      <td class="dropdown" style="text-align:center;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                          <i class="fa fa-user"></i>
+                            {{ Auth::user()->username }}
+                          <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu multi-level" role="menu">
+                          <li>
+                            <a href="{{ URL::to('usuario/perfil') }}">
+                              <span class="fa fa-cog"></span> Perfil
+                            </a>
+                          </li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr data-toggle="collapse" href="#contCarrito">
+                      <td style="text-align:center;">  
+                         <label><i class="fa fa-shopping-cart"></i> Cantidad de artículos: <span class="catnArt">{{ Cart::count() }}</span></label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:center;">
+                        <label><i class="fa fa-money"></i> Total: Bs.<span class="total">{{ Cart::total() }}</span></label>
+                      </td>
+                    </tr>
+                  @endif
+                </table>
+                  <!--<ul class="nav navbar-nav">
                     @if(!Auth::check())
                       <li class="textoPromedio"><a href="{{ URL::to('registro') }}">Registrarse </a></li>
                       <li class="textoPromedio"><a href="{{ URL::to('iniciar-sesion') }}">Iniciar sesión</a></li>
@@ -76,9 +116,8 @@
                       <li class="textoPromedio"><a href="{{ URL::to('cerrar-sesion') }}">Cerrar sesión</a></li>
                     @endif
                   </ul>
-                  <div class="carrito">
-                    <label>Cantidad de artículos: </label>
-                  </div>
+                  -->
+
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -120,8 +159,55 @@
                   </ul>
                 </div>--><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->
+              <div class="miniBanner" style="text-align:center;"><p class="textoPromedio" style="color:red;padding-top:1em">Envios gratis a toda venezuela.</p></div>
             </nav>
         <div class="clearfix"></div>
+        <div id="contCarrito">
+          <div class="table-responsive">
+            <table class="table table-hover">
+               <tr>
+                  <th>
+                   Artículo
+                  </th>
+                  <th>
+                    Cantidad
+                  </th>
+                  <th>
+                    Precio Unitario
+                  </th>
+                  <th>
+                    Sub-total
+                  </th>
+                  <th>
+                    <button class="btn btn-warning btn-xs btnVaciar">
+                      Vaciar
+                    </button>
+                  </th>
+                </tr>
+              @foreach(Cart::content() as $cart)
+                <tr class="carItems">
+                  <td class="carItem">
+                    {{ $cart->name }}
+                  </td>
+                  <td class="carItem">
+                    {{ $cart->qty }}
+                  </td>
+                  <td class="carItem">
+                    {{ $cart->price }}
+                  </td>
+                  <td class="carItem">
+                    {{ $cart->subtotal }}
+                  </td>
+                  <th class="carItem">
+                    <button class="btn btn-warning btn-xs">
+                      Quitar
+                    </button>
+                  </th>
+                </tr>
+              @endforeach
+            </table>
+          </div>
+        </div>
         @yield('content')
         <footer>
           <div class="row">
