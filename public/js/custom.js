@@ -358,13 +358,14 @@ jQuery(document).ready(function($) {
 jQuery(document).ready(function($) {
 	$('.btnVaciar').click(function(event) {
 		$.ajax({
-			url: 'vaciar-carrito',
+			url: '/prueba/guacamaya/public/vaciar-carrito',
 			type: 'POST',
 			dataType: 'json',
-			data: dataPost,
 			beforeSend:function()
 			{
-				$('.btnAgg').addClass('disabled');
+				$('.btnVaciar').css({
+					'display':'none'
+				});
 				$('.btnAgg').after('<img src="../images/loading.gif" class="loading">');
 				$('.loading').css({
 						'display': 'inline-block'
@@ -374,14 +375,19 @@ jQuery(document).ready(function($) {
 			},
 			success:function(response)
 			{
-				$('.btnAgg').removeClass('disabled');
+				$('.btnVaciar').css({
+					'display':'inline-block'
+				});
 				$('.loading').animate({
 						'opacity': 0},
 						500,function(){
 							$(this).remove();
 						});
-				$('.catnArt').html(response.cantArt);
-				$('.total').html(response.total);
+				if (response.type == 'success') {
+					$('.carItems').remove();
+					$('.catnArt').html(0)
+					$('.total').html(0)
+				}
 			}
 		})
 	});

@@ -179,7 +179,7 @@
                     Sub-total
                   </th>
                   <th>
-                    <button class="btn btn-warning btn-xs btnVaciar">
+                    <button class="btn btn-danger btn-xs btnVaciar">
                       Vaciar
                     </button>
                   </th>
