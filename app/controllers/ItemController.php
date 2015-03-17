@@ -18,19 +18,26 @@ class ItemController extends BaseController {
 			$rowid = Cart::search(array('id' => $inp['id']));
 			$item = Cart::get($rowid[0]);
 
-			return Response::json(array('img' => $img,'id' => $item->id,'name' => $item->name,'qty' => $item->qty,'price' => $item->price,'cantArt' => Cart::count(),'total' => Cart::total()));
+			return Response::json(array('img' => $img,'id' => $item->id,'name' => $item->name,'qty' => $item->qty,'price' => $item->price,'subtotal'=>$item->subtotal,'cantArt' => Cart::count(),'total' => Cart::total()));
+		}
+	}
+	public function dropItem()
+	{
+		if (Request::ajax()) {
+			$id = Input::get('id');
+			Cart::remove($id);
+			$count = Cart::count();
+			$total = Cart::total();
+			return Response::json(array('type' => 'success','count' => $count,'total' => 'total'));
 		}
 	}
 	public function dropCart()
 	{
-		Cart::destroy();
+		if (Request::ajax()) {
+			Cart::destroy();
+			
+			return Response::json(array('type' => 'success'));
+		}
 		
-		return Response::json(array('type' => 'success'));
-		
-		/*para eliminar en especifico creo q esto puede funcionar
-
-	$rowid = Cart::search(array('id' => $inp['id']));
-			return Cart::get($rowid[0]);
-		*/
 	}
 }

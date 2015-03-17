@@ -25,8 +25,11 @@ Route::post('administrador/iniciar-sesion/autenticar','AdminController@postLogin
 
 Route::group(array('before' =>'auth'),function()
 {
+	/*Rutas del carrito*/
 	Route::post('articulo/agregar-al-carrito','ItemController@getItem');
 	Route::post('vaciar-carrito', 'ItemController@dropCart');
+	Route::post('quitar-item', 'ItemController@dropItem');
+	
 	Route::group(array('before' => 'check_role'), function(){
 		Route::get('administrador/inicio','AdminController@getIndex');
 		/*Nuevos articulos*/

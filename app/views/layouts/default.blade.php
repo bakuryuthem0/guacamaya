@@ -74,7 +74,7 @@
                         </ul>
                       </td>
                     </tr>
-                    <tr data-toggle="collapse" href="#contCarrito">
+                    <tr data-toggle="collapse" href="#contCarrito" id="carrito">
                       <td style="text-align:center;">  
                          <label><i class="fa fa-shopping-cart"></i> Cantidad de artículos: <span class="catnArt">{{ Cart::count() }}</span></label>
                       </td>
@@ -125,7 +125,7 @@
             </nav>
         <div id="contCarrito">
           <div class="table-responsive">
-            <table class="table table-hover">
+            <table class="table table-hover tableCarrito">
                <tr>
                   <th>
                    Imagen
@@ -142,6 +142,12 @@
                   <th>
                     Sub-total
                   </th>
+                   <th>
+                    Agregar
+                  </th>
+                   <th>
+                    Restar
+                  </th>
                   <th>
                     <button class="btn btn-danger btn-xs btnVaciar">
                       Vaciar
@@ -149,8 +155,8 @@
                   </th>
                 </tr>
               @foreach(Cart::content() as $cart)
-                <tr class="carItems">
-                  <td class="carItem" id="{{ $cart->id }}">
+                <tr class="carItems" id="{{ $cart->id }}">
+                  <td class="carItem">
                     <img src="{{ asset('images/items/'.$cart->options['img']) }}" class="carImg">
                   </td>
                   <td class="carItem">
@@ -166,7 +172,17 @@
                     {{ $cart->subtotal }}
                   </td>
                   <th class="carItem">
-                    <button class="btn btn-warning btn-xs">
+                    <button class="btn btn-success btn-xs btnQuitar" value="{{ $cart->rowid; }}">
+                      Agregar
+                    </button>
+                  </th>
+                  <th class="carItem">
+                    <button class="btn btn-warning btn-xs btnQuitar" value="{{ $cart->rowid; }}">
+                      Restar
+                    </button>
+                  </th>
+                  <th class="carItem">
+                    <button class="btn btn-danger btn-xs btnQuitar" value="{{ $cart->rowid; }}">
                       Quitar
                     </button>
                   </th>

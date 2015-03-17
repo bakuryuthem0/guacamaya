@@ -10,6 +10,10 @@ footer
 {
 	padding-top: 13%;
 }
+#carrito
+{
+	cursor: pointer;
+}
 #contCarrito
 {
 	position: fixed;
@@ -44,6 +48,10 @@ footer
 .carImg
 {
 	max-width: 100px;
+}
+.carItem
+{
+	vertical-align: middle !important;
 }
 .container
 {
