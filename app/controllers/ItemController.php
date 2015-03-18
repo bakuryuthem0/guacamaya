@@ -21,6 +21,18 @@ class ItemController extends BaseController {
 			return Response::json(array('img' => $img,'id' => $item->id,'name' => $item->name,'qty' => $item->qty,'price' => $item->price,'subtotal'=>$item->subtotal,'cantArt' => Cart::count(),'total' => Cart::total()));
 		}
 	}
+	public function addItem()
+	{
+		if (Request::ajax()) {
+			$id = Input::get('id');
+			Cart::update($id,1);
+			$qty = Cart::get($id);
+			$qty = $qty->qty;
+			$count = Cart::count();
+			$total = Cart::total();
+			return Response::json(array('type' => 'success','count' => $count,'total' => $total,'qty' => $qty));
+		}
+	}
 	public function dropItem()
 	{
 		if (Request::ajax()) {

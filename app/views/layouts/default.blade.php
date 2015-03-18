@@ -172,17 +172,17 @@
                     {{ $cart->subtotal }}
                   </td>
                   <th class="carItem">
-                    <button class="btn btn-success btn-xs btnQuitar" value="{{ $cart->rowid; }}">
+                    <button class="btn btn-success btn-xs btnAdd" value="{{ $cart->rowid }}">
                       Agregar
                     </button>
                   </th>
                   <th class="carItem">
-                    <button class="btn btn-warning btn-xs btnQuitar" value="{{ $cart->rowid; }}">
+                    <button class="btn btn-warning btn-xs btnQuitar" value="{{ $cart->rowid }}">
                       Restar
                     </button>
                   </th>
                   <th class="carItem">
-                    <button class="btn btn-danger btn-xs btnQuitar" value="{{ $cart->rowid; }}">
+                    <button class="btn btn-danger btn-xs btnQuitar" value="{{ $cart->rowid }}">
                       Quitar
                     </button>
                   </th>
