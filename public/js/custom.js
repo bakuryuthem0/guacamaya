@@ -496,3 +496,54 @@ jQuery(document).ready(function($) {
 		}
 	});
 });
+jQuery(document).ready(function($) {
+	$('.btnAdd').click(function(event) {
+		var boton = $(this);
+		$.ajax({
+			//casa
+			url: '/guacamaya/public/agregar-item',
+			//trabajo
+			//url: '/prueba/guacamaya/public/agregar-item',
+			type: 'POST',
+			dataType: 'json',
+			data: {'id':boton.val() },
+			beforeSend:function()
+			{
+				boton.animate({
+						'opacity': 0},
+						250,function(){
+							$(this).css({
+								'display':'none'
+							});
+							$('.loading').css({
+								'display': 'inline-block'
+							}).animate({
+								'opacity': 1},
+								250);
+						}
+				);
+				boton.after('<img src="../images/loading.gif" class="loading">');
+				
+			},
+			success:function(response)
+			{
+				
+				$('.loading').animate({
+						'opacity': 0},
+						250,function(){
+							$(this).remove();
+							boton.css({
+								'display': 'inline-block'
+							}).animate({
+								'opacity': 1},
+								250);
+						});
+				
+				boton.parent().parent().remove();	
+				$('.catnArt').html(response.count)
+				$('.total').html(response.total)				
+			}
+		})
+
+	});
+});
