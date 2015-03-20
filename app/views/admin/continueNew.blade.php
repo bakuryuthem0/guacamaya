@@ -34,8 +34,8 @@
 				@endif
 				{{ Form::select('color',$arr,Input::old('color'),array('class' => 'form-control','requied' => 'required')
 					)}}
-				<input type="hidden" name="art" value="{{ $id }}">
-                <input type="hidden" name="misc" value="{{ $misc_id }}">
+				<input type="hidden" id="art_id" name="art" value="{{ $id }}">
+                <input type="hidden" id="misc_id" name="misc" value="{{ $misc_id }}">
 			</div>
 			
 			</form>
@@ -81,29 +81,42 @@
 // or disable for specific dropzone:
 // Dropzone.options.myDropzone = false;
     var myDropzone = new Dropzone("#my-awesome-dropzone");
+    myDropzone.on("success", function(resp){
+    	var response = JSON.parse(resp.xhr.response);
+    	
+    	$('.dz-preview:last-child').children('.dz-remove').attr({'data-info-value':response.campo,'id':response.campo})
+    });
+    
+	    myDropzone.on("removedfile", function(file) {
+	    	var campo = $(file._removeLink).attr('id');
 
-    myDropzone.on("removedfile", function(file) {
-        if(file.xhr){
+	        if(file.xhr){
 
-            $(function() {
-              // Now that the DOM is fully loaded, create the dropzone, and setup the
-              // event listeners
-                var url = JSON.parse(file.xhr.response);
-                var imagepath = url.url;
-                $.ajax({
-                    url: 'publicacion/habitual/enviar/imagenes/eliminar',
-                    type: 'POST)',
-                    dataType: 'json',
-                    data: {name :  file.name},
-                    success:function(response)
-                    {
-                        console.log(response)
-                    }
-                })
+	            $(function() {
+	              // Now that the DOM is fully loaded, create the dropzone, and setup the
+	              // event listeners
+	                var url = JSON.parse(file.xhr.response);
+	                var imagepath = url.url;
+	                $.ajax({
+	                    url: '../../imagenes/eliminar',
+	                    type: 'POST',
+	                    dataType: 'json',
+	                    data: {
+	                    	'name' 		: file.name,
+	                    	'misc_id' 	: $('#misc_id').val(),
+	                    	'campo'		: campo,
+	                    	'id'	  	: $('#art_id').val()
+	                    },
+	                    success:function(response)
+	                    {
+	                        console.log(response)
+	                    }
+	                })
 
-                
-                })
-            }
-    })
+	                
+	                })
+	            }
+	    })
+    
 </script>
 @stop

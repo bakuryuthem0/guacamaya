@@ -36,6 +36,7 @@ Route::group(array('before' =>'auth'),function()
 		Route::get('administrador/nuevo-articulo','AdminController@getNewItem');
 		Route::post('administrador/categoria/buscar-sub-categoria','AdminController@postCatSubCat');
 		Route::post('administrador/nuevo-articulo/enviar','AdminController@postNewItem');
+		Route::post('administrador/nuevo-articulo/imagenes/eliminar','AdminController@postDeleteImg');
 		Route::get('administrador/nuevo-articulo/continuar/{id}/{misc_id}','AdminController@getContinueNew');
 		Route::post('administrador/nuevo-articulo/continuar/enviar/{id}/{misc_id}','AdminController@postContinueNew');
 		Route::post('administrador/nuevo-articulo/continuar/guardar-cerrar/{id}/{misc_id}','AdminController@postSaveNew');

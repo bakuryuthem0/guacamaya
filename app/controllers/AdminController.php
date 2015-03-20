@@ -240,7 +240,7 @@ class AdminController extends BaseController {
 					$misc->img_1 = $id.'/'.$miImg;
 				}elseif ($campo == 'img_2') {
 					$misc->img_2 = $id.'/'.$miImg;
-				}elseif(empty($misc->img_3))
+				}elseif($campo == 'img_3')
 				{
 					$misc->img_3 = $id.'/'.$miImg;
 				}elseif($campo == 'img_4')
@@ -263,6 +263,7 @@ class AdminController extends BaseController {
 		}else
 		{
 			$file->move("images/items/".$id,$file->getClientOriginalName());
+			$blank = Image::make('images/blank.jpg');
 			$img = Image::make('images/items/'.$id.'/'.$file->getClientOriginalName());
             if ($img->width() > $img->height()) {
             	$img->widen(225);
@@ -270,18 +271,68 @@ class AdminController extends BaseController {
             {
             	$img->heighten(300);
             }
+
             $blank->insert($img,'center')
-            ->interlace()
-            ->save('images/items/'.$id.'/'.$file->getClientOriginalName());
+           ->interlace()
+           ->save('images/items/'.$id.'/'.$file->getClientOriginalName());
 		}
 		$misc->save();
-        return Response::json(array('esto' => $file->getClientOriginalName()));
+        return Response::json(array('campo' => $campo));
 
         if( $upload_success ) {
         	return Response::json('success', 200);
         } else {
         	return Response::json('error', 400);
         }
+	}
+	public function postDeleteImg()
+	{
+		$campo 		= Input::get('campo');
+		$file 		= Input::get('name');
+		$id     	= Input::get('id');
+		$misc_id    = Input::get('misc_id');
+		$misc 		= Misc::find($misc_id);
+		if ($campo == 'img_1') {
+			$img = $misc->img_1;
+			File::delete('images/items/'.$img);
+			$misc->img_1 = "";
+		}elseif ($campo == 'img_2') {
+			$img = $misc->img_2;
+			File::delete('images/items/'.$img);
+			$misc->img_2 = "";
+		}elseif($campo == 'img_3')
+		{
+			$img = $misc->img_3;
+			File::delete('images/items/'.$img);
+			$misc->img_3 = "";
+		}elseif($campo == 'img_4')
+		{
+			$img = $misc->img_4;
+			File::delete('images/items/'.$img);
+			$misc->img_4 = "";
+		}elseif($campo == 'img_5')
+		{
+			$img = $misc->img_5;
+			File::delete('images/items/'.$img);
+			$misc->img_5 = "";
+		}elseif($campo == 'img_6')
+		{
+			$img = $misc->img_6;
+			File::delete('images/items/'.$img);
+			$misc->img_6 = "";
+		}elseif($campo == 'img_7')
+		{
+			$img = $misc->img_7;
+			File::delete('images/items/'.$img);
+			$misc->img_7 = "";
+		}elseif($campo == 'img_8')
+		{
+			$img = $misc->img_8;
+			File::delete('images/items/'.$img);
+			$misc->img_8 = "";
+		}
+		$misc->save();
+		return Response::json(array('llego' => 'llego'));
 	}
 	public function postContinueNew()
 	{

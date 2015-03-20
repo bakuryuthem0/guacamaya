@@ -327,6 +327,10 @@
           file.previewElement.classList.add("dz-error");
           if (typeof message !== "String" && message.error) {
             message = message.error;
+          }else if(typeof message == "string")
+          {
+            message = JSON.parse(message)
+            message = message.error;
           }
           _ref = file.previewElement.querySelectorAll("[data-dz-errormessage]");
           _results = [];
@@ -334,8 +338,10 @@
             node = _ref[_i];
             if (message.type == "ErrorException") {
               _results.push(node.textContent = 'Tipo de archivo Incorrecto');  
-            }else
+            }else if(message.type.indexOf('FatalErrorException') > -1)
             {
+              _results.push(node.textContent = 'Error al subir el archivo');
+            }else{
               _results.push(node.textContent = message);
             }
             
