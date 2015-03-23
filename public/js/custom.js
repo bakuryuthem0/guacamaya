@@ -318,87 +318,141 @@ jQuery(document).ready(function($) {
 });
 
 jQuery(document).ready(function($) {
-	$('.btnAgg').click(function(event) {
-		var dataPost = {
-			'id'	: $(this).val(),
-			'name'  : $(this).attr('data-name-value'),
-			'price' : $(this).attr('data-price-value')
-		}
+	function doAjax(esto)
+	{
+		var boton = esto;
+		to = boton.attr('data-url-value');
 		$.ajax({
-			url: 'agregar-al-carrito',
+			//casa
+			url: '/guacamaya/public/'+to,
+			//trabajo
+			//url: '/prueba/guacamaya/public/agregar-item',
 			type: 'POST',
 			dataType: 'json',
-			data: dataPost,
+			data: {'id':boton.val() },
 			beforeSend:function()
 			{
-				$('.btnAgg').addClass('disabled');
-				$('.btnAgg').after('<img src="../images/loading.gif" class="loading">');
-				$('.loading').css({
-						'display': 'inline-block'
-					}).animate({
-						'opacity': 1},
-						500);
+				
+				boton.animate({
+						'opacity': 0},
+						250,function(){
+							$(this).css({
+								'display':'none'
+							});
+							$('.loading').css({
+								'display': 'inline-block'
+							}).animate({
+								'opacity': 1},
+								250);
+						}
+				);
+				boton.after('<img src="../images/loading.gif" class="loading">');
+				
 			},
 			success:function(response)
 			{
-				$('.btnAgg').removeClass('disabled');
-				$('.loading').animate({
+					$('.loading').animate({
 						'opacity': 0},
-						500,function(){
+						250,function(){
 							$(this).remove();
+							boton.css({
+								'display': 'inline-block'
+							}).animate({
+								'opacity': 1},
+								250);
 						});
-				$('.catnArt').html(response.cantArt);
-				$('.total').html(response.total);
-				if($('#'+response.id).length<1)
-				{
-					var row = '<tr class="carItems">';
-	                  row = row+'<td class="carItem" id="'+response.id+'">';
-	                    /*casa*/
-	                    //row = row+'<img src="/guacamaya/public/images/items/'+response.img+'" class="carImg">';
-	                    //trabajo
-	                    row = row+'<img src="/prueba/guacamaya/public/images/items/'+response.img+'" class="carImg">';
-	                  row = row+'</td>';
-	                  row = row+'<td class="carItem">';
-	                    row = row+response.name;
-	                  row = row+'</td>';
-	                  row = row+'<td class="carItem">';
-	                    row = row+response.qty;
-	                  row = row+'</td>';
-	                  row = row+'<td class="carItem">';
-	                    row = row+response.price;
-	                  row = row+'</td>';
-	                  row = row+'<td class="carItem">';
-	                    row = row+response.subtotal;
-	                  row = row+'</td>';
-	                  row = row+'<th class="carItem">';
-	                    row = row+'<button class="btn btn-warning btn-xs">';
-	                      row = row+'Quitar';
-	                    row = row+'</button>';
-	                  row = row+'</th>';
-	                row = row+'</tr>';
-	                $('.tableCarrito').append(row);
-				}else
-				{
-					var qty = $('#'+response.id+' > .carItem:nth-child(3)').html(response.qty);
-					var qty = $('#'+response.id+' > .carItem:nth-child(5)').html(response.subtotal);
-					
-				}
-				
+				$('#'+response.id+'> .carItem:nth-child(3)').html(response.qty);
+				$('#'+response.id+'> .carItem:nth-child(5)').html(response.subtotal);
+				$('.catnArt').html(response.count)
+				$('.total').html(response.total)				
+			
 			}
 		})
-		
-	});
-});
+	}
 
-jQuery(document).ready(function($) {
+
+	function doQuitarAjax(esto)
+	{
+		var boton = esto;
+		var to = boton.attr('data-url-value');
+			$.ajax({
+				//casa
+				url: '/guacamaya/public/'+to,
+				//trabajo
+				//url: '/prueba/guacamaya/public/quitar-item',
+				type: 'POST',
+				dataType: 'json',
+				data: {'id':boton.val() },
+				beforeSend:function()
+				{
+					boton.after('<img src="../images/loading.gif" class="loading">');
+					boton.animate({
+							'opacity': 0},
+							250,function(){
+								$(this).css({
+									'display':'none'
+								});
+								$('.loading').css({
+									'display': 'inline-block'
+								}).animate({
+									'opacity': 1},
+									250);
+							}
+					);
+					
+				},
+				success:function(response)
+				{
+					
+					$('.loading').animate({
+							'opacity': 0},
+							250,function(){
+								$(this).remove();
+								boton.css({
+									'display': 'inline-block'
+								}).animate({
+									'opacity': 1},
+									250);
+							});
+					
+					boton.parent().parent().animate({
+							'opacity':0
+						},
+						250, function() {
+						$(this).remove();
+						});
+					$('.catnArt').html(response.count)
+					$('.total').html(response.total)				
+				}
+			})
+	}
+	$('.btnAdd').click(function(event) {
+		var esto = $(this);
+		doAjax(esto);
+
+	});
+	$('.btnRestar').click(function(event) {
+		var esto = $(this);
+		doAjax(esto);
+
+	});
+	$('.btnQuitar').click(function(event) {
+		$('.btnQuitar').unbind('click');
+		var x = confirm('¿Seguro desea quitar el item?');
+		if (x) {
+			var esto = $(this);
+			doQuitarAjax(esto);
+
+		}
+	});
 	$('.btnVaciar').click(function(event) {
 		var x = confirm('¿Seguro desea vaciar el carrito?');
 		if (x) {
 			$.ajax({
 				//casa
-				//url: '/guacamaya/public/vaciar-carrito',
+				url: '/guacamaya/public/vaciar-carrito',
 				//trabajo
-				url: '/prueba/guacamaya/public/vaciar-carrito',
+				//url: '/prueba/guacamaya/public/vaciar-carrito',
 				type: 'POST',
 				dataType: 'json',
 				beforeSend:function()
@@ -416,6 +470,7 @@ jQuery(document).ready(function($) {
 									250);
 							}
 					);
+					$('.btn-carrito').addClass('disabled')
 					$('.btnVaciar').after('<img src="../images/loading.gif" class="loading">');
 					
 				},
@@ -441,109 +496,217 @@ jQuery(document).ready(function($) {
 
 		}
 	});
-});
-jQuery(document).ready(function($) {
-	$('.btnQuitar').click(function(event) {
-		var x = confirm('¿Seguro desea quitar el item?');
-		if (x) {
-			var boton = $(this);
-			$.ajax({
-				//casa
-				//url: '/guacamaya/public/quitar-item',
-				//trabajo
-				url: '/prueba/guacamaya/public/quitar-item',
-				type: 'POST',
-				dataType: 'json',
-				data: {'id':boton.val() },
-				beforeSend:function()
-				{
-					boton.animate({
-							'opacity': 0},
-							250,function(){
-								$(this).css({
-									'display':'none'
-								});
-								$('.loading').css({
-									'display': 'inline-block'
-								}).animate({
-									'opacity': 1},
-									250);
-							}
-					);
-					boton.after('<img src="../images/loading.gif" class="loading">');
-					
-				},
-				success:function(response)
-				{
-					
-					$('.loading').animate({
-							'opacity': 0},
-							250,function(){
-								$(this).remove();
-								boton.css({
-									'display': 'inline-block'
-								}).animate({
-									'opacity': 1},
-									250);
-							});
-					
-					boton.parent().parent().remove();	
-					$('.catnArt').html(response.count)
-					$('.total').html(response.total)				
-				}
-			})
-
+	$('.btnAgg').click(function(event) {
+		$('.btn-carrito').unbind('click')
+		var dataPost = {
+			'id'	: $(this).val(),
+			'name'  : $(this).attr('data-name-value'),
+			'price' : $(this).attr('data-price-value')
 		}
-	});
-});
-jQuery(document).ready(function($) {
-	$('.btnAdd').click(function(event) {
-		var boton = $(this);
 		$.ajax({
-			//casa
-			url: '/guacamaya/public/agregar-item',
-			//trabajo
-			//url: '/prueba/guacamaya/public/agregar-item',
+			url: 'agregar-al-carrito',
 			type: 'POST',
 			dataType: 'json',
-			data: {'id':boton.val() },
+			data: dataPost,
 			beforeSend:function()
 			{
-				boton.animate({
-						'opacity': 0},
-						250,function(){
-							$(this).css({
-								'display':'none'
-							});
-							$('.loading').css({
-								'display': 'inline-block'
-							}).animate({
-								'opacity': 1},
-								250);
-						}
-				);
-				boton.after('<img src="../images/loading.gif" class="loading">');
-				
+				$('.btnAgg').addClass('disabled');
+				$('.btnAgg').after('<img src="../images/loading.gif" class="loading">');
+				$('.loading').css({
+						'display': 'inline-block'
+					}).animate({
+						'opacity': 1},
+						500);
 			},
 			success:function(response)
 			{
-				
+
+				$('.btnAgg').removeClass('disabled');
 				$('.loading').animate({
 						'opacity': 0},
-						250,function(){
+						500,function(){
 							$(this).remove();
-							boton.css({
-								'display': 'inline-block'
-							}).animate({
-								'opacity': 1},
-								250);
 						});
-				
-				boton.parent().parent().remove();	
-				$('.catnArt').html(response.count)
-				$('.total').html(response.total)				
+				$('.catnArt').html(response.cantArt);
+				$('.total').html(response.total);
+				if($('#'+response.id).length<1)
+				{
+					var row = '<tr class="carItems">';
+	                  row = row+'<td class="carItem" id="'+response.id+'">';
+	                    /*casa*/
+	                    row = row+'<img src="/guacamaya/public/images/items/'+response.img+'" class="carImg">';
+	                    //trabajo
+	                    //row = row+'<img src="/prueba/guacamaya/public/images/items/'+response.img+'" class="carImg">';
+	                  row = row+'</td>';
+	                  row = row+'<td class="carItem">';
+	                    row = row+response.name;
+	                  row = row+'</td>';
+	                  row = row+'<td class="carItem">';
+	                    row = row+response.qty;
+	                  row = row+'</td>';
+	                  row = row+'<td class="carItem">';
+	                    row = row+response.price;
+	                  row = row+'</td>';
+	                  row = row+'<td class="carItem">';
+	                    row = row+response.subtotal;
+	                  row = row+'</td>';
+	                  row = row+'<td class="carItem">';
+	                    row = row+'<button class="btn btn-success btn-xs btnAdd btn-carrito" data-url-value="agregar-item" value="'+response.rowid+'">';
+	                      row = row+'Agregar';
+	                    row = row+'</button>';
+	                  row = row+'</td>';
+	                  row = row+'<td class="carItem">';
+	                    row = row+'<button class="btn btn-warning btn-xs btnRestar btn-carrito" data-url-value="restar-item" value="'+response.rowid+'">';
+	                      row = row+'Restar';
+	                    row = row+'</button>';
+	                  row = row+'</td>';
+	                  row = row+'<td class="carItem">';
+	                    row = row+'<button class="btn btn-danger btn-xs btnQuitar btn-carrito" data-url-value="quitar-item" value="'+response.rowid+'">';
+	                      row = row+'Quitar';
+	                    row = row+'</button>';
+	                  row = row+'</td>';
+	                row = row+'</tr>';
+	                $('.tableCarrito').append(row);
+				}else
+				{
+					$('#'+response.id+'> .carItem:nth-child(3)').html(response.qty);
+					$('#'+response.id+'> .carItem:nth-child(5)').html(response.subtotal);
+					
+				}
+				$('.btnAdd').click(function(event) {
+					var esto = $(this);
+					doAjax(esto);
+
+				});
+				$('.btnRestar').click(function(event) {
+					var esto = $(this);
+					doAjax(esto);
+
+				});
+				$('.btnQuitar').click(function(event) {
+					var x = confirm('¿Seguro desea quitar el item?');
+					if (x) {
+						var esto = $(this);
+						doQuitarAjax(esto);
+
+					}
+				});
 			}
 		})
+		
+	});
+});
 
+jQuery(document).ready(function($) {
+	$('.btnActualizar').click(function(event) {
+		var boton = $(this);
+		var inp = $(boton.attr('data-field-value'))
+		if (inp.val()<1) {
+			var x = confirm('¿Seguro desea quitar el item?');
+			if (x) {
+				$.ajax({
+					//casa
+					url: '/guacamaya/public/quitar-item',
+					//trabajo
+					//url: '/prueba/guacamaya/public/quitar-item',
+					type: 'POST',
+					dataType: 'json',
+					data: {'id':boton.val() },
+					beforeSend:function()
+					{
+						boton.after('<img src="../images/loading.gif" class="loading">');
+						boton.animate({
+								'opacity': 0},
+								250,function(){
+									$(this).css({
+										'display':'none'
+									});
+									$('.loading').css({
+										'display': 'inline-block'
+									}).animate({
+										'opacity': 1},
+										250);
+								}
+						);
+						
+					},
+					success:function(response)
+					{
+						
+						$('.loading').animate({
+								'opacity': 0},
+								250,function(){
+									$(this).remove();
+									boton.css({
+										'display': 'inline-block'
+									}).animate({
+										'opacity': 1},
+										250);
+								});
+						
+						boton.parent().parent().animate({
+								'opacity':0
+							},
+							250, function() {
+							$(this).remove();
+							});
+						$('#'+response.id).remove();
+						$('.catnArt').html(response.count)
+						$('.total').html(response.total)				
+					}
+				})
+
+			}
+		}else
+		{
+			$.ajax({
+					//casa
+					url: '/guacamaya/public/actualizar-al-carrito',
+					//trabajo
+					//url: '/prueba/guacamaya/public/actualizar-al-carrito',
+					type: 'POST',
+					dataType: 'json',
+					data: {
+						'id' :boton.val(),
+						'qty':inp.val() },
+					beforeSend:function()
+					{
+						boton.after('<img src="../images/loading.gif" class="loading">');
+						boton.animate({
+								'opacity': 0},
+								250,function(){
+									$(this).css({
+										'display':'none'
+									});
+									$('.loading').css({
+										'display': 'inline-block'
+									}).animate({
+										'opacity': 1},
+										250);
+								}
+						);
+						
+					},
+					success:function(response)
+					{
+						
+						$('.loading').animate({
+								'opacity': 0},
+								250,function(){
+									$(this).remove();
+									boton.css({
+										'display': 'inline-block'
+									}).animate({
+										'opacity': 1},
+										250);
+								});
+						$('#'+response.id+'> .carItem:nth-child(3)').html(response.qty);
+						$('#'+response.id+'> .carItem:nth-child(5)').html(response.subtotal);
+						$(boton.attr('data-field-value')+'_subtotal').html(response.subtotal);
+						$('.catnArt').html(response.count)
+						$('.total').html(response.total)				
+					}
+				})
+		}
 	});
 });

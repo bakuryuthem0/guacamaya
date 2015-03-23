@@ -8,7 +8,7 @@ footer
 }
 #body
 {
-	padding-top: 13%;
+	padding-top: 15%;
 }
 #carrito
 {
@@ -30,8 +30,8 @@ footer
 }
 .in
 {
-	height: auto !important;
-	overflow: auto !important;
+	height: 500px !important;
+	overflow-y: scroll !important;
 }
 .bt-buscar
 {
@@ -52,6 +52,10 @@ footer
 .carItem
 {
 	vertical-align: middle !important;
+}
+.columnCant
+{
+	width: 5%;	
 }
 .container
 {
@@ -267,6 +271,14 @@ footer
 .textoPromedio
 {
 	font-size: 1.5em;
+}
+.table
+{
+	text-align: center !important;
+}
+.table > tbody > tr >th
+{
+	text-align: center !important; 
 }
 .table-striped>tbody>tr:nth-of-type(odd) {
 	background-color: #E3F0DA !important;

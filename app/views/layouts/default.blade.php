@@ -76,12 +76,12 @@
                     </tr>
                     <tr data-toggle="collapse" href="#contCarrito" id="carrito">
                       <td style="text-align:center;">  
-                         <label><i class="fa fa-shopping-cart"></i> Cantidad de artículos: <span class="catnArt">{{ Cart::count() }}</span></label>
+                         <label style="cursor:pointer;"><i class="fa fa-shopping-cart"></i> Cantidad de artículos: <span class="catnArt">{{ Cart::count() }}</span></label>
                       </td>
                     </tr>
                     <tr>
                       <td style="text-align:center;">
-                        <label><i class="fa fa-money"></i> Total: Bs.<span class="total">{{ Cart::total() }}</span></label>
+                        <label><i class="fa fa-money"></i> Total: Bs.<span class="total">{{ Cart::total() }} </span><a type="button" class="btn btn-success btn-xs" href="{{ URL::to('comprar/ver-carrito') }}">Comprar</a></label>
                       </td>
                     </tr>
                   @endif
@@ -172,17 +172,17 @@
                     {{ $cart->subtotal }}
                   </td>
                   <th class="carItem">
-                    <button class="btn btn-success btn-xs btnAdd" value="{{ $cart->rowid }}">
+                    <button class="btn btn-success btn-xs btnAdd btn-carrito" data-url-value="agregar-item" value="{{ $cart->rowid }}">
                       Agregar
                     </button>
                   </th>
                   <th class="carItem">
-                    <button class="btn btn-warning btn-xs btnQuitar" value="{{ $cart->rowid }}">
+                    <button class="btn btn-warning btn-xs btnRestar btn-carrito" data-url-value="restar-item" value="{{ $cart->rowid }}">
                       Restar
                     </button>
                   </th>
                   <th class="carItem">
-                    <button class="btn btn-danger btn-xs btnQuitar" value="{{ $cart->rowid }}">
+                    <button class="btn btn-danger btn-xs btnQuitar btn-carrito" data-url-value="quitar-item" value="{{ $cart->rowid }}">
                       Quitar
                     </button>
                   </th>

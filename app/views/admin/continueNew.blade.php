@@ -87,36 +87,36 @@
     	$('.dz-preview:last-child').children('.dz-remove').attr({'data-info-value':response.campo,'id':response.campo})
     });
     
-	    myDropzone.on("removedfile", function(file) {
-	    	var campo = $(file._removeLink).attr('id');
+    myDropzone.on("removedfile", function(file) {
+    	var campo = $(file._removeLink).attr('id');
 
-	        if(file.xhr){
+        if(file.xhr){
 
-	            $(function() {
-	              // Now that the DOM is fully loaded, create the dropzone, and setup the
-	              // event listeners
-	                var url = JSON.parse(file.xhr.response);
-	                var imagepath = url.url;
-	                $.ajax({
-	                    url: '../../imagenes/eliminar',
-	                    type: 'POST',
-	                    dataType: 'json',
-	                    data: {
-	                    	'name' 		: file.name,
-	                    	'misc_id' 	: $('#misc_id').val(),
-	                    	'campo'		: campo,
-	                    	'id'	  	: $('#art_id').val()
-	                    },
-	                    success:function(response)
-	                    {
-	                        console.log(response)
-	                    }
-	                })
+            $(function() {
+              // Now that the DOM is fully loaded, create the dropzone, and setup the
+              // event listeners
+                var url = JSON.parse(file.xhr.response);
+                var imagepath = url.url;
+                $.ajax({
+                    url: '../../imagenes/eliminar',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                    	'name' 		: file.name,
+                    	'misc_id' 	: $('#misc_id').val(),
+                    	'campo'		: campo,
+                    	'id'	  	: $('#art_id').val()
+                    },
+                    success:function(response)
+                    {
+                        console.log(response)
+                    }
+                })
 
-	                
-	                })
-	            }
-	    })
+                
+                })
+            }
+    })
     
 </script>
 @stop

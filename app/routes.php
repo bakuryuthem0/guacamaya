@@ -30,7 +30,9 @@ Route::group(array('before' =>'auth'),function()
 	Route::post('vaciar-carrito', 'ItemController@dropCart');
 	Route::post('quitar-item', 'ItemController@dropItem');
 	Route::post('agregar-item', 'ItemController@addItem');
-	
+	Route::post('restar-item','ItemController@restItem');
+	Route::get('comprar/ver-carrito','ItemController@getCart');
+	Route::post('actualizar-al-carrito', 'ItemController@getRefresh');
 	Route::group(array('before' => 'check_role'), function(){
 		Route::get('administrador/inicio','AdminController@getIndex');
 		/*Nuevos articulos*/
