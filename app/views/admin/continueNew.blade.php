@@ -86,7 +86,6 @@
     	
     	$('.dz-preview:last-child').children('.dz-remove').attr({'data-info-value':response.campo,'id':response.campo})
     });
-    
     myDropzone.on("removedfile", function(file) {
     	var campo = $(file._removeLink).attr('id');
 
