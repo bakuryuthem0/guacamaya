@@ -28,7 +28,7 @@ footer
 {
 	padding: 0.5em 0.7em !important;
 }
-.in
+#contCarrito.in
 {
 	height: 500px !important;
 	overflow-y: scroll !important;
@@ -158,7 +158,10 @@ footer
 }
 .imgMini
 {
-	width: 100px;
+	max-width: 70px;
+	
+	border: 1px solid black;
+	width: 11.25%;
 }
 .imgPrinc
 {

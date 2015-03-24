@@ -8,16 +8,12 @@
 				<legend>{{ $art->item_nomb.' - '.$art->item_cod }}</legend>
 				<div class="col-xs-8">
 					<div class="col-xs-12 imgProd">
-
-						<img src="{{ asset('images/items/'.$art->img[$art->misc]['img_1']) }}" class="imgPrinc">
+						<input type="hidden" id="art_id" value="{{ $art->id }}">
+						<img src="{{ asset('images/items/'.$art->images[0]->image) }}" class="imgPrinc">
 					</div>
 					<div class="col-xs-12 minis">
-						@foreach($art->img as $img)
-							@foreach($img as $i)
-							@if(!empty($i))
-								<img src="{{ asset('images/items/'.$i) }}" class="imgMini">
-							@endif
-							@endforeach
+						@foreach($art->images as $a)
+							<img src="{{ asset('images/items/'.$a->image) }}" class="imgMini">
 						@endforeach
 					</div>
 				</div>
@@ -31,10 +27,17 @@
 						<label>Talla</label>
 						<select class="form-control talla">
 							@foreach($tallas as $t)
-								@if($t->talla_nomb.' - '.$t->talla_desc == $art->talla[$art->misc])
-									<option value="{{ $t->id }}" selected>{{ $t->talla_nomb.' - '.$t->talla_desc }}</option>
+								<?php $nop = 1;?>
+								@foreach($art->tallas as $at)
+									@if($at->id == $t->id)
+										<?php $nop = 0;?>
+									@endif
+								@endforeach
+
+								@if($nop == 0)
+									<option value="{{ $t->id }}">{{ strtoupper($t->talla_nomb).' - '.ucfirst($t->talla_desc) }}</option>
 								@else
-									<option value="{{ $t->id }}">{{ $t->talla_nomb.' - '.$t->talla_desc }}</option>
+									<option class="disabled" disabled value="{{ $t->id }}">{{ strtoupper($t->talla_nomb).' - '.ucfirst($t->talla_desc) }}</option>
 								@endif
 							@endforeach
 						</select>
@@ -43,18 +46,27 @@
 						<label>Color</label>
 						<select class="form-control color">
 							@foreach($colores as $c)
-								@if($c->color_desc == $art->color[$art->misc])
-									<option value="{{ $c->id }}" selected> {{$c->color_desc }} </option>
+								<?php $nop = 1;?>
+
+								@foreach($art->colores as $ac)
+									@if($ac->id == $c->id)
+										<?php $nop = 0;?>
+									@endif
+								@endforeach
+
+								@if($nop == 0)
+									<option value="{{ $c->id }}">{{ ucfirst($c->color_desc) }}</option>
 								@else
-									<option value="{{ $c->id }}">{{$c->color_desc }}</option>
+									<option class="disabled" disabled>{{ ucfirst($c->color_desc) }}</option>
 								@endif
+
 							@endforeach
 						</select>
 					</div>
 					<div class="col-xs-12">
 						<label>Cantidad</label>
 						{{ $art->item_stock }}
-						<input type="hidden" class="values" data-art-id="{{ $art->id }}" data-misc-id="{{ $art->misc }}">
+						<input type="hidden" class="values" data-art-id="{{ $art->id }}" data-misc-id="">
 					</div>
 					@if(Auth::check() && Auth::user()->role != 1)
 					<div class="col-xs-12">

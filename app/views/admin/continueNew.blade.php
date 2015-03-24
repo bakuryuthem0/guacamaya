@@ -16,7 +16,7 @@
 					 ?>
 				@if(!empty($tallas) && !is_null($tallas) && count($tallas)>0)
 					@foreach ($tallas as $talla)
-						<?php $arr = $arr+array($talla->id => $talla->talla_nomb.' - '.$talla->talla_desc);  ?>
+						<?php $arr = $arr+array($talla->id => strtoupper($talla->talla_nomb).' - '.ucfirst($talla->talla_desc));  ?>
 					@endforeach
 				@endif
 				{{ Form::select('talla',$arr,Input::old('talla'),array('class' => 'form-control','requied' => 'required')
@@ -29,7 +29,7 @@
 					 ?>
 				@if(!empty($colores) && !is_null($colores) && count($colores)>0)
 					@foreach ($colores as $color)
-						<?php $arr = $arr+array($color->id => $color->color_desc);  ?>
+						<?php $arr = $arr+array($color->id => ucfirst($color->color_desc));  ?>
 					@endforeach
 				@endif
 				{{ Form::select('color',$arr,Input::old('color'),array('class' => 'form-control','requied' => 'required')
@@ -84,10 +84,10 @@
     myDropzone.on("success", function(resp){
     	var response = JSON.parse(resp.xhr.response);
     	
-    	$('.dz-preview:last-child').children('.dz-remove').attr({'data-info-value':response.campo,'id':response.campo})
+    	$('.dz-preview:last-child').children('.dz-remove').attr({'data-info-value':response.image,'id':response.image})
     });
     myDropzone.on("removedfile", function(file) {
-    	var campo = $(file._removeLink).attr('id');
+    	var image = $(file._removeLink).attr('id');
 
         if(file.xhr){
 
@@ -103,7 +103,7 @@
                     data: {
                     	'name' 		: file.name,
                     	'misc_id' 	: $('#misc_id').val(),
-                    	'campo'		: campo,
+                    	'image'		: image,
                     	'id'	  	: $('#art_id').val()
                     },
                     success:function(response)

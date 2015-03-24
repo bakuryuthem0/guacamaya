@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 13-03-2015 a las 22:31:44
+-- Tiempo de generación: 24-03-2015 a las 22:29:51
 -- Versión del servidor: 5.5.39
 -- Versión de PHP: 5.4.31
 
@@ -118,6 +118,47 @@ INSERT INTO `estado` (`id`, `nombre`, `pais_id`, `deleted`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `images`
+--
+
+CREATE TABLE IF NOT EXISTS `images` (
+`id` int(11) NOT NULL,
+  `misc_id` int(11) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `updated_at` date DEFAULT NULL,
+  `deleted` int(11) DEFAULT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+
+--
+-- Volcado de datos para la tabla `images`
+--
+
+INSERT INTO `images` (`id`, `misc_id`, `image`, `created_at`, `updated_at`, `deleted`) VALUES
+(1, 9, '7/ADEA.jpg', '2015-03-24', '2015-03-24', 1),
+(2, 9, '7/ADEA.jpg', '2015-03-24', '2015-03-24', 1),
+(3, 9, '7/ADEA.jpg', '2015-03-24', '2015-03-24', 1),
+(4, 9, '7/logo-01(1).png', '2015-03-24', '2015-03-24', NULL),
+(5, 9, '7/afasaf.jpg', '2015-03-24', '2015-03-24', NULL),
+(6, 9, '7/ADEA.jpg', '2015-03-24', '2015-03-24', NULL),
+(7, 9, '7/construccion800.png', '2015-03-24', '2015-03-24', NULL),
+(8, 9, '7/Captura de pantalla de 2015-01-27 13:09:12.png', '2015-03-24', '2015-03-24', NULL),
+(9, 10, '7/ceascurca.jpg', '2015-03-24', '2015-03-24', NULL),
+(10, 10, '7/cidv.png', '2015-03-24', '2015-03-24', NULL),
+(11, 10, '7/ciades.jpg', '2015-03-24', '2015-03-24', NULL),
+(12, 10, '7/Captura de pantalla de 2015-01-27 13:09:12(1).png', '2015-03-24', '2015-03-24', NULL),
+(13, 11, '7/construccion800(1).png', '2015-03-24', '2015-03-24', NULL),
+(14, 11, '7/atributos.png', '2015-03-24', '2015-03-24', NULL),
+(15, 11, '7/ejemplo3.jpg', '2015-03-24', '2015-03-24', NULL),
+(16, 1, '1/ejemplo4(1).jpg', NULL, NULL, NULL),
+(17, 2, '2/ejemplo3(1).jpg', NULL, NULL, NULL),
+(18, 3, '3/ejemplo.jpg', NULL, NULL, NULL),
+(19, 4, '4/ejemplo2(1).jpg', NULL, NULL, NULL),
+(20, 6, '6/facilitador.png', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `item`
 --
 
@@ -134,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `item` (
   `item_cat` int(11) DEFAULT NULL,
   `item_subcat` int(11) DEFAULT NULL,
   `item_precio` float DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Volcado de datos para la tabla `item`
@@ -145,7 +186,9 @@ INSERT INTO `item` (`id`, `item_cod`, `item_nomb`, `item_desc`, `item_stock`, `i
 (2, '002', 'Camisota', '<p>dgdfgdfgdfgdfgdfgf</p>\r\n', 50, 0, '2015-03-13', '2015-03-13', 0, 2, 7, 250),
 (3, '003', 'Camisota3', '<p>sfafsfsfsafasfsafsaf</p>\r\n', 50, 0, '2015-03-13', '2015-03-13', 0, 3, NULL, 3000),
 (4, '004', 'Camisota4', '<p>fsafasfasfafsa</p>\r\n', 50, 0, '2015-03-13', '2015-03-13', 0, 1, 1, 50),
-(5, '', '', '', 0, 0, '0000-00-00', '0000-00-00', 0, NULL, NULL, 0);
+(5, '', '', '', 0, 0, '0000-00-00', '0000-00-00', 0, NULL, NULL, 0),
+(6, '005', 'articulo 5', '<p>esta es la descripcion del articulo</p>\r\n', 100, 0, '2015-03-20', '2015-03-20', 0, 2, 7, 50),
+(7, '0010', 'articulo 2123', '<p>afasfasfasfsdfsdfsdfsdfdsfsd</p>\r\n', 1000, 0, '2015-03-24', '2015-03-24', 0, 3, NULL, 1200);
 
 -- --------------------------------------------------------
 
@@ -158,28 +201,27 @@ CREATE TABLE IF NOT EXISTS `miscelanias` (
   `item_id` int(11) DEFAULT NULL,
   `item_talla` varchar(20) DEFAULT NULL,
   `item_color` varchar(20) DEFAULT NULL,
-  `img_1` varchar(100) DEFAULT NULL,
-  `img_2` varchar(100) DEFAULT NULL,
-  `img_3` varchar(100) DEFAULT NULL,
-  `img_4` varchar(100) DEFAULT NULL,
-  `img_5` varchar(100) DEFAULT NULL,
-  `img_6` varchar(100) DEFAULT NULL,
-  `img_7` varchar(100) DEFAULT NULL,
-  `img_8` varchar(100) DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `deleted` int(11) DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Volcado de datos para la tabla `miscelanias`
 --
 
-INSERT INTO `miscelanias` (`id`, `item_id`, `item_talla`, `item_color`, `img_1`, `img_2`, `img_3`, `img_4`, `img_5`, `img_6`, `img_7`, `img_8`, `updated_at`, `created_at`, `deleted`) VALUES
-(1, 1, '1', '2', '1/ejemplo4(1).jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-13', '2015-03-13', 0),
-(2, 2, '2', '2', '2/ejemplo3(2).jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-13', '2015-03-13', 0),
-(3, 3, '3', '3', '3/ejemplo(1).jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-13', '2015-03-13', 0),
-(4, 4, '2', '2', '4/ejemplo2(1).jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-13', '2015-03-13', 0);
+INSERT INTO `miscelanias` (`id`, `item_id`, `item_talla`, `item_color`, `updated_at`, `created_at`, `deleted`) VALUES
+(1, 1, '1', '2', '2015-03-13', '2015-03-13', 0),
+(2, 2, '2', '2', '2015-03-13', '2015-03-13', 0),
+(3, 3, '3', '3', '2015-03-13', '2015-03-13', 0),
+(4, 4, '2', '2', '2015-03-13', '2015-03-13', 0),
+(5, 6, '2', '2', '2015-03-20', '2015-03-20', 0),
+(6, 4, '1', '2', '2015-03-13', '2015-03-13', 0),
+(7, 4, '2', '2', '2015-03-13', '2015-03-13', 0),
+(8, 4, '1', '1', '2015-03-13', '2015-03-13', 0),
+(9, 7, '1', '1', '2015-03-24', '2015-03-24', 0),
+(10, 7, '2', '1', '2015-03-24', '2015-03-24', 0),
+(11, 7, '1', '1', '2015-03-24', '2015-03-24', 0);
 
 -- --------------------------------------------------------
 
@@ -1794,8 +1836,8 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `username`, `password`, `dir`, `email`, `telefono`, `cedula`, `created_at`, `updated_at`, `nombre`, `apellido`, `parroquia`, `municipio`, `estado`, `role`, `user_deleted`, `register_cod`, `register_cod_active`, `remember_token`) VALUES
-(1, 'admin', '$2y$08$EiGNW.dQp1X2X0/4GvWgGuGXLPUwWdsqe3zhZarOV8e1tkKcnV96m', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, 1, 0, '', 0, 'dCwjqBIGITfBNCdvOVtmNzk7U3XEMkzrIg7DOnaurtQpXuEGumzHBdfzv3yp'),
-(2, 'carlos', '$2y$08$3WEbQLhnWV4nlIXgGp4H6.XJ834Tv1vvcqbSqLCR3.Tx00CG0puy.', NULL, 'shenlong_12@hotmail.com', NULL, NULL, '2015-03-12', '2015-03-12', 'carlos', 'salazar', '263', '75', '7', 0, 0, '9b26f36e3f37a5d1841d3599a226e087', 0, ''),
+(1, 'admin', '$2y$08$EiGNW.dQp1X2X0/4GvWgGuGXLPUwWdsqe3zhZarOV8e1tkKcnV96m', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, 1, 0, '', 0, 'JnwcYX3IuT6ntPgslaUrT5DH0WKxmTWRAIW6WgYqtrKwN3MFYSd56dhEtgrb'),
+(2, 'carlos', '$2y$08$3WEbQLhnWV4nlIXgGp4H6.XJ834Tv1vvcqbSqLCR3.Tx00CG0puy.', NULL, 'shenlong_12@hotmail.com', NULL, NULL, '2015-03-12', '2015-03-12', 'carlos', 'salazar', '263', '75', '7', 0, 0, '9b26f36e3f37a5d1841d3599a226e087', 0, 'UXxGbalCuJ55kI491jGsIKDar8eGP2lOIhXsKXH2SR3iQTCRM4boM7ZjFCel'),
 (3, 'pepe', '$2y$08$8ZykLDy/Xx2K5lweVstBK.3izd2oFxpyNzLxKnznGxGLZ2TeK3a6S', NULL, 'pepe@pepe.com', NULL, NULL, '2015-03-12', '2015-03-12', 'pepe', 'pepe', '1', '1', '1', 0, 0, '31fc7f18e6dc5f5d7cb09a40d1fa7115', 0, 'W754R9johJkDrVA0GbjejJNT0itE8YkT3gma6uIHwXc5mb35RwdAJh84ighZ');
 
 --
@@ -1819,6 +1861,12 @@ ALTER TABLE `colores`
 --
 ALTER TABLE `estado`
  ADD PRIMARY KEY (`id`), ADD KEY `fk_estado_pais` (`pais_id`);
+
+--
+-- Indices de la tabla `images`
+--
+ALTER TABLE `images`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `item`
@@ -1888,15 +1936,20 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 ALTER TABLE `estado`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la tabla Estado',AUTO_INCREMENT=25;
 --
+-- AUTO_INCREMENT de la tabla `images`
+--
+ALTER TABLE `images`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+--
 -- AUTO_INCREMENT de la tabla `item`
 --
 ALTER TABLE `item`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `miscelanias`
 --
 ALTER TABLE `miscelanias`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `municipio`
 --

@@ -34,7 +34,7 @@
         @foreach($art as $a)
           <a href="{{ URL::to('articulo/'.$a->id) }}">
             <div class="col-xs-3 contArtPrinc">
-              <img src="{{ asset('images/items/'.$a->img_1) }}" class="imgArtPrinc imgPrinc">
+              <img src="{{ asset('images/items/'.$a->image) }}" class="imgArtPrinc imgPrinc">
               <ul class="textoPromedio ulNoStyle">
                 <li>
                   <label style="color:black;">{{ $a->item_nomb.' - Cod: '.$a->item_cod }}</label>

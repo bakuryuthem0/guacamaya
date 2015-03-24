@@ -174,40 +174,8 @@ class AdminController extends BaseController {
 		$id = Input::get('art_id');
 		$misc_id = Input::get('misc_id');
 		$file = Input::file('file');
-		$misc = Misc::find($misc_id);
-		$campo = "";
-		if (empty($misc->img_1)) {
-			$misc->img_1 = $id.'/'.$file->getClientOriginalName();
-			$campo = 'img_1';
-		}elseif (empty($misc->img_2)) {
-			$misc->img_2 = $id.'/'.$file->getClientOriginalName();
-			$campo = 'img_2';
-		}elseif(empty($misc->img_3))
-		{
-			$misc->img_3 = $id.'/'.$file->getClientOriginalName();
-			$campo = 'img_3';
-		}elseif(empty($misc->img_4))
-		{
-			$misc->img_4 = $id.'/'.$file->getClientOriginalName();
-			$campo = 'img_4';
-		}elseif(empty($misc->img_5))
-		{
-			$misc->img_5 = $id.'/'.$file->getClientOriginalName();
-			$campo = 'img_5';
-		}elseif(empty($misc->img_6))
-		{
-			$misc->img_6 = $id.'/'.$file->getClientOriginalName();
-			$campo = 'img_6';
-		}elseif(empty($misc->img_7))
-		{
-			$misc->img_7 = $id.'/'.$file->getClientOriginalName();
-			$campo = 'img_7';
-		}elseif(empty($misc->img_8))
-		{
-			$misc->img_8 = $id.'/'.$file->getClientOriginalName();
-			$campo = 'img_8';
-		}
-		
+		$images = new Images;
+		$images->misc_id =  $misc_id;
 		if (file_exists('images/items/'.$id.'/'.$file->getClientOriginalName())) {
 			//guardamos la imagen en public/imgs con el nombre original
             $i = 0;//indice para el while
@@ -236,29 +204,7 @@ class AdminController extends BaseController {
 	           ->interlace()
 	           ->save('images/items/'.$id.'/'.$miImg);
             if($miImg != $file->getClientOriginalName()){
-                if ($campo == 'img_1') {
-					$misc->img_1 = $id.'/'.$miImg;
-				}elseif ($campo == 'img_2') {
-					$misc->img_2 = $id.'/'.$miImg;
-				}elseif($campo == 'img_3')
-				{
-					$misc->img_3 = $id.'/'.$miImg;
-				}elseif($campo == 'img_4')
-				{
-					$misc->img_4 = $id.'/'.$miImg;
-				}elseif($campo == 'img_5')
-				{
-					$misc->img_5 = $id.'/'.$miImg;
-				}elseif($campo == 'img_6')
-				{
-					$misc->img_6 = $id.'/'.$miImg;
-				}elseif($campo == 'img_7')
-				{
-					$misc->img_7 = $id.'/'.$miImg;
-				}elseif($campo == 'img_8')
-				{
-					$misc->img_8 = $id.'/'.$miImg;
-				}
+            	$images->image = $id.'/'.$miImg;
             }
 		}else
 		{
@@ -275,9 +221,10 @@ class AdminController extends BaseController {
             $blank->insert($img,'center')
            ->interlace()
            ->save('images/items/'.$id.'/'.$file->getClientOriginalName());
+           $images->image = $id.'/'.$file->getClientOriginalName();
 		}
-		$misc->save();
-        return Response::json(array('campo' => $campo));
+		$images->save();
+        return Response::json(array('image' => $images->id));
 
         if( $upload_success ) {
         	return Response::json('success', 200);
@@ -287,51 +234,16 @@ class AdminController extends BaseController {
 	}
 	public function postDeleteImg()
 	{
-		$campo 		= Input::get('campo');
+		$image 		= Input::get('image');
 		$file 		= Input::get('name');
 		$id     	= Input::get('id');
 		$misc_id    = Input::get('misc_id');
 		$misc 		= Misc::find($misc_id);
-		if ($campo == 'img_1') {
-			$img = $misc->img_1;
-			File::delete('images/items/'.$img);
-			$misc->img_1 = "";
-		}elseif ($campo == 'img_2') {
-			$img = $misc->img_2;
-			File::delete('images/items/'.$img);
-			$misc->img_2 = "";
-		}elseif($campo == 'img_3')
-		{
-			$img = $misc->img_3;
-			File::delete('images/items/'.$img);
-			$misc->img_3 = "";
-		}elseif($campo == 'img_4')
-		{
-			$img = $misc->img_4;
-			File::delete('images/items/'.$img);
-			$misc->img_4 = "";
-		}elseif($campo == 'img_5')
-		{
-			$img = $misc->img_5;
-			File::delete('images/items/'.$img);
-			$misc->img_5 = "";
-		}elseif($campo == 'img_6')
-		{
-			$img = $misc->img_6;
-			File::delete('images/items/'.$img);
-			$misc->img_6 = "";
-		}elseif($campo == 'img_7')
-		{
-			$img = $misc->img_7;
-			File::delete('images/items/'.$img);
-			$misc->img_7 = "";
-		}elseif($campo == 'img_8')
-		{
-			$img = $misc->img_8;
-			File::delete('images/items/'.$img);
-			$misc->img_8 = "";
-		}
-		$misc->save();
+		$img = Images::find($image);
+		$img->deleted = 1;
+		File::delete('images/items/'.$img->image);
+		$img->save();
+		
 		return Response::json(array('llego' => 'llego'));
 	}
 	public function postContinueNew()

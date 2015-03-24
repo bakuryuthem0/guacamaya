@@ -32,7 +32,7 @@ class HomeController extends BaseController {
 			$subcat[$c->id] = $aux->toArray();
 		}
 		$art = Items::leftJoin('miscelanias as m','m.item_id','=','item.id')
-		
+		->leftJoin('images as i','m.id','=','i.misc_id')
 		->groupBy('item.id')
 		->where('item.deleted','=',0)
 		->get(array(
@@ -41,7 +41,8 @@ class HomeController extends BaseController {
 			'item.item_cod',
 			'item.item_stock',
 			'item.item_precio',
-			'm.img_1',
+			'm.id as misc_id',
+			'i.image',
 		));
 		return View::make('indexs.index')
 		->with('title',$title)
@@ -62,35 +63,29 @@ class HomeController extends BaseController {
 		$art = Items::find($id);
 		$a = new stdClass;
 		$a->id = $art->id;
-		$a->item_nomb = $art->item_nomb;
-		$a->item_stock= $art->item_stock;
-		$a->item_desc = $art->item_desc;
-		$a->item_cod  = $art->item_cod;
-		$a->item_precio = $art->item_precio;
-		$a->talla = array();
-		$a->color = array();
+		$a->item_nomb 		= $art->item_nomb;
+		$a->item_stock		= $art->item_stock;
+		$a->item_desc 		= $art->item_desc;
+		$a->item_cod 	 	= $art->item_cod;
+		$a->item_precio 	= $art->item_precio;
+		$a->misc 			= array();
+		$a->tallas    		= array();
+		$a->colores   		= array();
+		$misc    			= Misc::where('item_id','=',$art->id)->first();
+		$a->images   	 	= Images::where('misc_id','=',$misc->id)->get();
+		if (!empty($misc) || !is_null($misc)) {
+				$aux  = Tallas::find($misc->item_talla);
+				$aux2 = Colores::find($misc->item_color);
+				
+				$a->misc 	    	= $misc->id;
+				$a->tallas  		= array_merge($a->tallas,array($misc->item_talla => $aux));
+				$a->colores 		= array_merge($a->colores,array($misc->item_color => $aux2));
+				
+		}
+		$tallas  = Tallas::get();
+		$colores = Colores::get();
 
-		$misc = Misc::where('item_id','=',$a->id)->first();
-		$a->img = array();
-		$a->misc = $misc->id;
-
-		$talla = Tallas::find($misc->item_talla);
-		$color = Colores::find($misc->item_color);
-		$misc2 = Misc::where('item_id','=',$a->id)->where('id','!=',$misc->id)->get();
-		$a->talla[$misc->id] = $talla->talla_nomb.' - '.$talla->talla_desc;
-		$a->color[$misc->id] = $color->color_desc;
-		$a->img[$misc->id] = array(
-			'img_1' => $misc->img_1,
-			'img_2' => $misc->img_2,
-			'img_3' => $misc->img_3,
-			'img_4' => $misc->img_4,
-			'img_5' => $misc->img_5,
-			'img_6' => $misc->img_6,
-			'img_7' => $misc->img_7,
-			'img_8' => $misc->img_8,
-		);
-		
-		$title = $art->nombre;
+		$title = $art->item_nomb;
 		if (Auth::check() && Auth::user()->role == 1) {
 			$layout = 'admin';
 		}else
@@ -106,5 +101,6 @@ class HomeController extends BaseController {
 		->with('layout',$layout)
 		->with('tallas',$tallas)
 		->with('colores',$colores);
+	
 	}
 }
