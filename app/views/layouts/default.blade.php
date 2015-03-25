@@ -38,12 +38,14 @@
                   </button>
                 </div>
                 <div class="col-xs-6">
+                  <form method="POST" action="{{ URL::to('busqueda') }}">
                   <div class="col-xs-10">
-                    <input class="form-control inputBusqueda" placeholder="Busqueda por palabras claves,marcas o productos">
+                      <input class="form-control inputBusqueda" placeholder="Busqueda por palabras claves,marcas o productos" name="busq">
                   </div>
                   <div class="col-xs-2">
                     <button class="btn bt-buscar">Buscar</button>
                   </div>
+                  </form>
                 </div>
                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="display:inline-block !important;">
                 <table class="nav navbar-nav table table-striped table-hover textoPromedio nav navbar-nav">
@@ -55,7 +57,7 @@
                       <td style="text-align:center;"><a href="{{ URL::to('registro') }}">Registrarse </a></td>
                     </tr>
                     <tr>
-                      <td style="text-align:center;"><a href="{{ URL::to('') }}">Contactenos</a></td>
+                      <td style="text-align:center;"><a href="{{ URL::to('contactenos') }}">Contactenos</a></td>
                     </tr>
                   @else
                     <tr>
@@ -69,6 +71,11 @@
                           <li>
                             <a href="{{ URL::to('usuario/perfil') }}">
                               <span class="fa fa-cog"></span> Perfil
+                            </a>
+                          </li>
+                          <li>
+                            <a href="{{ URL::to('cerrar-sesion') }}">
+                              <i class="fa fa-sign-out"></i> Cerrar sesión
                             </a>
                           </li>
                         </ul>

@@ -11,16 +11,18 @@ class ItemController extends BaseController {
 	{
 		if (Request::ajax()) {
 			$inp = Input::all();
-			$img = Misc::where('deleted','=',0)->where('item_id','=',$inp['id'])->pluck('img_1');
+			$misc = Misc::where('item_id','=',$inp['id'])->where('deleted','=',0)->first();
+
+			$img = Images::where('deleted','=',0)->where('misc_id','=',$misc->id)->first();
 			
 			
-			Cart::add(array('id' => $inp['id'],'name' => $inp['name'],'qty' => 1,'options' =>array('img' => $img),'price' => $inp['price']));
+			Cart::add(array('id' => $inp['id'],'name' => $inp['name'],'qty' => 1,'options' =>array('img' => $img->image),'price' => $inp['price']));
 			$rowid = Cart::search(array('id' => $inp['id']));
 			$item = Cart::get($rowid[0]);
 
 			return Response::json(array(
 				'rowid'		=> $rowid[0],
-				'img' 		=> $img,
+				'img' 		=> $img->image,
 				'id' 		=> $item->id,
 				'name' 		=> $item->name,
 				'qty' 		=> $item->qty,

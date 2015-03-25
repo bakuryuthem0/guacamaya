@@ -1,15 +1,6 @@
 @extends('layouts.default')
 
 @section('content')
-<div class="row">
-    <div class="col-xs-12 contSlider" style="padding-left:0px;padding-right:0px;">
-    	<div class="mySlide">
-    		<div><img src="{{URL::to('images/slides-top/slider1-01.png')}}"></div>
-    		<div><img src="{{URL::to('images/slides-top/slider2-01.png')}}"></div>
-    		<div><img src="{{URL::to('images/slides-top/slider3-01.png')}}"></div>
-    	</div>
-    </div>
-</div>  
 <div class="row" style="margin-top:2em;">
   <div class="container">
     <div class="col-xs-12">
@@ -23,8 +14,8 @@
               @foreach($subcat[$c->id] as $j => $s)
                 @if(isset($subcat[$c->id][$j]))
                   <li>
-                    <a href="{{ URL::to('categorias/'.str_replace(' ','-',$subcat[$c->id][$j]['sub_nomb']).'/'.$subcat[$c->id][$j]['id']) }}" style="color:black;">
-                      {{ $subcat[$c->id][$j]['sub_nomb'] }}</a></li>
+                    <a href="{{ URL::to('categorias/'.str_replace(' ','-',$subcat[$c->id][$j]['sub_nomb']).'/'.$subcat[$c->id][$j]['id']) }}" style="color:black;">{{ $subcat[$c->id][$j]['sub_nomb'] }}</a>
+                    </li>
                 @endif  
               @endforeach
               
@@ -35,6 +26,10 @@
       </div>
       <div class="col-xs-10 contdeColor" style="padding-right: 0px;">
         @if(count($art)>0)
+        <div class="alert alert-success">
+          <p class="textoPromedio" style="text-align:center;">Resultados encontrados para <strong>{{ $busq }}</strong></p>
+        </div>
+
         @foreach($art as $a)
           <a href="{{ URL::to('articulo/'.$a->id) }}">
             <div class="col-xs-3 contArtPrinc">
@@ -52,44 +47,11 @@
         @endforeach
         @else
           <div class="alert alert-warning">
-              <p class="textoPromedio" style="text-align:center;">No se encontraron articulos</p>
+              <p class="textoPromedio" style="text-align:center;">No se encontraron articulos {{ 'para: <strong>'.$busq.'</strong>' }}</p>
           </div>
         @endif
       </div>
     </div>
   </div>
 </div>
-<div class="col-xs-6 contCentrado">
-  <img src="{{URL::to('images/slides-top/slider1-01.png')}}">
-</div>
-@stop
-
-@section('postscript')
-	 <script type="text/javascript">
-          $(document).ready(function(){
-            $('.mySlide').slick({
-              adaptiveHeight: false,
-              accessibility:true,
-              autoplay    : true,
-              autoplaySpeed : 5000,
-              dots: true,
-              infinite: true,
-              speed: 300,
-              slidesToShow: 1,
-            });
-            $('.fade').slick()
-            
-            /*$('.fade').slick({
-              dots: true,
-              infinite: true,
-              speed: 500,
-              fade: true,
-              cssEase: 'linear',
-              adaptiveHeight: true,
-              autoplay    : true,
-              autoplaySpeed : 5000
-            });
-            */
-          });
-    </script>
 @stop

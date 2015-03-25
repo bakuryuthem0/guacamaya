@@ -12,6 +12,8 @@
 */
 Route::get('/', 'HomeController@getFront');
 Route::get('inicio', 'HomeController@getIndex');
+Route::get('contactenos','HomeController@getContact');
+Route::post('contactenos','HomeController@postContact');
 Route::group(array('before' =>'no_auth'),function()
 {
 	Route::get('iniciar-sesion','HomeController@getLogin');
@@ -19,6 +21,11 @@ Route::group(array('before' =>'no_auth'),function()
 });
 
 Route::get('articulo/{id}','HomeController@getShowItem');
+
+Route::get('categorias/{subcat}/{id}','HomeController@getSubCatBuscar');
+Route::get('categorias/{id}','HomeController@getCatBuscar');
+
+Route::post('busqueda','HomeController@search');
 
 Route::get('administrador', 'AdminController@getLogin');
 Route::post('administrador/iniciar-sesion/autenticar','AdminController@postLogin');

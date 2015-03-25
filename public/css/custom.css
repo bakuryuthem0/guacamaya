@@ -279,9 +279,9 @@ footer
 {
 	text-align: center !important;
 }
-.table > tbody > tr >th
+.table>thead>tr>th
 {
-	text-align: center !important; 
+	text-align: center; 
 }
 .table-striped>tbody>tr:nth-of-type(odd) {
 	background-color: #E3F0DA !important;
