@@ -18,7 +18,7 @@
 					</div>
 				</div>
 				<div class="col-xs-4 textoPromedio">
-					<div class="col-xs-12">
+					<div class="col-xs-12" style="word-break: break-all;">
 						<label>Descripción</label>
 						{{ $art->item_desc }}
 					</div>
@@ -27,17 +27,18 @@
 						<label>Talla</label>
 						<select class="form-control talla">
 							@foreach($tallas as $t)
-								<?php $nop = 1;?>
+								<?php $n = 0;?>
 								@foreach($art->tallas as $at)
-									@if($at->id == $t->id)
-										<?php $nop = 0;?>
+									@if($at->item_talla == $t->id)
+										<?php $n = 0;?>
+										<option value="{{ $t->id }}">{{ strtoupper($t->talla_nomb).' - '.ucfirst($t->talla_desc) }}</option>
+										<?php break;?>
+									@else
+										<?php $n = 1;?>
 									@endif
 								@endforeach
-
-								@if($nop == 0)
-									<option value="{{ $t->id }}">{{ strtoupper($t->talla_nomb).' - '.ucfirst($t->talla_desc) }}</option>
-								@else
-									<option class="disabled" disabled value="{{ $t->id }}">{{ strtoupper($t->talla_nomb).' - '.ucfirst($t->talla_desc) }}</option>
+								@if($n == 1)
+								<option class="disabled" disabled value="{{ $t->id }}">{{ strtoupper($t->talla_nomb).' - '.ucfirst($t->talla_desc) }}</option>
 								@endif
 							@endforeach
 						</select>

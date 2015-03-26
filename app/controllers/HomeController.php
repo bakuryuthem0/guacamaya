@@ -72,16 +72,12 @@ class HomeController extends BaseController {
 		$a->tallas    		= array();
 		$a->colores   		= array();
 		$misc    			= Misc::where('item_id','=',$art->id)->first();
+
 		$a->images   	 	= Images::where('misc_id','=',$misc->id)->get();
-		if (!empty($misc) || !is_null($misc)) {
-				$aux  = Tallas::find($misc->item_talla);
-				$aux2 = Colores::find($misc->item_color);
-				
-				$a->misc 	    	= $misc->id;
-				$a->tallas  		= array_merge($a->tallas,array($misc->item_talla => $aux));
-				$a->colores 		= array_merge($a->colores,array($misc->item_color => $aux2));
-				
-		}
+		$t = Misc::where('item_id','=',$art->id)->groupBy('item_talla')->get(array('item_talla'));
+		$c = Misc::where('item_id','=',$art->id)->get(array('item_color','item_talla'));
+		$a->tallas = $t;
+		$a->colores= $c;
 		$tallas  = Tallas::get();
 		$colores = Colores::get();
 

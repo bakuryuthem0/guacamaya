@@ -37,7 +37,7 @@
                     <span class="icon-bar"></span>
                   </button>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-xs-6 myBuscador">
                   <form method="POST" action="{{ URL::to('busqueda') }}">
                   <div class="col-xs-10">
                       <input class="form-control inputBusqueda" placeholder="Busqueda por palabras claves,marcas o productos" name="busq">
@@ -200,9 +200,8 @@
         </div>
         @yield('content')
         <footer>
-          <div class="row">
-            <div class="container">
-              <div class="col-xs-8 contCentrado">
+          <div class="col-xs-9 contFoot">
+              <div class="col-xs-12 contList contCentrado">
                 <div class="col-xs-6 textoPromedio">
                   <label>Acerca de guacamaya</label>
                   <ul class="ulNoStyle">
@@ -211,10 +210,14 @@
                     <li>Cupones y Códigos de Promoción</li>
                     <li>Politicas de protección de datos</li>
                     <li>Formas de pago</li>
-                    <li>Contacto</li>
+                    <li>
+                      <a href="{{ URL::to('contactenos') }}" class="aSinFormato">
+                        Contacto
+                      </a>
+                    </li>
                   </ul>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-xs-6 contRedes">
                   <i class="fa fa-facebook redes" id="facebook"></i>
                   <i class="fa fa-twitter redes"></i>
                   <i class="fa fa-instagram redes"></i>
@@ -223,9 +226,8 @@
                 <div class="clearfix"></div>
               </div>
               <div class="col-xs-12 footerTerm">
-                <p class="textoPromedio">terminos y condiciones blah blah blah</p>
+                <p class="textoPromedio"><i class="fa fa-copyright"></i> 2015 Guacamaya stores 2015, c.a. | Todos los derechos reservados. Desarrolado por <a href="{{ URL::to('http://tecnographic.com.ve') }}" target="_blank">Tecnographic Venezuela c.a.</a></p>
               </div>
-            </div>
           </div>
         </footer>
         {{ HTML::script("http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js") }}

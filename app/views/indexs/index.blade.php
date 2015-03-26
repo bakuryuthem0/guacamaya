@@ -11,19 +11,18 @@
     </div>
 </div>  
 <div class="row" style="margin-top:2em;">
-  <div class="container">
     <div class="col-xs-12">
       <div class="col-xs-2">
         <div class="col-xs-12 contdeColor">
           <legend>Categorías</legend>
           @foreach($cat as $c)
             <label class="textoPromedio"><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#expand{{ $c->id }}"></i> 
-              <a href="{{ URL::to('categorias/'.$c->id) }}" style="color:black;">{{ $c->cat_nomb }}</a></label>
+              <a href="{{ URL::to('categorias/'.$c->id) }}" class="aSinFormato">{{ $c->cat_nomb }}</a></label>
             <ul class="collapse textoPromedio" id="expand{{ $c->id }}">
               @foreach($subcat[$c->id] as $j => $s)
                 @if(isset($subcat[$c->id][$j]))
                   <li>
-                    <a href="{{ URL::to('categorias/'.str_replace(' ','-',$subcat[$c->id][$j]['sub_nomb']).'/'.$subcat[$c->id][$j]['id']) }}" style="color:black;">
+                    <a href="{{ URL::to('categorias/'.str_replace(' ','-',$subcat[$c->id][$j]['sub_nomb']).'/'.$subcat[$c->id][$j]['id']) }}" class="aSinFormato">
                       {{ $subcat[$c->id][$j]['sub_nomb'] }}</a></li>
                 @endif  
               @endforeach
@@ -33,15 +32,15 @@
         </div>
      
       </div>
-      <div class="col-xs-10 contdeColor" style="padding-right: 0px;">
+      <div class="col-xs-10" style="padding-right: 0px;">
         @if(count($art)>0)
         @foreach($art as $a)
           <a href="{{ URL::to('articulo/'.$a->id) }}">
-            <div class="col-xs-3 contArtPrinc">
+            <div class="col-xs-2 contArtPrinc">
               <img src="{{ asset('images/items/'.$a->image) }}" class="imgArtPrinc imgPrinc">
               <ul class="textoPromedio ulNoStyle">
                 <li>
-                  <label style="color:black;">{{ $a->item_nomb.' - Cod: '.$a->item_cod }}</label>
+                  <label class="aSinFormato">{{ $a->item_nomb.' - Cod: '.$a->item_cod }}</label>
                 </li>
                 <li>
                   <p style="color:red;">Bs.{{ $a->item_precio }}</p>
@@ -57,9 +56,8 @@
         @endif
       </div>
     </div>
-  </div>
 </div>
-<div class="col-xs-6 contCentrado">
+<div class="col-xs-9 contCentrado bannerBottom" style="margin-top:2em;">
   <img src="{{URL::to('images/slides-top/slider1-01.png')}}">
 </div>
 @stop
