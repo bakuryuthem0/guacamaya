@@ -88,6 +88,12 @@ Route::group(array('before' =>'auth'),function()
 
 		//eliminar
 		Route::post('colores/eliminar','AdminController@postElimColor');
+		//Nuevo admin
+		Route::get('administrador/crear-nuevo','AdminController@getNewAdmin');
+		Route::post('administrador/crear-nuevo/enviar','AdminController@postNewAdmin');
+
+		//Nuevo slider
+		Route::get('administrador/nuevo-slide','AdminController@getNewSlide');
 	});
 
 });

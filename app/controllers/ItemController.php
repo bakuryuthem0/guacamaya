@@ -14,7 +14,7 @@ class ItemController extends BaseController {
 			$misc = Misc::where('item_id','=',$inp['id'])->where('deleted','=',0)->first();
 
 			$img = Images::where('deleted','!=',1)->where('misc_id','=',$misc->id)->first();
-			
+			return Response::json(array($img => $misc->id));
 			Cart::add(array('id' => $inp['id'],'name' => $inp['name'],'qty' => 1,'options' =>array('img' => $img->image),'price' => $inp['price']));
 			$rowid = Cart::search(array('id' => $inp['id']));
 			$item = Cart::get($rowid[0]);

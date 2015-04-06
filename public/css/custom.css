@@ -228,6 +228,11 @@ a.aSinFormato:hover
 {
 	margin-bottom: 2em;
 }
+.imagesSlidesOption
+{
+	display: none;
+	opacity: 0;
+}
 .loading
 {
 	width:25px;
@@ -278,6 +283,10 @@ a.aSinFormato:hover
 	width: 23% !important;
 	padding-top: 1em;
 	padding-bottom: 1em;
+}
+.adminlayout
+{
+	width: 100% !important;
 }
 .redes
 {
@@ -334,4 +343,9 @@ a.aSinFormato:hover
 {
 	list-style: none;
 	padding:0px;
+}
+.volver
+{
+	display: none;
+	opacity: 0;
 }

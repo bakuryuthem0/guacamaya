@@ -339,9 +339,9 @@ jQuery(document).ready(function($) {
 		to = boton.attr('data-url-value');
 		$.ajax({
 			//casa
-			//url: '/guacamaya/public/'+to,
+			url: '/guacamaya/public/'+to,
 			//trabajo
-			url: '/prueba/guacamaya/public/'+to,
+			//url: '/prueba/guacamaya/public/'+to,
 			type: 'POST',
 			dataType: 'json',
 			data: {'id':boton.val() },
@@ -392,9 +392,9 @@ jQuery(document).ready(function($) {
 		var to = boton.attr('data-url-value');
 			$.ajax({
 				//casa
-				//url: '/guacamaya/public/'+to,
+				url: '/guacamaya/public/'+to,
 				//trabajo
-				url: '/prueba/guacamaya/public/'+to,
+				//url: '/prueba/guacamaya/public/'+to,
 				type: 'POST',
 				dataType: 'json',
 				data: {'id':boton.val() },
@@ -465,9 +465,9 @@ jQuery(document).ready(function($) {
 		if (x) {
 			$.ajax({
 				//casa
-				//url: '/guacamaya/public/vaciar-carrito',
+				url: '/guacamaya/public/vaciar-carrito',
 				//trabajo
-				url: '/prueba/guacamaya/public/vaciar-carrito',
+				//url: '/prueba/guacamaya/public/vaciar-carrito',
 				type: 'POST',
 				dataType: 'json',
 				beforeSend:function()
@@ -624,9 +624,9 @@ jQuery(document).ready(function($) {
 			if (x) {
 				$.ajax({
 					//casa
-					//url: '/guacamaya/public/quitar-item',
+					url: '/guacamaya/public/quitar-item',
 					//trabajo
-					url: '/prueba/guacamaya/public/quitar-item',
+					//url: '/prueba/guacamaya/public/quitar-item',
 					type: 'POST',
 					dataType: 'json',
 					data: {'id':boton.val() },
@@ -679,9 +679,9 @@ jQuery(document).ready(function($) {
 		{
 			$.ajax({
 					//casa
-					//url: '/guacamaya/public/actualizar-al-carrito',
+					url: '/guacamaya/public/actualizar-al-carrito',
 					//trabajo
-					url: '/prueba/guacamaya/public/actualizar-al-carrito',
+					//url: '/prueba/guacamaya/public/actualizar-al-carrito',
 					type: 'POST',
 					dataType: 'json',
 					data: {
@@ -726,5 +726,24 @@ jQuery(document).ready(function($) {
 					}
 				})
 		}
+	});
+});
+jQuery(document).ready(function($) {
+	$('.optionA').click(function(event) {
+		var target = $(this).data('target');
+		$('.contOptionA').animate({'opacity':0}, 500,function(){
+			$(this).css({'display':'none'});
+			$(target).css({'display':'block'}).animate({'opacity':1},500)
+			$('.volver').css({'display':'block'}).animate({'opacity':1}, 500)
+		})
+	});
+	$('.volver').click(function(event) {
+		$(this).animate({'opacity':0}, 500,function(){
+			$(this).css({'display':'none'});
+			$('.contOptionA').css({'display':'block'}).animate({'opacity':1},500)
+		})
+		$('.imagesSlidesOption').animate({'opacity':0}, 500,function(){
+			$(this).css({'display':'none'});
+		})
 	});
 });

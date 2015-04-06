@@ -565,4 +565,128 @@ class AdminController extends BaseController {
 			return Response::json(array('type' => 'success','msg' => 'Categoría eliminada correctamente'));
 		}
 	}
+	public function getNewAdmin()
+	{
+		$title = "Crear nuevo administrador";
+		return View::make('admin.newAdmin')->with('title',$title);
+	}
+	public function postNewAdmin()
+	{
+		$input = Input::all();
+		$rules = array(
+			'adminUser' => 'required|unique:usuario,username',
+			'pass' 		=> 'required|min:8',
+			'pass2' 	=> 'required|same:pass'
+		);		
+		$messages = array(
+			'required' => ':attribute es obligatorio',
+			'min'	   => ':attribute debe tener al menos 8 caracteres',
+			'same'	   => ':attribute no coincide',
+			'unique'   => ':attribute debe ser unico'
+		);
+		$attributes = array(
+			'adminUser'  => 'El campo nombre de administrador',
+			'pass'  	 => 'El campo contraseña nueva',
+			'pass2'  	 => 'El campo repetir contraseña',
+			'adminUser'  => 'El campo nombre de usuario'
+		);
+		$validator = Validator::make($input, $rules, $messages, $attributes);
+		if ($validator->fails()) {
+			return Redirect::to('administrador/crear-nuevo')->withErrors($validator)->withInput();
+		}
+		$user = new User;
+		$user->username = $input['adminUser'];
+		$user->password = Hash::make($input['pass']);
+		$user->email    = $input['adminUser'].'@guacamayastores.com.ve';
+		$user->role     = 1;
+
+		if ($user->save()) {
+			$data = array(
+				'username' => $input['adminUser'],
+				'createBy' => Auth::user()->username
+			);
+			Mail::send('emails.newAdmin', $data, function ($message) use ($input){
+				    $message->subject('Correo creacion de usuario guacamayastores.com.ve');
+				    $message->to('someemail@guacamayastores.com.ve');
+				});
+			Session::flash('success', 'El usuario fue creado satisfactoriamente');
+			return Redirect::to('administrador/crear-nuevo');
+		}else
+		{
+			Session::flash('error', 'El usuario no e pudo crear.');
+			return Redirect::to('administrador/crear-nuevo');
+		}
+	}
+	public function getNewSlide()
+	{
+		$title = "Nuevo slide";
+		return View::make('admin.newSlide')->with('title',$title);
+	}
+	public function postNewSlide()
+	{
+		$input = Input::all();
+		$rules = array(
+		    'img' => 'image|max:2000',
+		);
+		$messages = array(
+			'image' => 'Todos los archivos deben ser imagenes',
+			'max'	=> 'Las imagenes deben ser de menos de 3Mb'
+		);
+		$validation = Validator::make($input, $rules, $messages);
+
+		if ($validation->fails())
+		{
+			return Redirect::to('administrador/nuevo-slide')->withErrors($validation);
+		}
+		$file = Input::file('img');
+		$images = new Slides;
+		if (file_exists('images/slides-top/'.$file->getClientOriginalName())) {
+			//guardamos la imagen en public/imgs con el nombre original
+            $i = 0;//indice para el while
+            //separamos el nombre de la img y la extensión
+            $info = explode(".",$file->getClientOriginalName());
+            //asignamos de nuevo el nombre de la imagen completo
+            $miImg = $file->getClientOriginalName();
+            //mientras el archivo exista iteramos y aumentamos i
+            while(file_exists('images/slides-top/'.$miImg)){
+                $i++;
+                $miImg = $info[0]."(".$i.")".".".$info[1];              
+            }
+            //guardamos la imagen con otro nombre ej foto(1).jpg || foto(2).jpg etc
+            $file->move("images/items/".$id,$miImg);
+            $blank = Image::make('images/blank.jpg');
+
+            $img = Image::make('images/items/'.$id.'/'.$miImg);
+            if ($img->width() > $img->height()) {
+            	$img->widen(225);
+            }else
+            {
+            	$img->heighten(300);
+            }
+            
+	        $blank->insert($img,'center')
+	           ->interlace()
+	           ->save('images/slides-top/'.$miImg);
+            if($miImg != $file->getClientOriginalName()){
+            	$images->image = $id.'/'.$miImg;
+            }
+		}else
+		{
+			$file->move("images/items/".$id,$file->getClientOriginalName());
+			$blank = Image::make('images/blank.jpg');
+			$img = Image::make('images/items/'.$id.'/'.$file->getClientOriginalName());
+            if ($img->width() > $img->height()) {
+            	$img->widen(225);
+            }else
+            {
+            	$img->heighten(300);
+            }
+
+            $blank->insert($img,'center')
+           ->interlace()
+           ->save('images/items/'.$id.'/'.$file->getClientOriginalName());
+           $images->image = $id.'/'.$file->getClientOriginalName();
+		}
+		$images->save();
+	}
 }

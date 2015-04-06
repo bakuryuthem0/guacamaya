@@ -38,133 +38,131 @@
                   </button>
                 </div>
                
-               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1 col-xs-3">
+               <div class="collapse navbar-collapse adminlayout" id="bs-example-navbar-collapse-1 col-xs-3">
                 @if(!Auth::check())
                 <h3 style="text-align:right;vertical-align:middle;">Sistema de administracion de guacamayastores</h3>
                 @else
                   <ul class="nav navbar-nav">
+                    <li class="dropdown myMenu">
+                      <a href="#" class="dropdown-toggle textoPromedio" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <i class="fa fa-user"></i>
+                          {{ Auth::user()->username }}
+                        <span class="caret"></span></a>
+                        <ul class="dropdown-menu multi-level" role="menu">
+                          <li class="dropdown-submenu">
+                            <a href="#" >
+                              Categorías
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                              <li>
+                                <a href="{{ URL::to('categoria/nueva') }}">
+                                  <i class="fa fa-plus"></i> Nueva categoría
+                                </a>
+                              </li>
+                              <li>
+                                <a href="{{ URL::to('categoria/ver-categorias') }}">
+                                  
+                                  Modificar categoría
+                                </a>
+                              </li>
+                              <li>
+                                <a href="{{ URL::to('categoria/nueva-sub-categoria') }}">
+                                  Nueva Sub-categoría
+                                </a>
+                              </li>
+                              <li>
+                                <a href="{{ URL::to('sub-categoria/ver-sub-categorias') }}">
+                                  Modificar Sub-categoría
+                                </a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a href="#" >
+                              Colores
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                              <li>
+                                <a href="{{ URL::to('color/nuevo') }}">
+                                  <i class="fa fa-plus"></i> Nuevo
+                                </a>
+                              </li>
+                              <li>
+                                <a href="{{ URL::to('colores/ver-colores') }}">
+                                  <i class="fa fa-money"></i>
+                                  Modificar
+                                </a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a href="#" >
+                              Articulos
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                              <li>
+                                <a href="{{ URL::to('administrador/nuevo-articulo') }}">
+                                  Nuevo articulo
+                                </a>
+                              </li>
+                              <li>
+                                <a href="{{ URL::to('administrador/ver-articulo') }}">
+                                  Ver articulos
+                                </a>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
                       <li class="dropdown myMenu">
                         <a href="#" class="dropdown-toggle textoPromedio" data-toggle="dropdown" role="button" aria-expanded="false">
                           <i class="fa fa-user"></i>
-                            {{ Auth::user()->username }}
+                            Usuario
                           <span class="caret"></span></a>
                           <ul class="dropdown-menu multi-level" role="menu">
-                            <li class="dropdown-submenu">
-                              <a href="#" >
-                                Categorías
-                              </a>
-                              <ul class="dropdown-menu" role="menu">
-                                <li>
-                                  <a href="{{ URL::to('categoria/nueva') }}">
-                                    <i class="fa fa-plus"></i> Nueva categoría
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="{{ URL::to('categoria/ver-categorias') }}">
-                                    
-                                    Modificar categoría
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="{{ URL::to('categoria/nueva-sub-categoria') }}">
-                                    Nueva Sub-categoría
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="{{ URL::to('sub-categoria/ver-sub-categorias') }}">
-                                    Modificar Sub-categoría
-                                  </a>
-                                </li>
-                              </ul>
-                            </li>
-                            <li class="dropdown-submenu">
-                              <a href="#" >
-                                Colores
-                              </a>
-                              <ul class="dropdown-menu" role="menu">
-                                <li>
-                                  <a href="{{ URL::to('color/nuevo') }}">
-                                    <i class="fa fa-plus"></i> Nuevo
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="{{ URL::to('colores/ver-colores') }}">
-                                    <i class="fa fa-money"></i>
-                                    Modificar
-                                  </a>
-                                </li>
-                              </ul>
-                            </li>
-                            <li class="dropdown-submenu">
-                              <a href="#" >
-                                Articulos
-                              </a>
-                              <ul class="dropdown-menu" role="menu">
-                                <li>
-                                  <a href="{{ URL::to('administrador/nuevo-articulo') }}">
-                                    Nuevo articulo
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="{{ URL::to('administrador/ver-articulo') }}">
-                                    Ver articulos
-                                  </a>
-                                </li>
-                              </ul>
-                            </li>
-                            
+                            <li><a href="{{ URL::to('administrador/crear-nuevo') }}">Nuevo administrador</a></li>
                           </ul>
-                        </li>
+                      </li>
+                      <li class="dropdown myMenu">
+                      <a href="#" class="dropdown-toggle textoPromedio" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <i class="fa fa-user"></i>
+                          Pagina
+                        <span class="caret"></span></a>
+                        <ul class="dropdown-menu multi-level" role="menu">
+                          <li class="dropdown-submenu">
+                            <a href="#" >
+                              Slider
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                              <li>
+                                <a href="{{ URL::to('administrador/nuevo-slide') }}">
+                                  Nuevo slide
+                                </a>
+                              </li>
+                              <li>
+                                <a href="{{ URL::to('categoria/editar-slides') }}">
+                                  Editar slides
+                                </a>
+                              </li>
+                              
+                            </ul>
+                          </li>
+                          
+                        </ul>
+                      </li> 
                       <li class="textoPromedio"><a href="{{ URL::to('cerrar-sesion') }}">Cerrar sesión</a></li>
                   </ul>
                 @endif
 
                 </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                  </form>
-                  <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Link</a></li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                  
-                  <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Link</a></li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>--><!-- /.navbar-collapse -->
+                
               </div><!-- /.container-fluid -->
             </nav>
         </header>
     @yield('content')
     {{ HTML::script("http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js") }}
         <script>window.jQuery || document.write('<script src="js/jquery.js"><\/script>')</script>
+        {{ HTML::script('js/jquery.js') }}
         {{ HTML::script('js/bootstrap.min.js') }}
         {{ HTML::script("js/plugins.js") }}
         {{ HTML::script("js/main.js") }}
