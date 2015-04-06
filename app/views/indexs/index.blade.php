@@ -4,9 +4,9 @@
 <div class="row">
     <div class="col-xs-12 contSlider" style="padding-left:0px;padding-right:0px;">
     	<div class="mySlide">
-    		<div><img src="{{URL::to('images/slides-top/slider1-01.png')}}"></div>
-    		<div><img src="{{URL::to('images/slides-top/slider2-01.png')}}"></div>
-    		<div><img src="{{URL::to('images/slides-top/slider3-01.png')}}"></div>
+        @foreach($slides as $s)
+    		<div><img src="{{URL::to('images/slides-top/'.$s->image)}}"></div>
+        @endforeach
     	</div>
     </div>
 </div>  

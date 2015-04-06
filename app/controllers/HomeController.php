@@ -31,6 +31,8 @@ class HomeController extends BaseController {
 			$aux = SubCat::where('cat_id','=',$c->id)->where('deleted','=',0)->get();
 			$subcat[$c->id] = $aux->toArray();
 		}
+		$slides = Slides::where('active','=',1)->where('deleted','=',0)->get();
+
 		$art = Items::leftJoin('miscelanias as m','m.item_id','=','item.id')
 		->leftJoin('images as i','m.id','=','i.misc_id')
 		->groupBy('item.id')
@@ -48,7 +50,8 @@ class HomeController extends BaseController {
 		->with('title',$title)
 		->with('art',$art)
 		->with('cat',$cat)
-		->with('subcat',$subcat);
+		->with('subcat',$subcat)
+		->with('slides',$slides);
 	}
 	public function getLogin()
 	{

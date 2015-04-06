@@ -22,7 +22,7 @@
 
 						<label>Slide:</label>
 						<input type="file" name="img">
-						<button class="btn btn-success">Enviar</button>
+						<button class="btn btn-success btn-xs" style="margin-top:1em;">Enviar</button>
 					</form>
 				</div>
 				<div class="multiple imagesSlidesOption">
@@ -34,7 +34,7 @@
 	                    </form>
 	                    
 	                </div>
-	                <a href="{{ URL::to('') }}" class="btn btn-success">Continuar</a>
+	                <a href="{{ URL::to('administrador/editar-slides') }}" class="btn btn-success">Continuar</a>
 				</div>
 				<div class="bg-primary textoPromedio volver" style="padding:0.5em;margin-top:1em;">
 					
@@ -82,14 +82,12 @@
                 var url = JSON.parse(file.xhr.response);
                 var imagepath = url.url;
                 $.ajax({
-                    url: '../../imagenes/eliminar',
+                    url: 'nuevos-slides/eliminar',
                     type: 'POST',
                     dataType: 'json',
                     data: {
                     	'name' 		: file.name,
-                    	'misc_id' 	: $('#misc_id').val(),
-                    	'image'		: image,
-                    	'id'	  	: $('#art_id').val()
+                    	'id'		: image,
                     },
                     success:function(response)
                     {

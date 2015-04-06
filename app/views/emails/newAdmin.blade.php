@@ -79,7 +79,7 @@ fieldset[disabled] .btn-success.active {
       </style>
    </head>
    <body style="font-family:'Roboto','san serif';padding:2em 4em;">
-      <img src="http://preview.ffasil.com/public/images/logo2.png" style="width:40%;">
+      <img src="http://preview.guacamayastores.com.ve/public/images/logo2.png" style="width:40%;">
       <div>
       	<legend>Estimado administrador</legend>
          <ul>

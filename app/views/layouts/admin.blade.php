@@ -19,6 +19,7 @@
         {{ HTML::script("js/vendor/modernizr-2.6.2.min.js") }}
         {{ HTML::style('css/custom.css') }}
         {{ HTML::style('js/slick/slick.css') }}
+        {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') }}
     </head>
     <body>
         <header>
@@ -140,14 +141,28 @@
                                 </a>
                               </li>
                               <li>
-                                <a href="{{ URL::to('categoria/editar-slides') }}">
+                                <a href="{{ URL::to('administrador/editar-slides') }}">
                                   Editar slides
                                 </a>
                               </li>
                               
                             </ul>
                           </li>
-                          
+                          <li class="dropdown-submenu">
+                            <a href="#">Publicidad</a>
+                            <ul class="dropdown-menu" role="menu">
+                              <li>
+                                <a href="{{ URL::to('administrador/nueva-publicidad') }}">
+                                  Agregar imagen
+                                </a>
+                              </li>
+                              <li>
+                                <a href="{{ URL::to('administrador/editar-publicidad') }}">
+                                  Editar publicidad
+                                </a>
+                              </li>
+                            </ul>
+                          </li>
                         </ul>
                       </li> 
                       <li class="textoPromedio"><a href="{{ URL::to('cerrar-sesion') }}">Cerrar sesión</a></li>

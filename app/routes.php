@@ -93,7 +93,19 @@ Route::group(array('before' =>'auth'),function()
 		Route::post('administrador/crear-nuevo/enviar','AdminController@postNewAdmin');
 
 		//Nuevo slider
+		//unico
 		Route::get('administrador/nuevo-slide','AdminController@getNewSlide');
+		Route::post('administrador/nuevo-slide/procesar','AdminController@postNewSlide');
+		//multiple
+		Route::post('administrador/nuevos-slides/procesar','AdminController@post_upload_slides');
+		Route::post('administrador/nuevos-slides/eliminar','AdminController@postDeleteSlide');
+		//editar
+		Route::get('administrador/editar-slides','AdminController@getEditSlides');
+		Route::post('administrador/editar-slides/actualizar','AdminController@postEditSlides');
+		Route::post('administrador/editar-slides/eliminar','AdminController@postElimSlides');
+		//Nueva pub
+		Route::get('administrador/nueva-publicidad','AdminController@getNewPub');
+		Route::post('administrador/nueva-publicidad/procesar','AdminController@postNewPub');
 	});
 
 });

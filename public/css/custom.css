@@ -1,7 +1,17 @@
+@font-face{ 
+	font-family: Raleway; src: url('Raleway-Regular.ttf'); 
+} 
+@font-face { 
+	font-family: Raleway; font-weight: bold; src: url('Raleway-Bold.ttf'); 
+}
+@font-face { 
+	font-family: Raleway; font-weight: italic; src: url('Raleway-Italic.ttf'); 
+}
 body,html
 {
 	font-size: 76.66%;
 	color:#404040;
+	font-family: Relaway;
 }
 footer
 {
@@ -339,6 +349,12 @@ a.aSinFormato:hover
 .table-striped>tbody>tr:nth-of-type(odd) {
 	background-color: #E3F0DA !important;
 }
+
+.table > tbody > .tr-slide-desc > td
+{
+	vertical-align: middle !important;
+}
+
 .ulNoStyle
 {
 	list-style: none;
