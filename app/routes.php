@@ -105,7 +105,10 @@ Route::group(array('before' =>'auth'),function()
 		Route::post('administrador/editar-slides/eliminar','AdminController@postElimSlides');
 		//Nueva pub
 		Route::get('administrador/nueva-publicidad','AdminController@getNewPub');
+		//promocion
+		Route::get('administrador/nueva-promocion','AdminController@getNewPromotion');
 		Route::post('administrador/nueva-publicidad/procesar','AdminController@postNewPub');
+
 	});
 
 });

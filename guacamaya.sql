@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 5.6.23, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `guacamaya` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `guacamaya`;
+-- MySQL dump 10.13  Distrib 5.5.41, for debian-linux-gnu (x86_64)
 --
 -- Host: 127.0.0.1    Database: guacamaya
 -- ------------------------------------------------------
--- Server version	5.5.32
+-- Server version	5.5.39
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -112,9 +114,9 @@ CREATE TABLE `images` (
   `image` varchar(255) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
-  `deleted` int(11) DEFAULT NULL,
+  `deleted` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +125,7 @@ CREATE TABLE `images` (
 
 LOCK TABLES `images` WRITE;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
-INSERT INTO `images` VALUES (1,9,'7/ADEA.jpg','2015-03-24','2015-03-24',1),(2,9,'7/ADEA.jpg','2015-03-24','2015-03-24',1),(3,9,'7/ADEA.jpg','2015-03-24','2015-03-24',1),(4,9,'7/logo-01(1).png','2015-03-24','2015-03-24',NULL),(5,9,'7/afasaf.jpg','2015-03-24','2015-03-24',NULL),(6,9,'7/ADEA.jpg','2015-03-24','2015-03-24',NULL),(7,9,'7/construccion800.png','2015-03-24','2015-03-24',NULL),(8,9,'7/Captura de pantalla de 2015-01-27 13:09:12.png','2015-03-24','2015-03-24',NULL),(9,10,'7/ceascurca.jpg','2015-03-24','2015-03-24',NULL),(10,10,'7/cidv.png','2015-03-24','2015-03-24',NULL),(11,10,'7/ciades.jpg','2015-03-24','2015-03-24',NULL),(12,10,'7/Captura de pantalla de 2015-01-27 13:09:12(1).png','2015-03-24','2015-03-24',NULL),(13,11,'7/construccion800(1).png','2015-03-24','2015-03-24',NULL),(14,11,'7/atributos.png','2015-03-24','2015-03-24',NULL),(15,11,'7/ejemplo3.jpg','2015-03-24','2015-03-24',NULL),(16,1,'1/ejemplo4(1).jpg',NULL,NULL,NULL),(17,2,'2/ejemplo3(1).jpg',NULL,NULL,NULL),(18,3,'3/ejemplo.jpg',NULL,NULL,NULL),(19,4,'4/ejemplo2(1).jpg',NULL,NULL,NULL),(20,6,'6/facilitador.png',NULL,NULL,NULL),(21,12,'8/banderas.png','2015-03-27','2015-03-27',NULL);
+INSERT INTO `images` VALUES (1,1,'1/Captura de pantalla de 2014-11-26 09:53:54.png','2015-04-07','2015-04-07',1),(2,1,'1/ejemplo(2).jpg','2015-04-07','2015-04-07',0),(3,1,'1/ejemplo2(2).jpg','2015-04-07','2015-04-07',0),(4,1,'1/ejemplo3(1).jpg','2015-04-07','2015-04-07',0),(5,1,'1/ejemplo4(1).jpg','2015-04-07','2015-04-07',0);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +151,7 @@ CREATE TABLE `item` (
   `item_precio` float DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `item_cod` (`item_cod`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +160,7 @@ CREATE TABLE `item` (
 
 LOCK TABLES `item` WRITE;
 /*!40000 ALTER TABLE `item` DISABLE KEYS */;
-INSERT INTO `item` VALUES (1,'001','Camisota','<p>bbfhfdhdfhdfhfdhd</p>\r\n',50,0,'2015-03-13','2015-03-13',0,1,2,100),(2,'002','Camisota','<p>dgdfgdfgdfgdfgdfgf</p>\r\n',50,0,'2015-03-13','2015-03-13',0,2,7,250),(3,'003','Camisota3','<p>sfafsfsfsafasfsafsaf</p>\r\n',50,0,'2015-03-13','2015-03-13',0,3,NULL,3000),(4,'004','Camisota4','<p>fsafasfasfafsa</p>\r\n',50,0,'2015-03-13','2015-03-13',0,1,1,50),(5,'','','',0,0,'0000-00-00','0000-00-00',0,NULL,NULL,0),(6,'005','articulo 5','<p>esta es la descripcion del articulo</p>\r\n',100,0,'2015-03-20','2015-03-20',0,2,7,50),(7,'0010','articulo 2123','<p>afasfasfasfsdfsdfsdfsdfdsfsd</p>\r\n',1000,0,'2015-03-24','2015-03-24',0,3,NULL,1200),(8,'34234234','vxzvxzvxz','<p>xvzvzxvzxvzxv</p>\r\n',1000,0,'2015-03-27','2015-03-27',0,3,NULL,1000);
+INSERT INTO `item` VALUES (1,'001','Camisota','<p>esta es la descripcion bien grandototoota para que entre en el articulo</p>\r\n',100,0,'2015-04-07','2015-04-07',0,1,1,1200);
 /*!40000 ALTER TABLE `item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,7 +180,7 @@ CREATE TABLE `miscelanias` (
   `created_at` date DEFAULT NULL,
   `deleted` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,7 +189,7 @@ CREATE TABLE `miscelanias` (
 
 LOCK TABLES `miscelanias` WRITE;
 /*!40000 ALTER TABLE `miscelanias` DISABLE KEYS */;
-INSERT INTO `miscelanias` VALUES (1,1,'1','2','2015-03-13','2015-03-13',0),(2,2,'2','2','2015-03-13','2015-03-13',0),(3,3,'3','3','2015-03-13','2015-03-13',0),(4,4,'2','2','2015-03-13','2015-03-13',0),(5,6,'2','2','2015-03-20','2015-03-20',0),(6,4,'1','2','2015-03-13','2015-03-13',0),(7,4,'2','2','2015-03-13','2015-03-13',0),(8,4,'1','1','2015-03-13','2015-03-13',0),(9,7,'1','1','2015-03-24','2015-03-24',0),(10,7,'2','1','2015-03-24','2015-03-24',0),(11,7,'1','1','2015-03-24','2015-03-24',0),(12,8,'1','1','2015-03-27','2015-03-27',0);
+INSERT INTO `miscelanias` VALUES (1,1,'1','1','2015-04-07','2015-04-07',0);
 /*!40000 ALTER TABLE `miscelanias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,6 +275,35 @@ INSERT INTO `parroquia` VALUES (1,'ALTAGRACIA',1,0),(2,'CANDELARIA',1,0),(3,'CAT
 UNLOCK TABLES;
 
 --
+-- Table structure for table `publicidad`
+--
+
+DROP TABLE IF EXISTS `publicidad`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `publicidad` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `item_id` int(11) NOT NULL,
+  `image` varchar(100) DEFAULT NULL,
+  `deleted` int(11) DEFAULT '0',
+  `created_at` date DEFAULT NULL,
+  `updated_at` date DEFAULT NULL,
+  `position` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `publicidad`
+--
+
+LOCK TABLES `publicidad` WRITE;
+/*!40000 ALTER TABLE `publicidad` DISABLE KEYS */;
+INSERT INTO `publicidad` VALUES (1,1,'slider1-01(1).png',0,NULL,'2015-04-07','top'),(2,1,'slider2-01(2).png',0,NULL,'2015-04-07','left'),(3,1,'slider3-01(1).png',0,NULL,'2015-04-07','right'),(4,1,'ejemplo(5).jpg',0,NULL,'2015-04-07','first'),(5,1,'ejemplo2(6).jpg',0,NULL,'2015-04-07','second');
+/*!40000 ALTER TABLE `publicidad` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `role`
 --
 
@@ -308,12 +339,12 @@ DROP TABLE IF EXISTS `slides`;
 CREATE TABLE `slides` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `image` varchar(100) DEFAULT NULL,
-  `active` int(11) DEFAULT NULL,
-  `deleted` int(11) DEFAULT NULL,
+  `active` int(11) DEFAULT '0',
+  `deleted` int(11) DEFAULT '0',
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -322,6 +353,7 @@ CREATE TABLE `slides` (
 
 LOCK TABLES `slides` WRITE;
 /*!40000 ALTER TABLE `slides` DISABLE KEYS */;
+INSERT INTO `slides` VALUES (1,'slider1-01.png',1,0,'2015-04-06','2015-04-06'),(2,'slider2-01.png',0,1,'2015-04-06','2015-04-06'),(3,'slider2-01(1).png',0,1,'2015-04-06','2015-04-06'),(4,'slider2-01.png',0,1,'2015-04-06','2015-04-06'),(5,'slider2-01.png',1,1,'2015-04-06','2015-04-06'),(6,'slider3-01.png',0,1,'2015-04-06','2015-04-06'),(7,'slider2-01.png',1,0,'2015-04-06','2015-04-06'),(8,'slider3-01.png',1,0,'2015-04-06','2015-04-06'),(9,'slider1-01(1).png',0,1,'2015-04-06','2015-04-06');
 /*!40000 ALTER TABLE `slides` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -352,6 +384,54 @@ LOCK TABLES `subcat` WRITE;
 /*!40000 ALTER TABLE `subcat` DISABLE KEYS */;
 INSERT INTO `subcat` VALUES (1,1,'camisa','camisa','2015-03-12','2015-03-12',0),(2,1,'blusa','blusa','2015-03-12','2015-03-12',0),(3,1,'vestido','vestido','2015-03-12','2015-03-12',0),(4,1,'pantalon','pantalón','2015-03-12','2015-03-12',0),(5,1,'ropa deportiva','ropa deportiva','2015-03-12','2015-03-12',0),(6,2,'franelas','franelas','2015-03-12','2015-03-12',0),(7,2,'chemises','chemises','2015-03-12','2015-03-12',0),(8,3,'Anillo','Anillo','2015-03-13','2015-03-13',1);
 /*!40000 ALTER TABLE `subcat` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_users`
+--
+
+DROP TABLE IF EXISTS `t_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `mdl_user_id` int(11) DEFAULT NULL,
+  `idnumber` varchar(30) NOT NULL DEFAULT '',
+  `username` varchar(60) NOT NULL DEFAULT '',
+  `firstname` varchar(45) NOT NULL,
+  `lastname` varchar(45) NOT NULL,
+  `balance` int(11) NOT NULL DEFAULT '0',
+  `password` varchar(60) NOT NULL,
+  `gender` varchar(1) NOT NULL DEFAULT '',
+  `birthdate` varchar(11) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `city` varchar(45) NOT NULL,
+  `country` varchar(2) NOT NULL,
+  `email` varchar(50) NOT NULL DEFAULT '',
+  `roles_code` varchar(3) NOT NULL,
+  `startdate` varchar(11) NOT NULL DEFAULT '',
+  `phone1` varchar(20) DEFAULT NULL,
+  `phone2` varchar(20) DEFAULT NULL,
+  `deleted` tinyint(1) DEFAULT NULL,
+  `suspended` tinyint(1) DEFAULT NULL,
+  `lang` varchar(30) DEFAULT NULL,
+  `institution` varchar(40) DEFAULT NULL,
+  `department` varchar(30) DEFAULT NULL,
+  `race` varchar(11) DEFAULT NULL,
+  `zip` varchar(11) DEFAULT NULL,
+  `career` varchar(11) DEFAULT NULL,
+  `role` varchar(13) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_users`
+--
+
+LOCK TABLES `t_users` WRITE;
+/*!40000 ALTER TABLE `t_users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -432,4 +512,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-05 22:03:17
+-- Dump completed on 2015-04-07 17:05:37

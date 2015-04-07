@@ -153,12 +153,17 @@
                             <ul class="dropdown-menu" role="menu">
                               <li>
                                 <a href="{{ URL::to('administrador/nueva-publicidad') }}">
-                                  Agregar imagen
+                                  Agregar Publicidad
                                 </a>
                               </li>
+                            </ul>
+                          </li>
+                           <li class="dropdown-submenu">
+                            <a href="#">Promociones</a>
+                            <ul class="dropdown-menu" role="menu">
                               <li>
-                                <a href="{{ URL::to('administrador/editar-publicidad') }}">
-                                  Editar publicidad
+                                <a href="{{ URL::to('administrador/nueva-promocion') }}">
+                                  Agregar Promociones
                                 </a>
                               </li>
                             </ul>
@@ -185,6 +190,7 @@
         {{ HTML::script('js/custom.js') }}
         {{ HTML::script('js/ckeditor.js') }}
         {{ HTML::script('js/jquery.ckeditor.js') }}
+        
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

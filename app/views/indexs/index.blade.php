@@ -32,12 +32,12 @@
         </div>
      
       </div>
-      <div class="col-xs-10" style="padding-right: 0px;">
+      <div class="col-xs-8" style="padding-right: 0px;">
         @if(count($art)>0)
         @foreach($art as $a)
           <a href="{{ URL::to('articulo/'.$a->id) }}">
             <div class="col-xs-2 contArtPrinc">
-              <img src="{{ asset('images/items/'.$a->image) }}" class="imgArtPrinc imgPrinc">
+              <img src="{{ asset('images/items/'.$img[$a->id]->image) }}" class="imgArtPrinc imgPrinc">
               <ul class="textoPromedio ulNoStyle">
                 <li>
                   <label class="aSinFormato">{{ $a->item_nomb.' - Cod: '.$a->item_cod }}</label>
@@ -55,11 +55,20 @@
           </div>
         @endif
       </div>
+      <div class="col-xs-2">
+        <div class="col-xs-12"><a href="{{ URL::to('images/pub/'.$first->item_id) }}"><img src="{{ asset('images/pub/'.$first->image) }}"></a></div>
+        <div class="col-xs-12"><a href="{{ URL::to('images/pub/'.$second->item_id) }}"><img src="{{ asset('images/pub/'.$second->image) }}"></a></div>
+      </div>
     </div>
 </div>
-<div class="col-xs-9 contCentrado bannerBottom" style="margin-top:2em;">
-  <img src="{{URL::to('images/slides-top/slider1-01.png')}}">
+<div class="col-xs-12 contCentrado bannerBottom" style="margin-top:2em;">
+  <div class="col-xs-12" style="margin-bottom:1em;">
+    <a href="{{ URL::to('articulo/'.$top->item_id) }}"><img src="{{ asset('images/pub/'.$top->image) }}" style="width:100%;"></a>
+  </div>
+  <div class="col-xs-6"><a href="{{ URL::to('articulo/'.$left->item_id) }}"><img src="{{ asset('images/pub/'.$left->image) }}" style="width:100%;"></a></div>
+  <div class="col-xs-6"><a href="{{ URL::to('articulo/'.$right->item_id) }}"><img src="{{ asset('images/pub/'.$right->image) }}" style="width:100%;"></a></div>
 </div>
+<div class="clearfix"></div>
 @stop
 
 @section('postscript')

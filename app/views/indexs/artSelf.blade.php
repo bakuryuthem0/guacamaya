@@ -6,17 +6,52 @@
 		<div class="col-xs-12">
 			<div class="col-xs-10 contCentrado contdeColor">
 				<legend>{{ $art->item_nomb.' - '.$art->item_cod }}</legend>
-				<div class="col-xs-8">
-					<div class="col-xs-12 imgProd">
-						<input type="hidden" id="art_id" value="{{ $art->id }}">
-						<img src="{{ asset('images/items/'.$art->images[0]->image) }}" class="imgPrinc">
-					</div>
-					<div class="col-xs-12 minis">
-						@foreach($art->images as $a)
-							<img src="{{ asset('images/items/'.$a->image) }}" class="imgMini">
-						@endforeach
-					</div>
-				</div>
+				<ul id="cd-gallery-items" class="cd-container">
+					<li>
+						<ul class="cd-item-wrapper">
+							{{ count($art->images) }}
+							@for($i = 0;$i < count($art->images);$i++)
+								@if($i == 0)
+									<li class="cd-item-front">
+										<a href="#0">
+											<img src="{{ asset('images/items/'.$art->images[$i]->image) }}" alt="{{ $art->item_nomb }}">
+										</a>
+									</li>
+								@elseif(($i+2) == count($art->images))
+								<li class="cd-item-back">
+									<a href="#0">
+										<img src="{{ asset('images/items/'.$art->images[$i]->image) }}" alt="{{ $art->item_nomb }}">
+									</a>
+								</li>
+								@elseif(($i+1) == count($art->images))
+									<li class="cd-item-out">
+										<a href="#0">
+											<img src="{{ asset('images/items/'.$art->images[$i]->image) }}" alt="{{ $art->item_nomb }}">
+										</a>
+									</li>
+								@else
+									<li class="cd-item-middle cd-item-{{ $i }}">
+										<a href="#0">
+											<img src="{{ asset('images/items/'.$art->images[$i]->image) }}" alt="{{ $art->item_nomb }}">
+										</a>
+									</li>
+								@endif
+								
+							@endfor
+						</ul> <!-- cd-item-wrapper -->
+
+						<nav>
+							<ul class="cd-item-navigation">
+								<li><a class="cd-img-replace" href="#0">Prev</a></li>
+								<li><a class="cd-img-replace" href="#0">Next</a></li>
+							</ul>
+						</nav>
+
+						<a class="cd-3d-trigger cd-img-replace" href="#0">Open</a>
+					</li>
+				</ul>				
+
+
 				<div class="col-xs-4 textoPromedio">
 					<div class="col-xs-12" style="word-break: break-all;">
 						<label>Descripción</label>

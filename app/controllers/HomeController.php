@@ -33,10 +33,16 @@ class HomeController extends BaseController {
 		}
 		$slides = Slides::where('active','=',1)->where('deleted','=',0)->get();
 
-		$art = Items::leftJoin('miscelanias as m','m.item_id','=','item.id')
-		->leftJoin('images as i','m.id','=','i.misc_id')
+		$top    = Publicidad::where('id','=',1)->first(array('image','item_id'));
+		$left   = Publicidad::where('id','=',2)->first(array('image','item_id'));
+		$right  = Publicidad::where('id','=',3)->first(array('image','item_id'));
+		$first  = Publicidad::where('id','=',4)->first(array('image','item_id'));
+		$second = Publicidad::where('id','=',5)->first(array('image','item_id'));
+
+		$art    = Items::leftJoin('miscelanias as m','m.item_id','=','item.id')
 		->groupBy('item.id')
 		->where('item.deleted','=',0)
+		->where('m.deleted','=',0)
 		->get(array(
 			'item.id',
 			'item.item_nomb',
@@ -44,14 +50,23 @@ class HomeController extends BaseController {
 			'item.item_stock',
 			'item.item_precio',
 			'm.id as misc_id',
-			'i.image',
 		));
+		$img = array();
+		foreach ($art as $a) {
+			$img[$a->id] = Images::where('deleted','=',0)->where('misc_id','=',$a->misc_id)->first(array('image'));
+		}
 		return View::make('indexs.index')
 		->with('title',$title)
 		->with('art',$art)
 		->with('cat',$cat)
 		->with('subcat',$subcat)
-		->with('slides',$slides);
+		->with('slides',$slides)
+		->with('top',$top)
+		->with('left',$left)
+		->with('right',$right)
+		->with('img',$img)
+		->with('first',$first)
+		->with('second',$second);
 	}
 	public function getLogin()
 	{
@@ -76,7 +91,7 @@ class HomeController extends BaseController {
 		$a->colores   		= array();
 		$misc    			= Misc::where('item_id','=',$art->id)->first();
 
-		$a->images   	 	= Images::where('misc_id','=',$misc->id)->get();
+		$a->images   	 	= Images::where('misc_id','=',$misc->id)->where('deleted','=',0)->get();
 		$t = Misc::where('item_id','=',$art->id)->groupBy('item_talla')->get(array('item_talla'));
 		$c = Misc::where('item_id','=',$art->id)->get(array('item_color','item_talla'));
 		$a->tallas = $t;

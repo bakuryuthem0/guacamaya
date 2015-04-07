@@ -55,7 +55,7 @@
                 </div>
             </div>
 			<div class="col-xs-12">
-				<button class="btn btn-primary contNew">Nueva caracteristica</button>
+				<!--<button class="btn btn-primary contNew">Nueva caracteristica</button>-->
 				<button class="btn btn-success contSave">Guardar y continuar</button>
 			</div>
 			<div class="clearfix"></div>

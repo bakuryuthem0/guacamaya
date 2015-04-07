@@ -793,6 +793,11 @@ class AdminController extends BaseController {
 		$title = "Nueva publicidad";
 		return View::make('admin.newPub')->with('title',$title);
 	}
+	public function getNewPromotion()
+	{
+		$title ="Nueva promocion";
+		return View::make('admin.newPromotion')->with('title',$title);
+	}
 	public function postNewPub()
 	{
 		$input = Input::all();
@@ -825,9 +830,16 @@ class AdminController extends BaseController {
 		}elseif($input['position'] == 'right')
 		{
 			$pub = Publicidad::find(3);
+		}elseif($input['position'] == 'first')
+		{
+			$pub = Publicidad::find(4);
+		}elseif($input['position'] == 'second')
+		{
+			$pub = Publicidad::find(5);
 		}
+
 		$file = Input::file('img');
-		if (file_exists('images/slides-top/'.$file->getClientOriginalName())) {
+		if (file_exists('images/pub/'.$file->getClientOriginalName())) {
 			//guardamos la imagen en public/imgs con el nombre original
             $i = 0;//indice para el while
             //separamos el nombre de la img y la extensión
@@ -835,34 +847,74 @@ class AdminController extends BaseController {
             //asignamos de nuevo el nombre de la imagen completo
             $miImg = $file->getClientOriginalName();
             //mientras el archivo exista iteramos y aumentamos i
-            while(file_exists('images/slides-top/'.$miImg)){
+            while(file_exists('images/pub/'.$miImg)){
                 $i++;
                 $miImg = $info[0]."(".$i.")".".".$info[1];              
             }
             //guardamos la imagen con otro nombre ej foto(1).jpg || foto(2).jpg etc
-            $file->move("images/slides-top/",$miImg);
-            $img = Image::make('images/slides-top/'.$miImg)
+            $file->move("images/pub/",$miImg);
+            if($input['position'] == 'first' || $input['position'] == 'second')
+			{
+				$img = Image::make('images/pub/'.$miImg);
+				if ($img->width() > 200) {
+					$img->widen(200);
+				}elseif($img->height() > 200)
+				{
+					$img->heighten(200);
+				}
+				$blank = Image::make('images/blank2.jpg');
+				$blank->insert($img,'center')
 	           ->interlace()
-	           ->save('images/slides-top/'.$miImg);
+	           ->save('images/pub/'.$miImg);
+			}else
+			{
+	            $img = Image::make('images/pub/'.$miImg)
+		           ->interlace()
+		           ->save('images/pub/'.$miImg);
+			}
             if($miImg != $file->getClientOriginalName()){
             	$pub->image = $miImg;
             }
 		}else
 		{
-			$file->move("images/slides-top/",$file->getClientOriginalName());
-			$img = Image::make('images/slides-top/'.$file->getClientOriginalName())->interlace()
-           ->save('images/slides-top/'.$file->getClientOriginalName());
+			$file->move("images/pub/",$file->getClientOriginalName());
+			if($input['position'] == 'first' || $input['position'] == 'second')
+			{
+				$img = Image::make('images/pub/'.$file->getClientOriginalName());
+				if ($img->width > 200) {
+					$img->widen(200);
+				}elseif($img->height() > 200)
+				{
+					$img->heighten(200);
+				}
+				$blank = Image::make('images/blank2.jpg');
+		        $blank->insert($img,'center')
+	            ->interlace()
+            	->save('images/pub/'.$file->getClientOriginalName());
+			}else
+			{
+	            $img = Image::make('images/pub/'.$file->getClientOriginalName())->interlace()
+            	->save('images/pub/'.$file->getClientOriginalName());
+			}
+			
           	$pub->image = $file->getClientOriginalName();
 		}
 		$pub->item_id = $id;
 		if($pub->save())
 		{
+			if($input['position'] == 'first' || $input['position'] == 'second')
+			{
+				$url = "administrador/nueva-promocion";
+			}else
+			{
+				$url = "administrador/nueva-publicidad";
+			}
 			Session::flash('success','Publicidad guardada correctamente');
-			return Redirect::to('administrador/nueva-publicidad');
+			return Redirect::to($url);
 		}else
 		{
 			Session::flash('danger','Error al guardar la publicidad');
-			return Redirect::to('administrador/nueva-publicidad');
+			return Redirect::to($url);
 		}
 	}
 }
