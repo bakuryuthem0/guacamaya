@@ -933,7 +933,10 @@ jQuery(document).ready(function($) {
 	});
 });
 
-
+jQuery(document).ready(function($) {
+	$('.slick-prev').html('<i class="fa fa-caret-left"></i>');
+	$('.slick-next').html('<i class="fa fa-caret-left"></i>');
+});
 
 /*Plugin*/
 jQuery(document).ready(function($){

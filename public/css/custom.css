@@ -17,9 +17,12 @@ footer
 {
 	background-color: #ebebeb;
 	padding-top: 2em;
-    display: block;
-  	margin-top: 2em;
-  	overflow: auto;
+  display: block;
+	margin-top: 2em;
+	overflow: auto;
+  background-image: url(../images/footer.png);
+  background-attachment: fixed;
+  background-size: 100% 100%;
 }
 #body
 {
@@ -56,15 +59,31 @@ a.aSinFormato:hover
 {
 	color:#404040;
 }
+a.aConFormato{
+  color:white;
+}
+a.aConFormato:hover{
+  color: white;
+}
 .bannerBottom > img
 {
 	width: 100%;
 }
 .bt-buscar
 {
-	background-color: rgba(199, 37, 55, 1);
+	background-color: #6EB52F;
 	color: white;
-	border-radius: 12px;
+	-webkit-transform: translate(-5px,-2px);
+     -moz-transform: translate(-5px,-2px);
+      -ms-transform: translate(-5px,-2px);
+       -o-transform: translate(-5px,-2px);
+          transform: translate(-5px,-2px);
+  border-radius: 0 4px 4px 0;
+}
+.btn-buscar-cat
+{
+  background-color: #6EB52F;
+  color: white;
 }
 .carrito
 {
@@ -130,10 +149,16 @@ a.aSinFormato:hover
 	  margin: 2em auto;
 	  float: none;
 	  padding: 0px;
+    
+}
+.contFoot a
+{
+  color:white;
 }
 .contList
 {
 	padding: 0;
+  color:white;
 }
 .contdeColor
 {
@@ -192,6 +217,12 @@ a.aSinFormato:hover
 .footerTerm
 {
 	text-align: center;
+  background-color: #6EB52F;
+  color:white;
+  padding: 1em 0 1em 0;
+}
+.footerTerm > p > a{
+  color: white;
 }
 .formulario
 {
@@ -231,7 +262,8 @@ a.aSinFormato:hover
 } 
 .inputBusqueda
 {
-	background-color: rgba(235, 235, 235, 1);
+  width: 70% !important;
+  display: inline-block !important;
 }
 .inputFondoNegro
 {
@@ -268,7 +300,7 @@ a.aSinFormato:hover
 {
 	width: 100%;
 	overflow: auto;
-	background: rgb(227, 240, 218);
+	background: rgb(0, 0, 0);
 	padding: 0px;
 	box-shadow: 0px 7px 10px -3px;
 }
@@ -304,10 +336,10 @@ a.aSinFormato:hover
 .redes
 {
 	font-size: 3em !important;
-	color: green;
+	color: white;
 	border-radius:50%;
 	padding: 0.5em;
-	border: 1px solid green;
+	border: 1px solid white;
 
 }
 .responseDanger
@@ -322,7 +354,7 @@ a.aSinFormato:hover
 }
 .slick-prev, .slick-next
 {
-	background-color: rgba(0,0,0,0.5) !important;
+	background-color: transparent !important;
 	border-radius: 50%;
 }
 .slick-prev{
@@ -330,7 +362,7 @@ a.aSinFormato:hover
 }
 .slick-next
 {
-	right: 0px !important;
+	right: 40px !important;
 }
 .slick-slide img
 {
@@ -350,9 +382,18 @@ a.aSinFormato:hover
 	text-align: center; 
 }
 .table-striped>tbody>tr:nth-of-type(odd) {
-	background-color: #E3F0DA !important;
+	background-color: #6EB52F !important;
 }
+.table-striped>tbody>tr:nth-of-type(odd)>td>a
+{
+  color: white;
 
+}
+.table-striped>tbody>tr:nth-of-type(even)>td>a
+{
+  color: black;
+
+}
 .table > tbody > .tr-slide-desc > td
 {
 	vertical-align: middle !important;
@@ -370,6 +411,9 @@ a.aSinFormato:hover
 }
 
 /*item plugin*/
+#cd-gallery-items{
+  list-style: none;
+}
 @media only screen and (min-width: 1170px){
 #cd-gallery-items > li {
   width: 31%;
@@ -676,4 +720,26 @@ a.aSinFormato:hover
 .navButtom
 {
   opacity: 0;
+}
+.input-group-btn
+{
+  width: auto;
+  display: inline-block !important;
+  -webkit-transform: translate(5px,-2px);
+     -moz-transform: translate(5px,-2px);
+      -ms-transform: translate(5px,-2px);
+       -o-transform: translate(5px,-2px);
+          transform: translate(5px,-2px);
+}
+
+.slick-prev:before, .slick-next:before
+{
+  font-size: 50px !important;
+  color: #6EB52F !important;
+  opacity: 0.9 !important;
+}
+.slick-prev:hover:before, .slick-prev:focus:before, .slick-next:hover:before, .slick-next:focus:before
+{
+  opacity: 0.9 !important;
+  color: #6EB52F;
 }

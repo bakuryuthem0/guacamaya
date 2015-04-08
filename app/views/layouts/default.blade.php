@@ -26,7 +26,7 @@
               <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="col-xs-3">
-                  <a href="{{ URL::to('inicio') }}"><img src="{{ asset('images/logo.jpg') }}" class="logo"></a>
+                  <a href="{{ URL::to('inicio') }}"><img src="{{ asset('images/logo.png') }}" class="logo"></a>
                 </div>
 
                 <div class="navbar-header">
@@ -37,14 +37,23 @@
                     <span class="icon-bar"></span>
                   </button>
                 </div>
+                {{ showCat() }}
                 <div class="col-xs-6 myBuscador">
                   <form method="POST" action="{{ URL::to('busqueda') }}">
-                  <div class="col-xs-10">
-                      <input class="form-control inputBusqueda" placeholder="Busqueda por palabras claves,marcas o productos" name="busq">
-                  </div>
-                  <div class="col-xs-2">
-                    <button class="btn bt-buscar">Buscar</button>
-                  </div>
+                    <div class="input-group-btn">
+                      <button type="button" class="btn dropdown-toggle btn-buscar-cat" data-toggle="dropdown" aria-expanded="false">Categorias <span class="caret"></span></button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                      </ul>
+                    </div><!-- /btn-group -->
+                     <input class="form-control inputBusqueda" placeholder="Busqueda por palabras claves,marcas o productos" name="busq">
+                    <button class="btn bt-buscar"><i class="fa fa-search"></i></button>
+                 
+                  
                   </form>
                 </div>
                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="display:inline-block !important;">
@@ -95,40 +104,8 @@
                 </table>
               </div>
             </div>
-                  <!--<ul class="nav navbar-nav">
-                    @if(!Auth::check())
-                      <li class="textoPromedio"><a href="{{ URL::to('registro') }}">Registrarse </a></li>
-                      <li class="textoPromedio"><a href="{{ URL::to('iniciar-sesion') }}">Iniciar sesión</a></li>
-                    @else
-                    @if(Auth::user()->role != 1)
-                      <li class="dropdown myMenu">
-                        <a href="#" class="dropdown-toggle textoPromedio" data-toggle="dropdown" role="button" aria-expanded="false">
-                          <i class="fa fa-user"></i>
-                            {{ Auth::user()->username }}
-                          <span class="caret"></span></a>
-                          <ul class="dropdown-menu multi-level" role="menu">
-                            <li>
-                              <a href="{{ URL::to('usuario/perfil') }}">
-                                <span class="fa fa-cog"></span> Perfil
-                              </a>
-                            </li>
-                          </ul>
-                        </li>
-                      @else
-                      <li class="dropdown myMenu">
-                        <a href="{{ URL::to('administrador/inicio') }}" class="dropdown-toggle textoPromedio">
-                          <i class="fa fa-user"></i>
-                            {{ Auth::user()->username }}
-                          <span class="caret"></span></a>
-                        </li>
-                      @endif
-                      <li class="textoPromedio"><a href="{{ URL::to('cerrar-sesion') }}">Cerrar sesión</a></li>
-                    @endif
-                  </ul>
-                  -->
-
                
-              <div class="miniBanner" style="text-align:center;"><p class="textoPromedio" style="color:red;padding-top:1em">Envios gratis a toda venezuela.</p></div>
+              <div class="miniBanner" style="text-align:center;"><p class="textoPromedio" style="color:white;padding-top:1em">Envios gratis a toda venezuela.</p></div>
             </nav>
         <div id="contCarrito">
           <div class="table-responsive">
@@ -205,13 +182,13 @@
                 <div class="col-xs-6 textoPromedio">
                   <label>Acerca de guacamaya</label>
                   <ul class="ulNoStyle">
-                    <li>Quiénes somos</li>
-                    <li>Términos y Condiciones</li>
-                    <li>Cupones y Códigos de Promoción</li>
-                    <li>Politicas de protección de datos</li>
-                    <li>Formas de pago</li>
+                    <li><a href="{{ URL::to('') }}" class="aConFormato">Quiénes somos</a></li>
+                    <li><a href="{{ URL::to('') }}" class="aConFormato">Términos y Condiciones</a></li>
+                    <li><a href="{{ URL::to('') }}" class="aConFormato">Cupones y Códigos de Promoción</a></li>
+                    <li><a href="{{ URL::to('') }}" class="aConFormato">Politicas de protección de datos</a></li>
+                    <li><a href="{{ URL::to('') }}" class="aConFormato">Formas de pago</a></li>
                     <li>
-                      <a href="{{ URL::to('contactenos') }}" class="aSinFormato">
+                      <a href="{{ URL::to('contactenos') }}" class="aConFormato">
                         Contacto
                       </a>
                     </li>
@@ -225,10 +202,10 @@
                 </div>
                 <div class="clearfix"></div>
               </div>
-              <div class="col-xs-12 footerTerm">
-                <p class="textoPromedio"><i class="fa fa-copyright"></i> 2015 Guacamaya stores 2015, c.a. | Todos los derechos reservados. Desarrolado por <a href="{{ URL::to('http://tecnographic.com.ve') }}" target="_blank">Tecnographic Venezuela c.a.</a></p>
-              </div>
           </div>
+            <div class="col-xs-12 footerTerm">
+              <p class="textoPromedio"><i class="fa fa-copyright"></i> 2015 Guacamaya stores 2015, c.a. | Todos los derechos reservados. Desarrolado por <a href="{{ URL::to('http://tecnographic.com.ve') }}" target="_blank">Tecnographic Venezuela c.a.</a></p>
+            </div>
         </footer>
         {{ HTML::script("http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js") }}
         <script>window.jQuery || document.write('<script src="js/jquery.js"><\/script>')</script>
