@@ -9,7 +9,6 @@
 				<ul id="cd-gallery-items" class="cd-container">
 					<li>
 						<ul class="cd-item-wrapper">
-							{{ count($art->images) }}
 							@for($i = 0;$i < count($art->images);$i++)
 								@if($i == 0)
 									<li class="cd-item-front">
@@ -42,8 +41,8 @@
 
 						<nav>
 							<ul class="cd-item-navigation">
-								<li><a class="cd-img-replace" href="#0">Prev</a></li>
-								<li><a class="cd-img-replace" href="#0">Next</a></li>
+								<li><a class="cd-img-replace" href="#0"><span class="navButtom">Prev</span></a></li>
+								<li><a class="cd-img-replace" href="#0"><span class="navButtom">Next</span></a></li>
 							</ul>
 						</nav>
 

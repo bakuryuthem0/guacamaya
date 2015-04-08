@@ -434,6 +434,7 @@ a.aSinFormato:hover
   -webkit-perspective-origin: 50% -30%;
   -moz-perspective-origin: 50% -30%;
   perspective-origin: 50% -30%;
+  list-style: none;
 }
 .cd-item-wrapper li {
   position: absolute;
@@ -659,4 +660,20 @@ a.aSinFormato:hover
   -o-transform: translate3d(0, 0, -40px);
   transform: translate3d(0, 0, -40px);
   opacity: .4;
+}
+.cd-img-replace
+{
+  background-color: rgba(147, 227, 24, 0.51) !important; 
+}
+.cd-img-replace:focus
+{
+  background-color: rgba(250, 0, 0, 0.76) !important;
+}
+.cd-gallery-items
+{
+  list-style: none;
+}
+.navButtom
+{
+  opacity: 0;
 }

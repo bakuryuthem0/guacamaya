@@ -155,7 +155,8 @@ class AdminController extends BaseController {
 		->with('id',$id);
 		;
 	}
-	public function post_upload(){
+	public function post_upload()
+	{
 
 		$input = Input::all();
 		$rules = array(
@@ -171,10 +172,10 @@ class AdminController extends BaseController {
 		{
 			return Response::make($validation)->withErrors($validation);
 		}
-		$id = Input::get('art_id');
+		$id 	 = Input::get('art_id');
 		$misc_id = Input::get('misc_id');
-		$file = Input::file('file');
-		$images = new Images;
+		$file 	 = Input::file('file');
+		$images  = new Images;
 		$images->misc_id =  $misc_id;
 		if (file_exists('images/items/'.$id.'/'.$file->getClientOriginalName())) {
 			//guardamos la imagen en public/imgs con el nombre original
@@ -290,7 +291,7 @@ class AdminController extends BaseController {
 	public function getShowArt()
 	{
 		$title = "Articulos";
-		$art = Items::get(array(
+		$art = Items::where('deleted','=',0)->get(array(
 			'item.item_cod',
 			'item.item_nomb',
 			'item.item_stock',
@@ -916,5 +917,32 @@ class AdminController extends BaseController {
 			Session::flash('danger','Error al guardar la publicidad');
 			return Redirect::to($url);
 		}
+	}
+	public function postElimItem()
+	{
+		$id = Input::get('id');
+		$item = Items::find($id);
+		$misc = Misc::where('item_id','=',$id)->first();
+		$img  = Images::where('misc_id','=',$misc->id)->get();
+		$item->deleted = 1;
+		$misc->deleted = 1;
+		foreach ($img as $i) {
+			$i->deleted = 1;
+			$i->save();
+		}
+		
+		if($item->save() && $misc->save())
+		{
+			return Response::json(array('type' => 'success','msg' => 'Articulo eliminado satisfactoriamente'));
+		}else
+		{
+			return Response::json(array('type' =>'danger','msg' =>'Error al eliminar el articulo'));
+		}
+	}
+	public function getMdfItem($id)
+	{
+		$item = Item::find($id);
+		$misc = Misc::where('item_id','=',$item->id)->first();
+		$title = "Modificar articulo: ".$item->item_nomb;
 	}
 }

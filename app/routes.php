@@ -55,7 +55,8 @@ Route::group(array('before' =>'auth'),function()
 		/*Ver articulos*/
 		Route::get('administrador/ver-articulo', 'AdminController@getShowArt');
 		Route::get('administrador/ver-articulo/{id}','HomeController@getShowItem');
-
+		Route::post('administrador/ver-articulo/eliminar','AdminController@postElimItem');
+		Route::get('administrador/editar-articulo/{id}','AdminController@getMdfItem');
 		/*Categorias*/
 		/*nueva*/
 		Route::get('categoria/nueva','AdminController@getNewCat');
