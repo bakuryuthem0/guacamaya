@@ -339,9 +339,9 @@ jQuery(document).ready(function($) {
 		to = boton.attr('data-url-value');
 		$.ajax({
 			//casa
-			url: '/guacamaya/public/'+to,
+			//url: '/guacamaya/public/'+to,
 			//trabajo
-			//url: '/prueba/guacamaya/public/'+to,
+			url: '/prueba/guacamaya/public/'+to,
 			type: 'POST',
 			dataType: 'json',
 			data: {'id':boton.val() },
@@ -392,9 +392,9 @@ jQuery(document).ready(function($) {
 		var to = boton.attr('data-url-value');
 			$.ajax({
 				//casa
-				url: '/guacamaya/public/'+to,
+				//url: '/guacamaya/public/'+to,
 				//trabajo
-				//url: '/prueba/guacamaya/public/'+to,
+				url: '/prueba/guacamaya/public/'+to,
 				type: 'POST',
 				dataType: 'json',
 				data: {'id':boton.val() },
@@ -465,9 +465,9 @@ jQuery(document).ready(function($) {
 		if (x) {
 			$.ajax({
 				//casa
-				url: '/guacamaya/public/vaciar-carrito',
+				//url: '/guacamaya/public/vaciar-carrito',
 				//trabajo
-				//url: '/prueba/guacamaya/public/vaciar-carrito',
+				url: '/prueba/guacamaya/public/vaciar-carrito',
 				type: 'POST',
 				dataType: 'json',
 				beforeSend:function()
@@ -551,7 +551,7 @@ jQuery(document).ready(function($) {
 	                    /*casa*/
 	                    //row = row+'<img src="/guacamaya/public/images/items/'+response.img+'" class="carImg">';
 	                    //trabajo
-	                    row = row+'<img src="/prueba/guacamaya/public/images/items/'+response.img+'" class="carImg">';
+	                  row = row+'<img src="/prueba/guacamaya/public/images/items/'+response.img+'" class="carImg">';
 	                  row = row+'</td>';
 	                  row = row+'<td class="carItem">';
 	                    row = row+response.name;
@@ -624,9 +624,9 @@ jQuery(document).ready(function($) {
 			if (x) {
 				$.ajax({
 					//casa
-					url: '/guacamaya/public/quitar-item',
+					//url: '/guacamaya/public/quitar-item',
 					//trabajo
-					//url: '/prueba/guacamaya/public/quitar-item',
+					url: '/prueba/guacamaya/public/quitar-item',
 					type: 'POST',
 					dataType: 'json',
 					data: {'id':boton.val() },
@@ -679,9 +679,9 @@ jQuery(document).ready(function($) {
 		{
 			$.ajax({
 					//casa
-					url: '/guacamaya/public/actualizar-al-carrito',
+					//url: '/guacamaya/public/actualizar-al-carrito',
 					//trabajo
-					//url: '/prueba/guacamaya/public/actualizar-al-carrito',
+					url: '/prueba/guacamaya/public/actualizar-al-carrito',
 					type: 'POST',
 					dataType: 'json',
 					data: {

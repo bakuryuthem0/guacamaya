@@ -20,6 +20,23 @@
         {{ HTML::style('css/custom.css') }}
         {{ HTML::style('js/slick/slick.css') }}
         {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') }}
+        <script>
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId      : '1640851839462151',
+                xfbml      : true,
+                version    : 'v2.3'
+              });
+            };
+
+            (function(d, s, id){
+               var js, fjs = d.getElementsByTagName(s)[0];
+               if (d.getElementById(id)) {return;}
+               js = d.createElement(s); js.id = id;
+               js.src = "//connect.facebook.net/en_US/sdk.js";
+               fjs.parentNode.insertBefore(js, fjs);
+             }(document, 'script', 'facebook-jssdk'));
+          </script>
     </head>
     <body id="body">
             <nav class="navbar navbar-default">
@@ -37,17 +54,12 @@
                     <span class="icon-bar"></span>
                   </button>
                 </div>
-                {{ showCat() }}
                 <div class="col-xs-6 myBuscador">
                   <form method="POST" action="{{ URL::to('busqueda') }}">
                     <div class="input-group-btn">
                       <button type="button" class="btn dropdown-toggle btn-buscar-cat" data-toggle="dropdown" aria-expanded="false">Categorias <span class="caret"></span></button>
                       <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
+                        {{ ShowCat::show() }}
                       </ul>
                     </div><!-- /btn-group -->
                      <input class="form-control inputBusqueda" placeholder="Busqueda por palabras claves,marcas o productos" name="busq">
@@ -214,6 +226,7 @@
         {{ HTML::script("js/main.js") }}
         {{ HTML::script('js/slick/slick.min.js') }}
         {{ HTML::script('js/custom.js') }}
+        {{ HTML::script('js/jquery.elevateZoom-3.0.8.min.js') }}
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

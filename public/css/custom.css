@@ -1,12 +1,16 @@
 @font-face{ 
-	font-family: Raleway; src: url('Raleway-Regular.ttf'); 
+	font-family: Raleway; src: url('../fonts/raleway/Raleway-Regular.ttf'); 
 } 
 @font-face { 
-	font-family: Raleway; font-weight: bold; src: url('Raleway-Bold.ttf'); 
+	font-family: Raleway; font-weight: bold; src: url('../fonts/raleway/Raleway-Bold.ttf'); 
 }
 @font-face { 
-	font-family: Raleway; font-weight: italic; src: url('Raleway-Italic.ttf'); 
+	font-family: Raleway; font-weight: italic; src: url('../fonts/raleway/Raleway-Italic.ttf'); 
 }
+@font-face{ 
+  font-family: Bembo Std; src: url('../fonts/Bembo Std/BemboStd.otf'); 
+} 
+
 body,html
 {
 	font-size: 76.66%;
@@ -413,10 +417,11 @@ a.aConFormato:hover{
 /*item plugin*/
 #cd-gallery-items{
   list-style: none;
+  padding-left: 0;
 }
 @media only screen and (min-width: 1170px){
 #cd-gallery-items > li {
-  width: 31%;
+  width: 50%;
   float: left;
   margin-bottom: 7em;
   margin-right: 3.5%;
@@ -444,7 +449,7 @@ a.aConFormato:hover{
     margin-top: 2em;
   }
   #cd-gallery-items > li {
-    width: 48%;
+    width: 100%;
     float: left;
     margin-right: 4%;
     margin-bottom: 6.5em;
@@ -458,7 +463,7 @@ a.aConFormato:hover{
     margin-top: 2.5em;
   }
   #cd-gallery-items > li {
-    width: 31%;
+    width: 100%;
     float: left;
     margin-bottom: 7em;
     margin-right: 3.5%;
@@ -472,6 +477,7 @@ a.aConFormato:hover{
 }
 
 .cd-item-wrapper {
+  padding-left: 0;
   -webkit-perspective: 500px;
   -moz-perspective: 500px;
   perspective: 500px;
@@ -707,11 +713,11 @@ a.aConFormato:hover{
 }
 .cd-img-replace
 {
-  background-color: rgba(147, 227, 24, 0.51) !important; 
+  background-color: rgba(147, 227, 24, 0.8) !important; 
 }
 .cd-img-replace:focus
 {
-  background-color: rgba(250, 0, 0, 0.76) !important;
+  background-color: rgba(147, 227, 24, 1) !important;
 }
 .cd-gallery-items
 {
@@ -742,4 +748,25 @@ a.aConFormato:hover{
 {
   opacity: 0.9 !important;
   color: #6EB52F;
+}
+.navItemIcon
+{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 5em !important;
+  -webkit-transform: translate(-50%,-50%) !important;
+     -moz-transform: translate(-50%,-50%) !important;
+      -ms-transform: translate(-50%,-50%) !important;
+       -o-transform: translate(-50%,-50%) !important;
+          transform: translate(-50%,-50%) !important;
+}
+.precio
+{
+  font-family: Bembo Std, Relaway;
+}
+
+li.disabled
+{
+  color: gray;
 }

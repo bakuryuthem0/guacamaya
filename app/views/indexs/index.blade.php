@@ -43,7 +43,7 @@
                   <label class="aSinFormato">{{ $a->item_nomb.' - Cod: '.$a->item_cod }}</label>
                 </li>
                 <li>
-                  <p style="color:red;">Bs.{{ $a->item_precio }}</p>
+                  <p class="precio" style="color:red;">Bs.{{ $a->item_precio }}</p>
                 </li>
               </ul>
             </div>

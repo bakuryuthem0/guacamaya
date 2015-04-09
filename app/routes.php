@@ -40,6 +40,8 @@ Route::group(array('before' =>'auth'),function()
 	Route::post('restar-item','ItemController@restItem');
 	Route::get('comprar/ver-carrito','ItemController@getCart');
 	Route::post('actualizar-al-carrito', 'ItemController@getRefresh');
+	Route::post('comprar/ver-carrito/agragar-y-comprar','ItemController@postPurchaseAndNewDir');
+	Route::get('mis-compras/{id}','ItemController@getItemPursache');
 	Route::group(array('before' => 'check_role'), function(){
 		Route::get('administrador/inicio','AdminController@getIndex');
 		/*Nuevos articulos*/

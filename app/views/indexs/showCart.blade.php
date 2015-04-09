@@ -62,9 +62,75 @@
                 </tr>
               @endforeach
             </table>
-            <a href="{{ URL::to('') }}" class="btn btn-success">Comprar</a>
+            <buttom class="btn btn-success" data-toggle="collapse" href="#continuar">Continuar</buttom>
+            
 		</div>
+    <div class="collapse contdeColor col-xs-12" id="continuar" style="margin-top:2em;">
+      <div class="col-xs-6">
+      </div>
+       @if((!empty(Auth::user()->dir) && !is_null(Auth::user()->dir)) || count($dir) > 0)
+       <legend>Usar dirección creada</legend>
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Email</th>
+              <th>Dirección</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if(!empty(Auth::user()->dir) && !is_null(Auth::user()->dir))
+              <tr>
+                <td class="textoPromedio" style="color:white;"><input type="radio" name="dir" value="{{ Auh::user()->dir }}"></td>
+                <td class="textoPromedio" style="color:white;">{{ Auth::user()->email }}</td>
+                <td class="textoPromedio" style="color:white;">{{ Auth::user()->dir }}</td>
+              </tr>
+            @endif
 
+            @if(count($dir) > 0)
+              @foreach($dir as $d)
+                <tr>
+                  <td class="textoPromedio" style="color:white;"><input type="radio" name="dir" value="{{ $d->dir }}"></td>
+                  <td class="textoPromedio" style="color:white;">{{ $d->email }}</td>
+                  <td class="textoPromedio" style="color:white;">{{ $d->dir }}</td>
+                </tr>
+              @endforeach
+            @endif
+
+          </tbody>
+        </table>
+      @endif
+      <hr>
+      <div class="col-xs-6">
+        <h3>Usar nueva direccion</h3>
+        <p class="bg-info textoPromedio" style="padding:0.5em;">En caso de no tener una direccion registrada o desee agregar una nueva llene el siguiente formulario</p>
+        <form method="POST" action="{{ URL::to('comprar/ver-carrito/agragar-y-comprar') }}" >
+          <label class="textoPromedio">Email.</label>
+          <input type="text" class="form-control" name="email" placeholder="Email" value="{{ Input::old('email') }}" required>
+          @if ($errors->has('email'))
+             @foreach($errors->get('email') as $err)
+              <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p class="textoPromedio">{{ $err }}</p>
+              </div>
+             @endforeach
+          @endif
+          <br>
+          <label class="textoPromedio">Dirección</label>
+          <textarea class="form-control" name="dir" placeholder="Dirección" required>{{ Input::old('dir') }}</textarea>
+          @if ($errors->has('dir'))
+               @foreach($errors->get('dir') as $err)
+                <div class="alert alert-danger">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                  <p class="textoPromedio">{{ $err }}</p>
+                </div>
+               @endforeach
+            @endif
+          <br>
+          <button class="btn btn-success">Enviar y comprar</button>
+        </form>
+      </div>
+      </div>
 	</div>
 </div>
 @stop
