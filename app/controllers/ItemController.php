@@ -126,6 +126,6 @@ class ItemController extends BaseController {
 	}
 	public function getItemPursache($id)
 	{
-		# code...
+		
 	}
 }

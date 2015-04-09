@@ -74,6 +74,34 @@ INSERT INTO `colores` VALUES (1,'amarillo','Amarillo','2015-03-08','2015-03-08',
 UNLOCK TABLES;
 
 --
+-- Table structure for table `direcciones`
+--
+
+DROP TABLE IF EXISTS `direcciones`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `direcciones` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `dir` varchar(500) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `updated_at` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `direcciones`
+--
+
+LOCK TABLES `direcciones` WRITE;
+/*!40000 ALTER TABLE `direcciones` DISABLE KEYS */;
+INSERT INTO `direcciones` VALUES (1,2,'acgua /aragua','shenlong_12@hotmail.com','2015-04-09','2015-04-09');
+/*!40000 ALTER TABLE `direcciones` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `estado`
 --
 
@@ -344,7 +372,7 @@ CREATE TABLE `slides` (
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -353,7 +381,7 @@ CREATE TABLE `slides` (
 
 LOCK TABLES `slides` WRITE;
 /*!40000 ALTER TABLE `slides` DISABLE KEYS */;
-INSERT INTO `slides` VALUES (1,'slider1-01.png',1,0,'2015-04-06','2015-04-06'),(2,'slider2-01.png',0,1,'2015-04-06','2015-04-06'),(3,'slider2-01(1).png',0,1,'2015-04-06','2015-04-06'),(4,'slider2-01.png',0,1,'2015-04-06','2015-04-06'),(5,'slider2-01.png',1,1,'2015-04-06','2015-04-06'),(6,'slider3-01.png',0,1,'2015-04-06','2015-04-06'),(7,'slider2-01.png',1,0,'2015-04-06','2015-04-06'),(8,'slider3-01.png',1,0,'2015-04-06','2015-04-06'),(9,'slider1-01(1).png',0,1,'2015-04-06','2015-04-06');
+INSERT INTO `slides` VALUES (1,'slider1-01.png',1,1,'2015-04-06','2015-04-08'),(2,'slider2-01.png',0,1,'2015-04-06','2015-04-06'),(3,'slider2-01(1).png',0,1,'2015-04-06','2015-04-06'),(4,'slider2-01.png',0,1,'2015-04-06','2015-04-06'),(5,'slider2-01.png',1,1,'2015-04-06','2015-04-06'),(6,'slider3-01.png',0,1,'2015-04-06','2015-04-06'),(7,'slider2-01.png',1,1,'2015-04-06','2015-04-08'),(8,'slider3-01.png',1,1,'2015-04-06','2015-04-08'),(9,'slider1-01(1).png',0,1,'2015-04-06','2015-04-06'),(10,'guacamayastores-01.png',1,0,'2015-04-08','2015-04-08'),(11,'guacamayastores-02.png',1,0,'2015-04-08','2015-04-08'),(12,'guacamayastores-03.png',1,0,'2015-04-08','2015-04-08');
 /*!40000 ALTER TABLE `slides` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -384,54 +412,6 @@ LOCK TABLES `subcat` WRITE;
 /*!40000 ALTER TABLE `subcat` DISABLE KEYS */;
 INSERT INTO `subcat` VALUES (1,1,'camisa','camisa','2015-03-12','2015-03-12',0),(2,1,'blusa','blusa','2015-03-12','2015-03-12',0),(3,1,'vestido','vestido','2015-03-12','2015-03-12',0),(4,1,'pantalon','pantalón','2015-03-12','2015-03-12',0),(5,1,'ropa deportiva','ropa deportiva','2015-03-12','2015-03-12',0),(6,2,'franelas','franelas','2015-03-12','2015-03-12',0),(7,2,'chemises','chemises','2015-03-12','2015-03-12',0),(8,3,'Anillo','Anillo','2015-03-13','2015-03-13',1);
 /*!40000 ALTER TABLE `subcat` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `t_users`
---
-
-DROP TABLE IF EXISTS `t_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `t_users` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `mdl_user_id` int(11) DEFAULT NULL,
-  `idnumber` varchar(30) NOT NULL DEFAULT '',
-  `username` varchar(60) NOT NULL DEFAULT '',
-  `firstname` varchar(45) NOT NULL,
-  `lastname` varchar(45) NOT NULL,
-  `balance` int(11) NOT NULL DEFAULT '0',
-  `password` varchar(60) NOT NULL,
-  `gender` varchar(1) NOT NULL DEFAULT '',
-  `birthdate` varchar(11) NOT NULL,
-  `address` varchar(100) NOT NULL,
-  `city` varchar(45) NOT NULL,
-  `country` varchar(2) NOT NULL,
-  `email` varchar(50) NOT NULL DEFAULT '',
-  `roles_code` varchar(3) NOT NULL,
-  `startdate` varchar(11) NOT NULL DEFAULT '',
-  `phone1` varchar(20) DEFAULT NULL,
-  `phone2` varchar(20) DEFAULT NULL,
-  `deleted` tinyint(1) DEFAULT NULL,
-  `suspended` tinyint(1) DEFAULT NULL,
-  `lang` varchar(30) DEFAULT NULL,
-  `institution` varchar(40) DEFAULT NULL,
-  `department` varchar(30) DEFAULT NULL,
-  `race` varchar(11) DEFAULT NULL,
-  `zip` varchar(11) DEFAULT NULL,
-  `career` varchar(11) DEFAULT NULL,
-  `role` varchar(13) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_users`
---
-
-LOCK TABLES `t_users` WRITE;
-/*!40000 ALTER TABLE `t_users` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -499,7 +479,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'admin','$2y$08$EiGNW.dQp1X2X0/4GvWgGuGXLPUwWdsqe3zhZarOV8e1tkKcnV96m',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL,1,0,'',0,'QmGREQbriM2gxiab629J9zuydkwISpsQJaqK2EGPL71MfMfLUGHjVKWYgnWu'),(2,'carlos','$2y$08$3WEbQLhnWV4nlIXgGp4H6.XJ834Tv1vvcqbSqLCR3.Tx00CG0puy.',NULL,'shenlong_12@hotmail.com',NULL,NULL,'2015-03-12','2015-03-12','carlos','salazar','263','75','7',0,0,'9b26f36e3f37a5d1841d3599a226e087',0,'Tu1og7IGbBjS1tVAEFSOi90D1IgalEV3qt2v4h5W9Z4GfZKATB78VkvqSEOq'),(3,'pepe','$2y$08$8ZykLDy/Xx2K5lweVstBK.3izd2oFxpyNzLxKnznGxGLZ2TeK3a6S',NULL,'pepe@pepe.com',NULL,NULL,'2015-03-12','2015-03-12','pepe','pepe','1','1','1',0,0,'31fc7f18e6dc5f5d7cb09a40d1fa7115',0,'W754R9johJkDrVA0GbjejJNT0itE8YkT3gma6uIHwXc5mb35RwdAJh84ighZ'),(4,'carlosqw','$2y$08$ckqZ644SPK904MS1oiOiiO3.9Uq7ct12XCphVHWOLG4r27LJkkKGS',NULL,'carlosqw@guacamayastores.com.ve',NULL,NULL,'2015-04-04','2015-04-04',NULL,NULL,'',NULL,NULL,0,0,'',0,''),(5,'pepetonioadminw','$2y$08$sjohuwRyVZqfx9jnid7jAeUYHCGkLEyl0GiKsylpcA7hNWZ7efHI2',NULL,'pepetonioadminw@guacamayastores.com.ve',NULL,NULL,'2015-04-04','2015-04-04',NULL,NULL,'',NULL,NULL,1,0,'',0,'');
+INSERT INTO `usuario` VALUES (1,'admin','$2y$08$EiGNW.dQp1X2X0/4GvWgGuGXLPUwWdsqe3zhZarOV8e1tkKcnV96m',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL,1,0,'',0,'PdBWqsmtHCTf0ODkZZGYrawseOwdfNcPtMmldVQJcOo9ZSkc31gcysi7iogR'),(2,'carlos','$2y$08$3WEbQLhnWV4nlIXgGp4H6.XJ834Tv1vvcqbSqLCR3.Tx00CG0puy.',NULL,'shenlong_12@hotmail.com',NULL,NULL,'2015-03-12','2015-03-12','carlos','salazar','263','75','7',0,0,'9b26f36e3f37a5d1841d3599a226e087',0,'Tu1og7IGbBjS1tVAEFSOi90D1IgalEV3qt2v4h5W9Z4GfZKATB78VkvqSEOq'),(3,'pepe','$2y$08$8ZykLDy/Xx2K5lweVstBK.3izd2oFxpyNzLxKnznGxGLZ2TeK3a6S',NULL,'pepe@pepe.com',NULL,NULL,'2015-03-12','2015-03-12','pepe','pepe','1','1','1',0,0,'31fc7f18e6dc5f5d7cb09a40d1fa7115',0,'W754R9johJkDrVA0GbjejJNT0itE8YkT3gma6uIHwXc5mb35RwdAJh84ighZ'),(4,'carlosqw','$2y$08$ckqZ644SPK904MS1oiOiiO3.9Uq7ct12XCphVHWOLG4r27LJkkKGS',NULL,'carlosqw@guacamayastores.com.ve',NULL,NULL,'2015-04-04','2015-04-04',NULL,NULL,'',NULL,NULL,0,0,'',0,''),(5,'pepetonioadminw','$2y$08$sjohuwRyVZqfx9jnid7jAeUYHCGkLEyl0GiKsylpcA7hNWZ7efHI2',NULL,'pepetonioadminw@guacamayastores.com.ve',NULL,NULL,'2015-04-04','2015-04-04',NULL,NULL,'',NULL,NULL,1,0,'',0,'');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -512,4 +492,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-07 17:05:37
+-- Dump completed on 2015-04-09 17:18:31
