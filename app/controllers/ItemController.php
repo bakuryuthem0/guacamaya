@@ -100,6 +100,31 @@ class ItemController extends BaseController {
 			return Response::json(array('type' => 'success','count' => $count,'total' => $total,'qty' => $cart->qty,'id' => $cart->id,'subtotal'=>$cart->subtotal));
 		}
 	}
+	public function postDir()
+	{
+		$id = Input::get('dir');
+		if ($id == 'user_id') {
+			$dir = array('dir' =>Auth::user()->dir,'email' => Auth::user()->email);
+		}else
+		{
+			$dir = Dir::find($id);
+		}
+		$fac = new Facturas;
+		$fac->user_id =  Auth::user()->id;
+		$fac->dir     = $dir['dir'];
+		if($fac->save())
+		{
+			foreach (Cart::content() as $c) {
+				$itemFac = new FacturaItem;
+				$itemFac->factura_id = $fac->id;
+				$itemFac->item_id    = $c->id;
+				$itemFac->item_qty	 = $c->qty;
+				$itemFac->save();
+			}
+			Cart::destroy();
+			return Redirect::to('compra/procesar');			
+		}
+	}
 	public function postPurchaseAndNewDir()
 	{
 		$input = Input::all();
@@ -120,12 +145,67 @@ class ItemController extends BaseController {
 		$dir->email   = $input['email'];
 		$dir->dir 	  = $input['dir'];
 		if ($dir->save()) {
-			Session::flash('success','Dirección guardada correctamente.');
-			return Redirect::to('mis-compras/'.$dir->id);
+			$fac = new Facturas;
+			$fac->user_id =  Auth::user()->id;
+			$fac->dir 	  = $dir->dir;
+			if($fac->save())
+			{
+				foreach (Cart::content() as $c) {
+					$itemFac = new FacturaItem;
+					$itemFac->factura_id = $fac->id;
+					$itemFac->item_id    = $c->id;
+					$itemFac->item_qty	 = $c->qty;
+					$itemFac->save();
+				}
+				Cart::destroy();
+				return Redirect::to('compra/procesar/'.$fac->id);			
+			}
 		}
 	}
-	public function getItemPursache($id)
+	public function getProcesePurchase($id)
 	{
+		return $id;
+		$title = "Metodo de pago | guacamayastores.com.ve";
+		$method= "hola";
+		$mp = new MP('8718886882978199','K1SlqcrxB2kKnnrhxt6PCyLtC6RuSuux');
 		
+		return View::make('indexs.showCart')
+		->with('title',$title)
+		->with('method',$method);
+	}
+
+	public function postPayment(){
+		$input = Input::all();
+		$id = $input['enviarPago'];
+		$rules = array('transNumber' => 'required|numeric');
+		$messages = array('required' => 'El numero de transacción es obligatorio.','numeric' => 'El campo debe ser un número.');
+		$validator = Validator::make($input, $rules, $messages);
+		if ($validator->fails()) {
+			return Redirect::back()->withErrors($validator);
+		}
+		$fac 		  	= new Facturas;
+		$fac->user_id 	= Auth::user()->id;
+		$fac->num_trans = $input['enviarPago'];
+		
+		if ($fac->save()) {
+			$subject = "Correo de administrador";
+			$data = array(
+				'subject' => $subject,
+				'createBy'=> Auth::user()->username,
+				'monto'   => Cart::total(),
+				'num_trans' => $input['transNumber']
+			);
+			$to_Email = 'ejemplo@gmail.com';
+			Mail::send('emails.newPayment', $data, function($message) use ($input,$to_Email,$subject)
+			{
+				$message->to($to_Email)->from('sistema@guacamayastores.com.ve')->subject($subject);
+			});
+			Session::flash('success', 'Pago enviado, pronto procesaremos su pago');
+			return Redirect::to('usuario/publicaciones/mis-publicaciones');
+		}else
+		{
+			Session::flash('error', 'Error al guardar el pago');
+			return Redirect::to('usuario/publicaciones/mis-publicaciones');
+		}
 	}
 }

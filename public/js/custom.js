@@ -263,6 +263,7 @@ jQuery(document).ready(function($) {
 });
 jQuery(document).ready(function($) {
 	$('.iconToggle').click(function(event) {
+
 		if ($(this).hasClass('fa-plus-circle')) {
 			$(this).removeClass('fa-plus-circle');
 			$(this).addClass('fa-minus-circle');
@@ -270,7 +271,7 @@ jQuery(document).ready(function($) {
 			$(this).removeClass('fa-minus-circle');
 			$(this).addClass('fa-plus-circle');
 		}
-	});;
+	});
 	
 });
 jQuery(document).ready(function($) {
@@ -418,7 +419,10 @@ jQuery(document).ready(function($) {
 				},
 				success:function(response)
 				{
-					
+					if($('.carItems').length < 1)
+					{
+						$('.btn-comprar').removeClass('btn-comprar').addClass('btn-no');
+					}
 					$('.loading').animate({
 							'opacity': 0},
 							250,function(){
@@ -544,6 +548,10 @@ jQuery(document).ready(function($) {
 						});
 				$('.catnArt').html(response.cantArt);
 				$('.total').html(response.total);
+				if($('.btn-no').length > 0)
+				{
+					$('.btn-no').addClass('btn-comprar').removeClass('btn-no');
+				}
 				if($('#'+response.id).length<1)
 				{
 					var row = '<tr class="carItems">';

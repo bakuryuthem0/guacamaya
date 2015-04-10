@@ -4,7 +4,13 @@
 	<div class="container">
 		<div class="col-xs-12 contdeColor">
 			<legend>Mi carrito</legend>
-			<table class="table table-hover tableCarrito">
+      @if(Session::has('danger'))
+        <div class="alert alert-danger">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <p class="textoPromedio">{{ Session::get('danger') }}</p>
+        </div>
+      @endif
+			       <table class="table table-hover tableCarrito">
                <tr>
                   <th>
                    Imagen
@@ -62,15 +68,18 @@
                 </tr>
               @endforeach
             </table>
-            <buttom class="btn btn-success" data-toggle="collapse" href="#continuar">Continuar</buttom>
+            @if(!isset($method))<buttom class="btn btn-success" data-toggle="collapse" href="#continuar">Continuar</buttom>@endif
             
 		</div>
+    @if(!isset($method))
     <div class="collapse contdeColor col-xs-12" id="continuar" style="margin-top:2em;">
       <div class="col-xs-6">
-      </div>
+      
        @if((!empty(Auth::user()->dir) && !is_null(Auth::user()->dir)) || count($dir) > 0)
-       <legend>Usar dirección creada</legend>
-        <table class="table table-striped table-hover">
+       <h3>Usar dirección existente</h3>
+       <hr>
+       <form method="POST" action="{{ URL::to('comprar/ver-carrito/enviar') }}">
+        <table class="table table-striped table-hover table-dir">
           <thead>
             <tr>
               <th></th>
@@ -81,28 +90,31 @@
           <tbody>
             @if(!empty(Auth::user()->dir) && !is_null(Auth::user()->dir))
               <tr>
-                <td class="textoPromedio" style="color:white;"><input type="radio" name="dir" value="{{ Auh::user()->dir }}"></td>
-                <td class="textoPromedio" style="color:white;">{{ Auth::user()->email }}</td>
-                <td class="textoPromedio" style="color:white;">{{ Auth::user()->dir }}</td>
+                <td class="textoPromedio" ><input type="radio" name="dir" value="user_id"></td>
+                <td class="textoPromedio" >{{ Auth::user()->email }}</td>
+                <td class="textoPromedio" >{{ Auth::user()->dir }}</td>
               </tr>
             @endif
 
             @if(count($dir) > 0)
               @foreach($dir as $d)
                 <tr>
-                  <td class="textoPromedio" style="color:white;"><input type="radio" name="dir" value="{{ $d->dir }}"></td>
-                  <td class="textoPromedio" style="color:white;">{{ $d->email }}</td>
-                  <td class="textoPromedio" style="color:white;">{{ $d->dir }}</td>
+                  <td class="textoPromedio" ><input type="radio" name="dir" value="{{ $d->id }}"></td>
+                  <td class="textoPromedio" >{{ $d->email }}</td>
+                  <td class="textoPromedio" >{{ $d->dir }}</td>
                 </tr>
               @endforeach
             @endif
 
           </tbody>
         </table>
+        <button class="btn btn-success">Comprar</button>
+      </form>
       @endif
-      <hr>
+      </div>
       <div class="col-xs-6">
         <h3>Usar nueva direccion</h3>
+        <hr>
         <p class="bg-info textoPromedio" style="padding:0.5em;">En caso de no tener una direccion registrada o desee agregar una nueva llene el siguiente formulario</p>
         <form method="POST" action="{{ URL::to('comprar/ver-carrito/agragar-y-comprar') }}" >
           <label class="textoPromedio">Email.</label>
@@ -130,7 +142,38 @@
           <button class="btn btn-success">Enviar y comprar</button>
         </form>
       </div>
+    </div>
+    @else
+    <div class="contdeColor col-xs-12" style="margin-top:2em;">
+      <h3 style="text-align:center;">Metodos de pago</h3>
+      <div class="col-xs-6 bg-info">
+        <h3><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#transferencia"></i> Transferencia bancaria</h3>
+        <div class="col-xs-12 collapse" id="transferencia" style="padding:2em;">
+          <p class="textoPromedio">Una vez haya realizado su pago, introduzca el número de transacción en la casilla</p>
+          <form method="post" action="{{ URL::to('usuario/publicaciones/pago/enviar') }}">
+            <div class="col-xs-12">
+                <input type="text" id="numTransVal" name="transNumber" placehlder="Numero de transaccion" class="form-control textoPromedio" >
+                @if ($errors->has('transNumber'))
+                   @foreach($errors->get('transNumber') as $err)
+                    <div class="alert alert-danger">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                      <p class="textoPromedio">{{ $err }}</p>
+                    </div>
+                   @endforeach
+                @endif
+              <button class="btn btn-success" style="margin-top:1em;">Enviar</button>
+                <a class="btn btn-primary"  data-toggle="modal" data-target="#myModalBancos" style="margin-top:1em;">CUENTAS Y ENTIDADES BANCARIAS.</a>
+                
+            </div>
+          </form>
+        </div>
       </div>
+      <div class="col-xs-6 bg-info">
+        <h3>Mercado pago</h3>
+       
+      </div>
+    </div>
+    @endif
 	</div>
 </div>
 @stop

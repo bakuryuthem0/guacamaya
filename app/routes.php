@@ -38,10 +38,19 @@ Route::group(array('before' =>'auth'),function()
 	Route::post('quitar-item', 'ItemController@dropItem');
 	Route::post('agregar-item', 'ItemController@addItem');
 	Route::post('restar-item','ItemController@restItem');
+
 	Route::get('comprar/ver-carrito','ItemController@getCart');
 	Route::post('actualizar-al-carrito', 'ItemController@getRefresh');
+	Route::post('comprar/ver-carrito/enviar','ItemController@postDir');
 	Route::post('comprar/ver-carrito/agragar-y-comprar','ItemController@postPurchaseAndNewDir');
-	Route::get('mis-compras/{id}','ItemController@getItemPursache');
+	Route::get('compra/procesar/{id}','ItemController@getProcesePurchase');
+	/*rutas usuario */
+	Route::get('usuario/perfil','UserController@getProfile');
+	Route::post('usuario/perfil/enviar','UserController@postProfile');
+	Route::get('mis-compras/pago/enviar','ItemController@postPayment');
+
+	Route::get('usuario/mis-compras','UserController@getMyPurchases');
+
 	Route::group(array('before' => 'check_role'), function(){
 		Route::get('administrador/inicio','AdminController@getIndex');
 		/*Nuevos articulos*/
@@ -113,7 +122,7 @@ Route::group(array('before' =>'auth'),function()
 		Route::post('administrador/nueva-publicidad/procesar','AdminController@postNewPub');
 
 	});
-
+	
 });
 
 Route::post('chequear/email','AuthController@postEmailCheck');

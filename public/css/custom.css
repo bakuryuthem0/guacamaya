@@ -89,6 +89,14 @@ a.aConFormato:hover{
   background-color: #6EB52F;
   color: white;
 }
+.btn-comprar
+{
+  display: inline-block;
+}
+.btn-no
+{
+  display: none;
+}
 .carrito
 {
 	  width: 100%;
@@ -154,6 +162,10 @@ a.aConFormato:hover{
 	  float: none;
 	  padding: 0px;
     
+}
+.iconToggle
+{
+  cursor: pointer;
 }
 .contFoot a
 {
@@ -385,8 +397,10 @@ a.aConFormato:hover{
 {
 	text-align: center; 
 }
+
 .table-striped>tbody>tr:nth-of-type(odd) {
 	background-color: #6EB52F !important;
+  color: #f9f9f9 !important;
 }
 .table-striped>tbody>tr:nth-of-type(odd)>td>a
 {
@@ -402,7 +416,12 @@ a.aConFormato:hover{
 {
 	vertical-align: middle !important;
 }
-
+.table-dir>tbody>tr:nth-of-type(odd) {
+  color:white;
+}
+.table-dir>tbody>tr:nth-of-type(even) {
+  color:black;
+}
 .ulNoStyle
 {
 	list-style: none;

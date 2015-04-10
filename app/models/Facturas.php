@@ -1,14 +1,14 @@
 <?php
 
 
-class Dir extends Eloquent {
+class Facturas extends Eloquent {
 
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
-	protected $table = 'direcciones';
+	protected $table = 'facturas';
 
 	/**
 	 * The attributes excluded from the model's JSON form.

@@ -95,6 +95,11 @@
                             </a>
                           </li>
                           <li>
+                            <a href="{{ URL::to('usuario/mis-compras') }}">
+                              Mis compras
+                            </a>
+                          </li>
+                          <li>
                             <a href="{{ URL::to('cerrar-sesion') }}">
                               <i class="fa fa-sign-out"></i> Cerrar sesión
                             </a>
@@ -109,7 +114,7 @@
                     </tr>
                     <tr>
                       <td style="text-align:center;">
-                        <label><i class="fa fa-money"></i> Total: Bs.<span class="total">{{ Cart::total() }} </span><a type="button" class="btn btn-success btn-xs" href="{{ URL::to('comprar/ver-carrito') }}">Comprar</a></label>
+                        <label><i class="fa fa-money"></i> Total: Bs.<span class="total">{{ Cart::total() }} </span><a type="button" class="btn btn-success btn-xs @if(Cart::count()>0) btn-comprar @else btn-no @endif" href="{{ URL::to('comprar/ver-carrito') }}">Comprar</a></label>
                       </td>
                     </tr>
                   @endif
