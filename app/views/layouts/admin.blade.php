@@ -183,7 +183,7 @@
                           </li>
                         </ul>
                       </li> 
-                      <li class="textoPromedio"><a href="{{ URL::to('cerrar-sesion') }}">Cerrar sesión</a></li>
+                      <li class="textoPromedio"><a href="{{ URL::to('cerrar-sesion') }}" class="logout">Cerrar sesión</a></li>
                   </ul>
                 @endif
 

@@ -1070,7 +1070,7 @@ class AdminController extends BaseController {
 	public function getPayment()
 	{
 		$title = "Pagos | guacamayastores.com.ve";
-		$fac = Facturas::where('pagada','=',-1)->get();
+		$fac = Facturas::where('pagada','=',-1)->orderBy('id','DESC')->get();
 		return View::make('admin.showPayment')
 		->with('title',$title)
 		->with('fac',$fac);

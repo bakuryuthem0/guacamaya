@@ -43,7 +43,8 @@ class HomeController extends BaseController {
 		->groupBy('item.id')
 		->where('item.deleted','=',0)
 		->where('m.deleted','=',0)
-		->get(array(
+		->orderBy('item.created_at')
+		->paginate(8,array(
 			'item.id',
 			'item.item_nomb',
 			'item.item_cod',
@@ -89,9 +90,16 @@ class HomeController extends BaseController {
 		$a->misc 			= array();
 		$a->tallas    		= array();
 		$a->colores   		= array();
-		$misc    			= Misc::where('item_id','=',$art->id)->first();
-
-		$a->images   	 	= Images::where('misc_id','=',$misc->id)->where('deleted','=',0)->get();
+		//$misc    			= Misc::where('item_id','=',$art->id)->first();
+		$misc    			= Misc::where('item_id','=',$art->id)->get();
+		$aux = array();
+		$i = 0;
+		foreach ($misc as $m ) {
+			$aux[$i] = Images::where('misc_id','=',$m->id)->where('deleted','=',0)->get();
+			$i++;
+		}
+		$a->images   	 	= $aux;
+		
 		$t = Misc::where('item_id','=',$art->id)->groupBy('item_talla')->get(array('item_talla'));
 		$c = Misc::where('item_id','=',$art->id)->get(array('item_color','item_talla'));
 		$a->tallas = $t;

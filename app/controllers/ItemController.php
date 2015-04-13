@@ -171,18 +171,16 @@ class ItemController extends BaseController {
 	public function getProcesePurchase($id)
 	{
 		$title = "Metodo de pago | guacamayastores.com.ve";
-		$method= "hola";
-		$mp = new MP('8718886882978199','K1SlqcrxB2kKnnrhxt6PCyLtC6RuSuux');
-
 		$fac = Facturas::find($id);
 		$x 	 = FacturaItem::where('factura_id','=',$id)->sum('item_qty');
 		$aux = FacturaItem::where('factura_id','=',$id)->get(array('item_id','item_qty'));
 		$i = 0;
-		$item = array();
 		$auxT = 0;
 		$auxQ = 0;
+		$p = '';
 		foreach ($aux as $a) {
 			$b = Items::find($a->item_id);
+			$p = $p.$b->item_nomb.', ';
 			$b->qty = $a->item_qty;
 			$auxT = $auxT+($b->qty*$b->item_precio);
 			$auxQ = $auxQ+$b->qty;
@@ -190,14 +188,28 @@ class ItemController extends BaseController {
 			$b->img = Images::where('misc_id','=',$aux->id)->where('deleted','=',0)->first(); 
 			$item[$i] = $b;
 			$i++;
+
 		}
-		
 		$total = 0;
+		$method= "hola";
+		$mp = new MP('8718886882978199','K1SlqcrxB2kKnnrhxt6PCyLtC6RuSuux');
+		$preference_data = array(
+    			"items" => array(
+       			array(
+           			"title" => $p,
+           			"quantity" => 1,
+           			"currency_id" => "VEF",
+           			"unit_price" => $auxT
+       			)
+    			)
+		);
+		$preference = $mp->create_preference ($preference_data);
 		return View::make('indexs.showCart')
 		->with('title',$title)
 		->with('method',$method)
 		->with('total',$total)
 		->with('items',$item)
+		->with('preference',$preference)
 		->with('id',$id);
 	}
 

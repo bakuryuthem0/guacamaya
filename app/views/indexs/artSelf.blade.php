@@ -23,30 +23,32 @@
 					<ul id="cd-gallery-items" class="cd-container">
 						<li>
 							<ul class="cd-item-wrapper">
-								@for($i = 0;$i < count($art->images);$i++)
-									@if(count($art->images)>4)
+								<?php $i = 0; ?>
+								@foreach($art->images as $img)
+									@foreach($img as $i)
+										@if(count($art->images)>4)
 										@if($i == 0)
 											<li class="cd-item-front">
 												<a href="#0">
-													<img src="{{ asset('images/items/'.$art->images[$i]->image) }}" data-zoom-image="{{ asset('images/items/'.$art->images[$i]->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
+													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
 												</a>
 											</li>
 										@elseif(($i+2) == count($art->images))
 										<li class="cd-item-back">
 											<a href="#0">
-												<img src="{{ asset('images/items/'.$art->images[$i]->image) }}" data-zoom-image="{{ asset('images/items/'.$art->images[$i]->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
+												<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
 											</a>
 										</li>
 										@elseif(($i+1) == count($art->images))
 											<li class="cd-item-out">
 												<a href="#0">
-													<img src="{{ asset('images/items/'.$art->images[$i]->image) }}" data-zoom-image="{{ asset('images/items/'.$art->images[$i]->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
+													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
 												</a>
 											</li>
 										@else
 											<li class="cd-item-middle cd-item-{{ $i }}">
 												<a href="#0">
-													<img src="{{ asset('images/items/'.$art->images[$i]->image) }}" data-zoom-image="{{ asset('images/items/'.$art->images[$i]->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
+													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
 												</a>
 											</li>
 										@endif
@@ -54,24 +56,25 @@
 										@if($i == 0)
 											<li class="cd-item-front">
 												<a href="#0">
-													<img src="{{ asset('images/items/'.$art->images[$i]->image) }}" data-zoom-image="{{ asset('images/items/'.$art->images[$i]->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
+													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
 												</a>
 											</li>
 										@elseif(($i+2) == count($art->images))
 											<li class="cd-item-back">
 												<a href="#0">
-													<img src="{{ asset('images/items/'.$art->images[$i]->image) }}" data-zoom-image="{{ asset('images/items/'.$art->images[$i]->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
+													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
 												</a>
 											</li>
 										@else
 											<li class="cd-item-middle cd-item-{{ $i }}">
 												<a href="#0">
-													<img src="{{ asset('images/items/'.$art->images[$i]->image) }}" data-zoom-image="{{ asset('images/items/'.$art->images[$i]->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
+													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
 												</a>
 											</li>
 										@endif
 									@endif
-								@endfor
+									@endforeach
+								@endforeach
 							</ul> <!-- cd-item-wrapper -->
 
 							<nav>
@@ -98,7 +101,7 @@
 							@foreach($tallas as $t)
 								<?php $n = 0;?>
 								@foreach($art->tallas as $at)
-									@if($at->item_talla == $t->id)
+									@if($at->item_talla == $t->id || $at->item_talla == "all")
 										<?php $n = 0;?>
 										<li value="{{ $t->id }}">{{ strtoupper($t->talla_nomb).' - '.ucfirst($t->talla_desc) }}</li>
 										<?php break;?>
@@ -119,7 +122,7 @@
 								<?php $nop = 1;?>
 
 								@foreach($art->colores as $ac)
-									@if($ac->id == $c->id)
+									@if($ac->item_color == $c->id || $ac->item_color == "all")
 										<?php $nop = 0;?>
 									@endif
 								@endforeach
@@ -141,7 +144,7 @@
 					@endif
 					<div class="col-xs-12">
 						<label>Disponibles es stock: </label>
-						<h3 style="  display: inline-block;">{{ $art->item_stock }}</h3>
+						<h3 class="stock">{{ $art->item_stock }}</h3>
 						<input type="hidden" class="values" data-art-id="{{ $art->id }}" data-misc-id="">
 					</div>
 				</div>

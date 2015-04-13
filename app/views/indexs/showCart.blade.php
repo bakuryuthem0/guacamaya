@@ -13,6 +13,9 @@
 			       <table class="table table-hover tableCarrito">
                <tr class="textoPromedio">
                   <th>
+                    Codigo de articulo
+                  </th>
+                  <th>
                    Imagen
                   </th>
                   <th>
@@ -86,6 +89,9 @@
               @else
                 @foreach($items as $cart)
                 <tr class="textoPromedio carItems" id="{{ $cart->id }}">
+                  <td>
+                    {{ $cart->item_cod }}
+                  </td>
                   <td class="carItem">
                     <img src="{{ asset('images/items/'.$cart->img->image) }}" class="carImg">
                   </td>
@@ -192,7 +198,7 @@
     @else
     <div class="contdeColor col-xs-12" style="margin-top:2em;">
       <h3 style="text-align:center;">Metodos de pago</h3>
-      <div class="col-xs-6 bg-info">
+      <div class="col-xs-6">
         <h3><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#transferencia"></i> Transferencia bancaria</h3>
         <div class="col-xs-12 collapse" id="transferencia" style="padding:2em;">
           <p class="textoPromedio">Una vez haya realizado su pago, introduzca el número de transacción en la casilla</p>
@@ -216,8 +222,12 @@
           </form>
         </div>
       </div>
-      <div class="col-xs-6 bg-info">
-        <h3>Mercado pago</h3>
+      <div class="col-xs-6">
+        <h3><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#mpago"></i> Mercado pago</h3>
+        <div class="col-xs-12 collapse" id="mpago" style="padding:2em;">
+          <a href="<?php echo $preference['response']['init_point']; ?>" name="MP-Checkout" class="lightblue-M-Ov-ArOn">Pagar</a>
+          <script type="text/javascript" src="https://www.mercadopago.com/org-img/jsapi/mptools/buttons/render.js"></script>
+        </div>
       </div>
     </div>
     @endif

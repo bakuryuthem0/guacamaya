@@ -68,7 +68,7 @@ class UserController extends Controller {
 	public function getMyPurchases()
 	{
 		$title = "Mis compras | guacamayastores.com.ve";
-		$fac = Facturas::where('user_id','=',Auth::user()->id)->get();
+		$fac = Facturas::where('user_id','=',Auth::user()->id)->orderBy('id','DESC')->get();
 		return View::make('user.myPurchases')
 		->with('title',$title)
 		->with('fac',$fac);

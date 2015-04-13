@@ -54,6 +54,77 @@
               <p class="textoPromedio" style="text-align:center;">No se encontraron articulos</p>
           </div>
         @endif
+        <nav role="navigation">
+          <?php  $presenter = new Illuminate\Pagination\BootstrapPresenter($art); ?>
+          @if ($art->getLastPage() > 1)
+          <ul class="cd-pagination no-space">
+            <?php
+              $beforeAndAfter = 2;
+           
+              //Página actual
+              $currentPage = $art->getCurrentPage();
+           
+              //Última página
+              $lastPage = $art->getLastPage();
+           
+              //Comprobamos si las páginas anteriores y siguientes de la actual existen
+              $start = $currentPage - $beforeAndAfter;
+           
+                  //Comprueba si la primera página en la paginación está por debajo de 1
+                  //para saber como colocar los enlaces
+              if($start < 1)
+              {
+                $pos = $start - 1;
+                $start = $currentPage - ($beforeAndAfter + $pos);
+              }
+           
+              //Último enlace a mostrar
+              $end = $currentPage + $beforeAndAfter;
+           
+              if($end > $lastPage)
+              {
+                $pos = $end - $lastPage;
+                $end = $end - $pos;
+              }
+           
+              //Si es la primera página mostramos el enlace desactivado
+              if ($currentPage <= 1)
+              {
+                echo '<li class="disabled"><span>Primera</span></li>';
+              }
+              //en otro caso obtenemos la url y mostramos en forma de link
+              else
+              {
+                $url = $art->getUrl(1);
+           
+                echo '<li><a href="'.$url.'">&lt;&lt; Primera</a></li>';
+              }
+           
+              //Para ir a la anterior
+              echo $presenter->getPrevious('&lt; Anterior');
+           
+              //Rango de enlaces desde el principio al final, 3 delante y 3 detrás
+              echo $presenter->getPageRange($start, $end);
+           
+              //Para ir a la siguiente
+              echo $presenter->getNext('Siguiente &gt;');
+           
+              ////Si es la última página mostramos desactivado
+              if ($currentPage >= $lastPage)
+              {
+                echo '<li class="disabled"><span>Última</span></li>';
+              }
+              //en otro caso obtenemos la url y mostramos en forma de link
+              else
+              {
+                $url = $art->getUrl($lastPage);
+           
+                echo '<li><a href="'.$url.'">Última &gt;&gt;</a></li>';
+              }
+              ?>
+            @endif
+          </ul>
+        </nav> <!-- cd-pagination-wrapper -->
       </div>
       <div class="col-xs-2">
         <div class="col-xs-12"><a href="{{ URL::to('images/pub/'.$first->item_id) }}"><img src="{{ asset('images/pub/'.$first->image) }}"></a></div>

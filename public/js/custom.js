@@ -1,3 +1,11 @@
+jQuery(document).ready(function($) {
+	$('.logout').click(function(event) {
+		var x = confirm('¿Seguro desea salir?');
+		if (!x) {
+			event.preventDefault();
+		}
+	});	
+});
 
 jQuery(document).ready(function($) {
 	/*-------------------------------------------registro de usuario-------------------------------------------*/

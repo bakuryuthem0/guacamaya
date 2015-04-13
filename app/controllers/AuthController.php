@@ -85,7 +85,8 @@ class AuthController extends BaseController {
 			'email'      			 => 'required|email|unique:usuario',
 			'dir' 			 		 => 'required',
 			'estado'				 => 'required',
-			'municipio'				 => 'required'
+			'municipio'				 => 'required',
+			'g-recaptcha-response'   => 'required',
 
 		);
 		$messages = array(
@@ -104,15 +105,14 @@ class AuthController extends BaseController {
 			'email' 			=> 'El campo email',
 			'dir'  			    => 'El campo departamento',
 			'estado'			=> 'El campo estado',
-			'municipio'			=> 'El campo municipio'
+			'municipio'			=> 'El campo municipio',
+			'g-recaptcha-response' => 'El captcha'
 		);
 		$validator = Validator::make($input, $rules, $messages,$custom);
 		if ($validator->fails()) {
 			return Redirect::to('registro')->withErrors($validator)->withInput();
 		}
 		$codigo = md5(rand());
-		$url = 'registro/verificar-codigo/'.$input['username'].'/'.$codigo;
-		$link = 'http://localhost/prueba/guacamaya/public/'.$url;
 		$user = new User;
 		$user->username 	 = $input['username'];
 		$user->password    	 = Hash::make($input['pass']);
@@ -129,18 +129,9 @@ class AuthController extends BaseController {
 			$user->telefono = $input['telefono'];
 		}
 		$user->role          = 'Usuario';
-		$user->register_cod = $codigo;
-		$data = array(
-			'link' => $link
-		);
-		Mail::send('emails.newUser', $data, function ($message) use ($input){
-		    $message->subject('Correo de registro de usuario en guacamayastores.com.ev');
-		    $message->to($input['email']);
-		});
+		
 		if ($user->save()) {
-			Session::flash('success', 'Hemos enviado un link de activación a su correo electrónico, para completar su registro
-
-por favor acceda al link');
+			Session::flash('success', 'Su cuenta fue creada satisfractoriamente, inicie sesión para disfrutar de nuestros servicios.');
 			return Redirect::to('iniciar-sesion');
 			
 		}else

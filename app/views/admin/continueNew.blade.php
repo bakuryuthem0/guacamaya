@@ -11,29 +11,30 @@
 			<form class="formCart" method="POST">
 			<div class="col-xs-6 inputForm">
 				<label class="textoPromedio">Seleccione la talla</label>
-				<?php $arr = array(
-					'' => 'Seleccione la talla');
-					 ?>
 				@if(!empty($tallas) && !is_null($tallas) && count($tallas)>0)
+				<select name="talla" class="form-control" requied>
+					<option value="">Seleccione una talla</option>
 					@foreach ($tallas as $talla)
-						<?php $arr = $arr+array($talla->id => strtoupper($talla->talla_nomb).' - '.ucfirst($talla->talla_desc));  ?>
+						<option value="{{ $talla->id }}">{{ strtoupper($talla->talla_nomb).' - '.ucfirst($talla->talla_desc) }}</option>
 					@endforeach
+					<option value="all">Todas</option>
+				</select>
 				@endif
-				{{ Form::select('talla',$arr,Input::old('talla'),array('class' => 'form-control','requied' => 'required')
-					)}}
+				
+				
 			</div>
 			<div class="col-xs-6 inputForm">
 				<label class="textoPromedio">Seleccione El color</label>
-				<?php $arr = array(
-					'' => 'Seleccione la talla');
-					 ?>
+				
 				@if(!empty($colores) && !is_null($colores) && count($colores)>0)
+				<select name="color" class="form-control" requied>
 					@foreach ($colores as $color)
-						<?php $arr = $arr+array($color->id => ucfirst($color->color_desc));  ?>
+						<option value="{{$color->id}}">{{ucfirst($color->color_desc)}}</option>
 					@endforeach
+					<option value="all">Todas</option>
+				</select>
 				@endif
-				{{ Form::select('color',$arr,Input::old('color'),array('class' => 'form-control','requied' => 'required')
-					)}}
+				
 				<input type="hidden" id="art_id" name="art" value="{{ $id }}">
                 <input type="hidden" id="misc_id" name="misc" value="{{ $misc_id }}">
 			</div>
@@ -55,7 +56,7 @@
                 </div>
             </div>
 			<div class="col-xs-12">
-				<!--<button class="btn btn-primary contNew">Nueva caracteristica</button>-->
+				<button class="btn btn-primary contNew">Nueva caracteristica</button>
 				<button class="btn btn-success contSave">Guardar y continuar</button>
 			</div>
 			<div class="clearfix"></div>

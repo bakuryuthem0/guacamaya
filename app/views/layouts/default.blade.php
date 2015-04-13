@@ -37,6 +37,7 @@
                fjs.parentNode.insertBefore(js, fjs);
              }(document, 'script', 'facebook-jssdk'));
           </script>
+          <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
     <body id="body">
             <nav class="navbar navbar-default">
@@ -96,11 +97,11 @@
                           </li>
                           <li>
                             <a href="{{ URL::to('usuario/mis-compras') }}">
-                              Mis compras
+                             <i class="fa fa-cart-arrow-down"></i> Mis compras
                             </a>
                           </li>
                           <li>
-                            <a href="{{ URL::to('cerrar-sesion') }}">
+                            <a href="{{ URL::to('cerrar-sesion') }}" class="logout">
                               <i class="fa fa-sign-out"></i> Cerrar sesión
                             </a>
                           </li>
@@ -197,11 +198,11 @@
           <div class="col-xs-9 contFoot">
               <div class="col-xs-12 contList contCentrado">
                 <div class="col-xs-6 textoPromedio">
-                  <label>Acerca de guacamaya</label>
+                  <label><h3>Acerca de guacamaya</h3></label>
                   <ul class="ulNoStyle">
                     <li><a href="{{ URL::to('') }}" class="aConFormato">Quiénes somos</a></li>
                     <li><a href="{{ URL::to('') }}" class="aConFormato">Términos y Condiciones</a></li>
-                    <li><a href="{{ URL::to('') }}" class="aConFormato">Cómo comprar/a></li>
+                    <li><a href="{{ URL::to('') }}" class="aConFormato">Cómo comprar</a></li>
                     <li><a href="{{ URL::to('') }}" class="aConFormato">Cupones y Códigos de Promoción</a></li>
                     <li><a href="{{ URL::to('') }}" class="aConFormato">Politicas de protección de datos</a></li>
                     <li><a href="{{ URL::to('') }}" class="aConFormato">Formas de pago</a></li>
@@ -221,10 +222,11 @@
                 <div class="clearfix"></div>
               </div>
           </div>
-            <div class="col-xs-12 footerTerm">
+            
+        </footer>
+        <div class="col-xs-12 footerTerm">
               <p class="textoPromedio"><i class="fa fa-copyright"></i> 2015 Guacamaya stores 2015, c.a. J-40566930-6 | Todos los derechos reservados.<br> Desarrolado por <a href="{{ URL::to('http://tecnographic.com.ve') }}" target="_blank">Tecnographic Venezuela c.a.</a></p>
             </div>
-        </footer>
         {{ HTML::script("http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js") }}
         <script>window.jQuery || document.write('<script src="js/jquery.js"><\/script>')</script>
         {{ HTML::script('js/bootstrap.min.js') }}

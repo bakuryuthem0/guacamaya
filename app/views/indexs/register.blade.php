@@ -217,6 +217,17 @@
 								 @endforeach
 							@endif
 						</div>
+
+					</div>
+					<div class="col-xs-12 formulario">
+						<div class="col-xs-6 inputRegister">
+							<p class="textoPromedio">captcha:</p>
+						</div>
+						<div class="col-xs-6 inputRegister">
+							
+							<div class="g-recaptcha" data-sitekey="6LeqSAUTAAAAAES98bSzQFzMWkQDlbednSpve05r"></div>
+						</div>
+						
 					</div>
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-6 imgLiderUp">
