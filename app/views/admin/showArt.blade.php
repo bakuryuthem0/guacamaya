@@ -5,6 +5,12 @@
 <div class="row">
 	<div class="container">
 		<div class="col-xs-12">
+		@if(Session::has('success'))
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			{{ Session::get('success') }}
+		</div>
+		@endif
 			<div class="alert responseDanger textoPromedio" style="text-align:center;">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			</div>
@@ -26,7 +32,7 @@
 							<td>{{ $a->item_cod }}</td>
 							<td>{{ $a->item_nomb }}</td>
 							<td>{{ $a->item_stock }}</td>
-							<td><a class="btn btn-xs btn-primary" href="{{ URL::to('administrador/ver-articulo/'.$a->id) }}">Ver</a></td>
+							<td><a class="btn btn-xs btn-success" href="{{ URL::to('administrador/ver-articulo/'.$a->id) }}">Ver</a></td>
 							<td><a href="{{ URL::to('administrador/editar-articulo/'.$a->id) }}" class="btn btn-xs btn-warning btnMdfItem">Modificar</a></td>
 							<td><button class="btn btn-xs btn-danger btnElimItem" data-toggle="modal" data-target="#elimModal" value="{{ $a->id }}">Eliminar</button></td>
 						</tr>

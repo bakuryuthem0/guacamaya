@@ -11,7 +11,7 @@
         </div>
       @endif
 			       <table class="table table-hover tableCarrito">
-               <tr>
+               <tr class="textoPromedio">
                   <th>
                    Imagen
                   </th>
@@ -27,6 +27,7 @@
                   <th>
                     Sub-total
                   </th>
+                  @if(!isset($method))
                    <th>
                     Agregar
                   </th>
@@ -36,9 +37,14 @@
                       Vaciar
                     </button>
                   </th>
+                  @endif
                 </tr>
+              @if(!isset($method))
+              <?php 
+              $total = 0; 
+              ?>
               @foreach(Cart::content() as $cart)
-                <tr class="carItems" id="{{ $cart->id }}">
+                <tr class="textoPromedio carItems" id="{{ $cart->id }}">
                   <td class="carItem">
                     <img src="{{ asset('images/items/'.$cart->options['img']) }}" class="carImg">
                   </td>
@@ -66,7 +72,47 @@
                     </button>
                   </th>
                 </tr>
+                <?php $total = $total+($cart->qty*$cart->price); ?>
               @endforeach
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><h3>Total:</h3></td>
+                <td><h3 class="precio">{{ $total }}</h3></td>
+              </tr>
+              @else
+                @foreach($items as $cart)
+                <tr class="textoPromedio carItems" id="{{ $cart->id }}">
+                  <td class="carItem">
+                    <img src="{{ asset('images/items/'.$cart->img->image) }}" class="carImg">
+                  </td>
+                  <td class="carItem">
+                    {{ $cart->item_nomb }}
+                  </td>
+                  <td class="carItem columnCant">
+                    {{ $cart->qty }}
+                  </td>
+                  <td class="carItem">
+                    {{ $cart->item_precio }}
+                  </td>
+                  <td class="carItem" id="input{{ $cart->id }}_subtotal">
+                    {{ $cart->qty*$cart->item_precio }}
+                  </td>
+                  <?php $total = $total+($cart->qty*$cart->item_precio); ?>
+                </tr>
+              @endforeach
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+
+                <td><h3>Total:</h3></td>
+                <td><h3 class="precio total">{{ $total }}</h3></td>
+              </tr>
+              @endif
             </table>
             @if(!isset($method))<buttom class="btn btn-success" data-toggle="collapse" href="#continuar">Continuar</buttom>@endif
             
@@ -153,6 +199,8 @@
           <form method="post" action="{{ URL::to('usuario/publicaciones/pago/enviar') }}">
             <div class="col-xs-12">
                 <input type="text" id="numTransVal" name="transNumber" placehlder="Numero de transaccion" class="form-control textoPromedio" >
+                <input type="hidden" name="factId" value="{{ $id }}">
+                <input type="hidden" name="total" value="{{ $total }}">
                 @if ($errors->has('transNumber'))
                    @foreach($errors->get('transNumber') as $err)
                     <div class="alert alert-danger">
@@ -170,7 +218,6 @@
       </div>
       <div class="col-xs-6 bg-info">
         <h3>Mercado pago</h3>
-       
       </div>
     </div>
     @endif

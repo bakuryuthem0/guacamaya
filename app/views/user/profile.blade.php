@@ -53,43 +53,26 @@
 					</div>				
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-6 inputRegister">
-							<p class="textoPromedio"><strong>Estado:</strong></p>
+							<p class="textoPromedio">(*) Estado:</p>
 						</div>
 						<div class="col-xs-6 inputRegister">
-							<select name="estado" class="form-control">
-								<option>Seleccione el estado</option>
-								@foreach($est as $e)
-									@if($e->id == $user->estado)
-										<option value="{{ $e->id }}" selected>{{ $e->nombre }}</option>
-									@else
-										<option value="{{ $e->id }}">{{ $e->nombre }}</option>
-									@endif
+							<select name="estado" class="form-control" id="estado2">
+								<option value="">Seleccione un estado</option>
+								@foreach($estados as $e)
+									<option value="{{ $e->id }}">{{ $e->nombre }}</option>
 								@endforeach
 							</select>
-							@if ($errors->has('estado'))
-								 @foreach($errors->get('estado') as $err)
-								 	<div class="alert alert-danger">
-								 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-								 		<p class="textoPromedio">{{ $err }}</p>
-								 	</div>
-								 @endforeach
-							@endif
 						</div>
-					</div>	
+					</div>
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-6 inputRegister">
-							<p class="textoPromedio"><strong>Municipio:</strong></p>
+							<p class="textoPromedio">(*) Municipio:</p>
 						</div>
 						<div class="col-xs-6 inputRegister">
-							<select name="municipio" class="form-control">
-								<option>Seleccione el municipio</option>
-								@foreach($mun as $m)
-									@if($m->id == $user->municipio)
-										<option value="{{ $m->id }}" selected>{{ $m->nombre }}</option>
-									@else
-										<option value="{{ $m->id }}">{{ $m->nombre }}</option>
-									@endif
-								@endforeach
+							
+							<select name="municipio" class="form-control" id="municipio2" required>
+								<option value="" >Seleccione un municipio</option>
+								
 							</select>
 							@if ($errors->has('municipio'))
 								 @foreach($errors->get('municipio') as $err)
@@ -100,21 +83,16 @@
 								 @endforeach
 							@endif
 						</div>
-					</div>	
+					</div>
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-6 inputRegister">
-							<p class="textoPromedio"><strong>Parroquia:</strong></p>
+							<p class="textoPromedio">Parroquia:</p>
 						</div>
-						<div class="col-xs-6 inputRegister">
-							<select name="parroquia" class="form-control">
-								<option>Seleccione la parroquia</option>
-								@foreach($par as $p)
-									@if($e->id == $user->parroquia)
-										<option value="{{ $p->id }}" selected>{{ $p->nombre }}</option>
-									@else
-										<option value="{{ $p->id }}">{{ $p->nombre }}</option>
-									@endif
-								@endforeach
+						<div class="col-xs-6">
+							
+							<select name="parroquia" class="form-control" id="parroquia2">
+								<option value="">Seleccione una parroquia</option>
+								
 							</select>
 							@if ($errors->has('parroquia'))
 								 @foreach($errors->get('parroquia') as $err)
@@ -125,8 +103,7 @@
 								 @endforeach
 							@endif
 						</div>
-					</div>	
-					
+					</div>
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-6 inputRegister">
 							<p class="textoPromedio"><strong>Dirección:</strong></p>

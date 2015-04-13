@@ -7,6 +7,9 @@
 @font-face { 
 	font-family: Raleway; font-weight: italic; src: url('../fonts/raleway/Raleway-Italic.ttf'); 
 }
+@font-face { 
+  font-family: Raleway-light; font-weight: italic; src: url('../fonts/raleway/Raleway-Light.ttf'); 
+}
 @font-face{ 
   font-family: Bembo Std; src: url('../fonts/Bembo Std/BemboStd.otf'); 
 } 
@@ -15,7 +18,7 @@ body,html
 {
 	font-size: 76.66%;
 	color:#404040;
-	font-family: Relaway;
+	font-family: Raleway-light;
 }
 footer
 {
@@ -27,6 +30,8 @@ footer
   background-image: url(../images/footer.png);
   background-attachment: fixed;
   background-size: 100% 100%;
+  min-height: 250px;
+  padding: 3em 0;
 }
 #body
 {
@@ -72,6 +77,11 @@ a.aConFormato:hover{
 .bannerBottom > img
 {
 	width: 100%;
+}
+.bannerNegro
+{
+    letter-spacing: 6px;
+    font-size: 1.7em !important;
 }
 .bt-buscar
 {
@@ -342,7 +352,6 @@ a.aConFormato:hover{
 {
 	display: inline-block !important;
 	width: 23% !important;
-	padding-top: 1em;
 	padding-bottom: 1em;
 }
 .adminlayout
@@ -393,7 +402,8 @@ a.aConFormato:hover{
 {
 	text-align: center !important;
 }
-.table>thead>tr>th
+
+.table>thead>tr>th,.table>tbody>tr>th
 {
 	text-align: center; 
 }
@@ -750,11 +760,11 @@ a.aConFormato:hover{
 {
   width: auto;
   display: inline-block !important;
-  -webkit-transform: translate(5px,-2px);
-     -moz-transform: translate(5px,-2px);
-      -ms-transform: translate(5px,-2px);
-       -o-transform: translate(5px,-2px);
-          transform: translate(5px,-2px);
+  -webkit-transform: translate(5px,-3px);
+     -moz-transform: translate(5px,-3px);
+      -ms-transform: translate(5px,-3px);
+       -o-transform: translate(5px,-3px);
+          transform: translate(5px,-3px);
 }
 
 .slick-prev:before, .slick-next:before
@@ -783,9 +793,46 @@ a.aConFormato:hover{
 .precio
 {
   font-family: Bembo Std, Relaway;
+  color: #CD1E35 !important;
 }
 
 li.disabled
 {
   color: gray;
+}
+.icon
+{
+  font-size:2em !important;
+  margin-top:0px;
+}
+.icon-status-pending
+{
+  color:red; 
+}
+.icon-status-procesing
+{
+  color:orange;
+}
+.icon-status-success
+{
+  
+  color:green;
+}
+.tablaImages > tbody > tr > td
+{
+  vertical-align: middle; 
+}
+.fileUpload {
+  position: relative;
+  overflow: hidden;
+}
+.fileUpload input.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
 }

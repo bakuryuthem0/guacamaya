@@ -185,7 +185,7 @@
 						<div class="col-xs-6 inputRegister">
 							
 							<select name="municipio" class="form-control inputFondoNegro" id="municipio" required>
-								<option value="" >Seleccione un departamento</option>
+								<option value="" >Seleccione un municipio</option>
 								
 							</select>
 							@if ($errors->has('municipio'))
@@ -205,7 +205,7 @@
 						<div class="col-xs-6 inputRegister">
 							
 							<select name="parroquia" class="form-control inputFondoNegro" id="parroquia">
-								<option value="">Seleccione un departamento</option>
+								<option value="">Seleccione una parroquia</option>
 								
 							</select>
 							@if ($errors->has('parroquia'))

@@ -113,6 +113,19 @@
                               </li>
                             </ul>
                           </li>
+                          <li class="dropdown-submenu">
+                            <a href="#" >
+                              Pagos
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                              <li>
+                                <a href="{{ URL::to('administrador/ver-pagos') }}">
+                                  Ver pagos
+                                </a>
+                              </li>
+                              
+                            </ul>
+                          </li>
                         </ul>
                       </li>
                       <li class="dropdown myMenu">

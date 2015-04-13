@@ -941,8 +941,209 @@ class AdminController extends BaseController {
 	}
 	public function getMdfItem($id)
 	{
-		$item = Item::find($id);
+		$item = Items::find($id);
 		$misc = Misc::where('item_id','=',$item->id)->first();
+		$images = Images::where('misc_id','=',$misc->id)->where('deleted','=',0)->get();
+		$item->misc = $misc;
+		$item->img  = $images;
 		$title = "Modificar articulo: ".$item->item_nomb;
+
+		$cat = Cat::where('deleted','=',0)->get();
+		$tallas = Tallas::where('deleted','=',0)->get();
+		$colors = Colores::where('deleted','=',0)->get();
+		return View::make('admin.mdfItem')
+		->with('title',$title)
+		->with('item',$item)
+		->with('cat',$cat)
+		->with('tallas',$tallas)
+		->with('colores',$colors);
+	}
+	public function postMdfItem()
+	{
+		$inp = Input::all();
+		$rules = array(
+			'item_cod'  	=> 'required',
+			'item_nomb' 	=> 'required',
+			'item_desc' 	=> 'required',
+			'item_precio' 	=> 'required',
+			'item_stock' 	=> 'required',
+		);
+		$msg = array(
+			'required' => 'El campo no debe estar vacio'
+		);
+		$validator = Validator::make($inp, $rules, $msg);
+		if ($validator->fails()) {
+			return Redirect::back()->withErrors($validation);
+		}
+		$misc = Misc::find($inp['misc']);
+		$item = Items::find($inp['item']);
+		if (!empty($inp['color'])) {
+			$misc->item_color = $inp['color'];
+		}
+		if (!empty($inp['talla'])) {
+			$misc->item_talla = $inp['talla'];
+		}
+		if (!empty($inp['cat'])) {
+			$item->item_cat = $inp['cat'];
+		}
+		if (!empty($inp['subcat'])) {
+			$item->item_subcat = $inp['subcat'];
+		}
+		$item->item_cod  	= $inp['item_cod'];
+		$item->item_nomb 	= $inp['item_nomb'];
+		$item->item_desc 	= $inp['item_desc'];
+		$item->item_precio	= $inp['item_precio'];
+		$item->item_stock   = $inp['item_stock'];
+
+		if ($misc->save() && $item->save()) {
+			Session::flash('success', 'Articulo modificado satisfactoriamente.');
+			return Redirect::to('administrador/ver-articulo');
+		}else
+		{
+			Session::flash('dager', 'Error al modificar el articulo.');
+			return Redirect::back();
+		}
+	}
+	public function changeItemImagen()
+	{
+		$id   	= Input::get('item_id');
+		$file 	= Input::file('file');
+		$img_id = Input::get('id'); 
+		$imagen = Images::find($img_id);
+		if (file_exists('images/items/'.$id.'/'.$file->getClientOriginalName())) {
+			//guardamos la imagen en public/imgs con el nombre original
+            $i = 0;//indice para el while
+            //separamos el nombre de la img y la extensión
+            $info = explode(".",$file->getClientOriginalName());
+            //asignamos de nuevo el nombre de la imagen completo
+            $miImg = $file->getClientOriginalName();
+            //mientras el archivo exista iteramos y aumentamos i
+            while(file_exists('images/items/'.$id.'/'. $miImg)){
+                $i++;
+                $miImg = $info[0]."(".$i.")".".".$info[1];              
+            }
+            //guardamos la imagen con otro nombre ej foto(1).jpg || foto(2).jpg etc
+            $file->move("images/items/".$id,$miImg);
+            $blank = Image::make('images/blank.jpg');
+
+            $img = Image::make('images/items/'.$id.'/'.$miImg);
+            if ($img->width() > $img->height()) {
+            	$img->widen(225);
+            }else
+            {
+            	$img->heighten(300);
+            }
+            
+	        $blank->insert($img,'center')
+	           ->interlace()
+	           ->save('images/items/'.$id.'/'.$miImg);
+            if($miImg != $file->getClientOriginalName()){
+            	$imagen->image = $id.'/'.$miImg;
+            }
+		}else
+		{
+			$file->move("images/items/".$id,$file->getClientOriginalName());
+			$blank = Image::make('images/blank.jpg');
+			$img = Image::make('images/items/'.$id.'/'.$file->getClientOriginalName());
+            if ($img->width() > $img->height()) {
+            	$img->widen(225);
+            }else
+            {
+            	$img->heighten(300);
+            }
+
+            $blank->insert($img,'center')
+           ->interlace()
+           ->save('images/items/'.$id.'/'.$file->getClientOriginalName());
+           $imagen->image = $id.'/'.$file->getClientOriginalName();
+		}
+		if($imagen->save())
+		{
+			Session::flash('success', 'Imagen modificada correctamente.');
+			return Redirect::back();
+		}else
+		{
+			Session::flash('danger', 'Error al modificar la imagen.');
+			return Redirect::back();
+		}
+	}
+	public function getPayment()
+	{
+		$title = "Pagos | guacamayastores.com.ve";
+		$fac = Facturas::where('pagada','=',-1)->get();
+		return View::make('admin.showPayment')
+		->with('title',$title)
+		->with('fac',$fac);
+	}
+	public function getPurchases($id)
+	{
+		$title = "Ver factura | guacamayastores.com.ve";
+
+		$fac = Facturas::find($id);
+		$x 	 = FacturaItem::where('factura_id','=',$id)->sum('item_qty');
+		$aux = FacturaItem::where('factura_id','=',$id)->get(array('item_id','item_qty'));
+		$i = 0;
+		foreach ($aux as $a) {
+			$b = Items::find($a->item_id);
+			$b->qty = $a->item_qty;
+			$aux = Misc::where('item_id','=',$a->item_id)->where('deleted','=',0)->first();
+			$b->img = Images::where('misc_id','=',$aux->id)->where('deleted','=',0)->first(); 
+			$item[$i] = $b;
+			$i++;
+
+		}
+		$total = 0;
+		return View::make('admin.showFactura')
+		->with('title',$title)
+		->with('total',$total)
+		->with('items',$item)
+		->with('id',$id);
+	}
+	public function postPaymentAprove()
+	{
+		$id  = Input::get('id');
+		$fac = Facturas::find($id);
+		$fac->pagada = 1;
+		$user = User::find($fac->user_id);
+		if($fac->save())
+		{
+			$data = array(
+				'username' => Auth::user()->username,
+				'fac'  	   => $id,
+				'fecha'	   => date('d-m-Y',time())
+			);
+			Mail::send('emails.aprob', $data, function ($message) use ($id){
+				    $message->subject('Correo de confirmación guacamayastores.com.ve');
+				    $message->to('someemail@guacamayastores.com.ve');
+			});
+			return Response::json(array('type' => 'success','msg' => 'Pago Aprovado correctamente.'));
+		}else
+		{
+			return Response::json(array('type' => 'danger','msg' => 'Error al aprovar el pago.'));
+		}
+	}
+	public function postPaymentReject()
+	{
+		$id = Input::get('id');
+		$motivo = Input::get('motivo');
+		$fac = Facturas::find($id);
+		$fac->pagada = 0;
+		$user = User::find($fac->user_id);
+		if ($fac->save()) {
+			$data = array(
+				'username' => Auth::user()->username,
+				'fac'  	   => $id,
+				'fecha'	   => date('d-m-Y',time()),
+				'motivo'   => $motivo,
+			);
+			Mail::send('emails.reject', $data, function ($message) use ($id,$motivo){
+				    $message->subject('Correo de confirmación guacamayastores.com.ve');
+				    $message->to('someemail@guacamayastores.com.ve');
+			});
+			return Response::json(array('type' => 'success','msg' => 'Pago Aprovado correctamente.'));
+		}else
+		{
+			return Response::json(array('type' => 'danger','msg' => 'Error al aprovar el pago.'));
+		}
 	}
 }

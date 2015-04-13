@@ -9,7 +9,7 @@
         <title>{{ $title; }}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <link rel="icon" type="image/jpg" href="{{ asset('images/favicon.jpg') }}" />
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         {{ HTML::style("css/normalize.css") }}
@@ -122,7 +122,7 @@
               </div>
             </div>
                
-              <div class="miniBanner" style="text-align:center;"><p class="textoPromedio" style="color:white;padding-top:1em">Envios gratis a toda venezuela.</p></div>
+              <div class="miniBanner" style="text-align:center;"><p class="textoPromedio bannerNegro" style="color:white;padding-top:1em">Envios gratis a toda venezuela.</p></div>
             </nav>
         <div id="contCarrito">
           <div class="table-responsive">
@@ -201,6 +201,7 @@
                   <ul class="ulNoStyle">
                     <li><a href="{{ URL::to('') }}" class="aConFormato">Quiénes somos</a></li>
                     <li><a href="{{ URL::to('') }}" class="aConFormato">Términos y Condiciones</a></li>
+                    <li><a href="{{ URL::to('') }}" class="aConFormato">Cómo comprar/a></li>
                     <li><a href="{{ URL::to('') }}" class="aConFormato">Cupones y Códigos de Promoción</a></li>
                     <li><a href="{{ URL::to('') }}" class="aConFormato">Politicas de protección de datos</a></li>
                     <li><a href="{{ URL::to('') }}" class="aConFormato">Formas de pago</a></li>
@@ -221,7 +222,7 @@
               </div>
           </div>
             <div class="col-xs-12 footerTerm">
-              <p class="textoPromedio"><i class="fa fa-copyright"></i> 2015 Guacamaya stores 2015, c.a. | Todos los derechos reservados. Desarrolado por <a href="{{ URL::to('http://tecnographic.com.ve') }}" target="_blank">Tecnographic Venezuela c.a.</a></p>
+              <p class="textoPromedio"><i class="fa fa-copyright"></i> 2015 Guacamaya stores 2015, c.a. J-40566930-6 | Todos los derechos reservados.<br> Desarrolado por <a href="{{ URL::to('http://tecnographic.com.ve') }}" target="_blank">Tecnographic Venezuela c.a.</a></p>
             </div>
         </footer>
         {{ HTML::script("http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js") }}

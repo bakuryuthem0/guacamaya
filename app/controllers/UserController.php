@@ -14,9 +14,7 @@ class UserController extends Controller {
 		if (!empty($user) && $user != "" && !is_null($user) ) {
 			return View::make('user.profile')
 			->with('title',$title)
-			->with('est',$estados)
-			->with('mun',$mun)
-			->with('par',$par)
+			->with('estados',$estados)
 			->with('user',$user);
 		}		
 		
@@ -24,7 +22,7 @@ class UserController extends Controller {
 	public function postProfile()
 	{
 		$input = Input::all();
-		$user = User::find(Auth::id());
+		$user = User::find(Auth::user()->id);
 		$email = $user->email;
 		$rules = array(
 			'estado'       			 => 'required',
@@ -66,5 +64,13 @@ class UserController extends Controller {
 			Session::flash('error','Error no se pudo modificar los datos');
 			return Redirect::to('usuario/perfil');
 		}
+	}
+	public function getMyPurchases()
+	{
+		$title = "Mis compras | guacamayastores.com.ve";
+		$fac = Facturas::where('user_id','=',Auth::user()->id)->get();
+		return View::make('user.myPurchases')
+		->with('title',$title)
+		->with('fac',$fac);
 	}
 }

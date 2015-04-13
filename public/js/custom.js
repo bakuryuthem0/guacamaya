@@ -340,9 +340,9 @@ jQuery(document).ready(function($) {
 		to = boton.attr('data-url-value');
 		$.ajax({
 			//casa
-			//url: '/guacamaya/public/'+to,
+			url: '/guacamaya/public/'+to,
 			//trabajo
-			url: '/prueba/guacamaya/public/'+to,
+			//url: '/prueba/guacamaya/public/'+to,
 			type: 'POST',
 			dataType: 'json',
 			data: {'id':boton.val() },
@@ -393,9 +393,9 @@ jQuery(document).ready(function($) {
 		var to = boton.attr('data-url-value');
 			$.ajax({
 				//casa
-				//url: '/guacamaya/public/'+to,
+				url: '/guacamaya/public/'+to,
 				//trabajo
-				url: '/prueba/guacamaya/public/'+to,
+				//url: '/prueba/guacamaya/public/'+to,
 				type: 'POST',
 				dataType: 'json',
 				data: {'id':boton.val() },
@@ -469,9 +469,9 @@ jQuery(document).ready(function($) {
 		if (x) {
 			$.ajax({
 				//casa
-				//url: '/guacamaya/public/vaciar-carrito',
+				url: '/guacamaya/public/vaciar-carrito',
 				//trabajo
-				url: '/prueba/guacamaya/public/vaciar-carrito',
+				//url: '/prueba/guacamaya/public/vaciar-carrito',
 				type: 'POST',
 				dataType: 'json',
 				beforeSend:function()
@@ -556,10 +556,10 @@ jQuery(document).ready(function($) {
 				{
 					var row = '<tr class="carItems">';
 	                  row = row+'<td class="carItem" id="'+response.id+'">';
-	                    /*casa*/
-	                    //row = row+'<img src="/guacamaya/public/images/items/'+response.img+'" class="carImg">';
+	                    //casa
+	                    row = row+'<img src="/guacamaya/public/images/items/'+response.img+'" class="carImg">';
 	                    //trabajo
-	                  row = row+'<img src="/prueba/guacamaya/public/images/items/'+response.img+'" class="carImg">';
+	                  //row = row+'<img src="/prueba/guacamaya/public/images/items/'+response.img+'" class="carImg">';
 	                  row = row+'</td>';
 	                  row = row+'<td class="carItem">';
 	                    row = row+response.name;
@@ -632,9 +632,9 @@ jQuery(document).ready(function($) {
 			if (x) {
 				$.ajax({
 					//casa
-					//url: '/guacamaya/public/quitar-item',
+					url: '/guacamaya/public/quitar-item',
 					//trabajo
-					url: '/prueba/guacamaya/public/quitar-item',
+					//url: '/prueba/guacamaya/public/quitar-item',
 					type: 'POST',
 					dataType: 'json',
 					data: {'id':boton.val() },
@@ -687,9 +687,9 @@ jQuery(document).ready(function($) {
 		{
 			$.ajax({
 					//casa
-					//url: '/guacamaya/public/actualizar-al-carrito',
+					url: '/guacamaya/public/actualizar-al-carrito',
 					//trabajo
-					url: '/prueba/guacamaya/public/actualizar-al-carrito',
+					//url: '/prueba/guacamaya/public/actualizar-al-carrito',
 					type: 'POST',
 					dataType: 'json',
 					data: {
@@ -804,6 +804,7 @@ jQuery(document).ready(function($) {
 					boton.addClass('active')
 					boton.html('Desactivar')
 				}
+				
 				$('.responseDanger').removeClass('alert-danger');
 					$('.responseDanger').removeClass('alert-success');
 					$('.responseDanger').stop().css({'display':'block'}).addClass('alert-'+response.type).html('<p class="textoPromedio">'+response.msg+'</p>').animate({
@@ -946,6 +947,182 @@ jQuery(document).ready(function($) {
 	$('.slick-next').html('<i class="fa fa-caret-left"></i>');
 });
 
+jQuery(document).ready(function($) {
+	/*-------------------------------------------registro de usuario-------------------------------------------*/
+	var estado = $('#estado2');
+	estado.change(function(event) {
+		if ($(this).val() != "") {
+			var id = estado.val();
+			$.ajax({
+				url: '../registro/buscar-municipio',
+				type: 'POST',
+				data: {'id': id},
+				success:function(response)
+				{
+					$('.optionModel').remove();
+					for (var i = 0 ; i < response.length; i++) {
+						$('#municipio2').append('<option class="optionModel" value="'+response[i].id+'">'+response[i].nombre+'</option>');
+					};
+
+					var mun = $('#municipio2');
+					mun.change(function(event) {
+						var id = $(this).val();
+						$.ajax({
+							url: '../registro/buscar-parroquia',
+							type: 'POST',
+							data: {'id': id},
+							success:function(response)
+							{
+								$('.optionModelParr').remove();
+								for (var i = 0 ; i < response.length; i++) {
+									$('#parroquia2').append('<option class="optionModelParr" value="'+response[i].id+'">'+response[i].nombre+'</option>');
+								};
+							
+							}
+						})
+					});
+				}
+			})
+
+			
+		}
+	});
+});
+jQuery(document).ready(function($) {
+	$('.upload').click(function(event) {
+		var boton = $(this).parent();
+		boton.css({'display':'none'});
+		$(this).parent().after('<button class="btn btn-success btn-work" style="margin-right:1em;">Enviar</button><input type="reset" class="btn-work btn btn-warning btn-cancel" value="Cancelar">')
+		$('.btn-cancel').click(function(event) {
+			$('.btn-work').remove();
+			boton.css({'display':'inline-block'});	
+		});
+	});
+	var cat = $('.catx');
+	cat.change(function(event) {
+		var id = $(this).val();
+		$.ajax({
+			url: '../categoria/buscar-sub-categoria',
+			type: 'POST',
+			data: {'id': id},
+			success:function(response)
+			{
+				$('.optionModelParr').remove();
+				for (var i = 0 ; i < response.length; i++) {
+					$('.subcat').append('<option class="optionModelParr" value="'+response[i].id+'">'+response[i].sub_desc+'</option>');
+				};
+			
+			}
+		})
+	});
+});
+
+
+jQuery(document).ready(function($) {
+	$('.aprov-fac').click(function(event) {
+		var boton = $(this);
+		
+		$.ajax({
+			//casa
+			url: 'ver-pagos/aprovar',
+			type: 'POST',
+			dataType: 'json',
+			data: {'id':boton.val() },
+			beforeSend:function()
+			{
+				
+				boton.animate({
+						'opacity': 0},
+						250,function(){
+							$(this).css({
+								'display':'none'
+							});
+							$('.loading').css({
+								'display': 'inline-block'
+							}).animate({
+								'opacity': 1},
+								250);
+						}
+				);
+				boton.after('<img src="../images/loading.gif" class="loading">');
+				
+			},
+			success:function(response)
+			{
+					$('.loading').animate({
+						'opacity': 0},
+						250,function(){
+							$(this).remove();
+							boton.css({
+								'display': 'inline-block'
+							}).animate({
+								'opacity': 1},
+								250);
+						});
+					$('.responseDanger').removeClass('alert-danger');
+					$('.responseDanger').removeClass('alert-success');
+					$('.responseDanger').stop().css({'display':'block'}).addClass('alert-'+response.type).html('<p class="textoPromedio">'+response.msg+'</p>').animate({
+						'opacity': 1},
+						500);
+					if (response.type == 'success') {
+						boton.parent().parent().remove();
+						
+					};
+			}
+		})
+	});
+	$('.reject-fac').click(function(event) {
+		var boton = $(this);
+		$('.responseDanger').removeClass('alert-danger');
+		$('.responseDanger').removeClass('alert-success');
+		$('.responseDanger').css({
+			'display': 'none',
+			'opacity': 0
+		});
+		$('.envReject').val(boton.val());
+		$('.envReject').click(function(event) {
+			var boton2 = $(this);
+			var motivo = $('#motivo').val();
+			$.ajax({
+				url: 'ver-pagos/rechazar',
+				type: 'POST',
+				dataType: 'json',
+				data: {'id': $(this).val(),'motivo': motivo},
+				beforeSend:function()
+				{
+					boton2.before('<img src="../images/loading.gif" class="loading">');
+					$('.loading').css({
+						'display': 'block',
+						'margin': '2em auto'
+					}).animate({
+						'opacity': 1},
+						500);
+					boton2.addClass('disabled');
+				},
+				success:function(response)
+				{
+					boton2.removeClass('disabled');
+					$('.loading').animate({
+						'opacity': 0},
+						500,function(){
+							$(this).remove();
+						});
+					if (response.type == 'success') {
+
+						boton.parent().parent().remove();
+					};
+					$('.responseDanger').addClass('alert-'+response.type).html(response.msg).css({
+						'display': 'block'
+					}).animate({
+						'opacity': 1},
+						500);
+				}
+			})
+			
+			
+		});
+	});
+});
 /*Plugin*/
 jQuery(document).ready(function($){
 	var visionTrigger = $('.cd-3d-trigger'),

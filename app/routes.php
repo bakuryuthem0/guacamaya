@@ -50,6 +50,7 @@ Route::group(array('before' =>'auth'),function()
 	Route::get('mis-compras/pago/enviar','ItemController@postPayment');
 
 	Route::get('usuario/mis-compras','UserController@getMyPurchases');
+	Route::post('usuario/publicaciones/pago/enviar','ItemController@postSendPayment');
 
 	Route::group(array('before' => 'check_role'), function(){
 		Route::get('administrador/inicio','AdminController@getIndex');
@@ -62,6 +63,9 @@ Route::group(array('before' =>'auth'),function()
 		Route::post('administrador/nuevo-articulo/continuar/enviar/{id}/{misc_id}','AdminController@postContinueNew');
 		Route::post('administrador/nuevo-articulo/continuar/guardar-cerrar/{id}/{misc_id}','AdminController@postSaveNew');
 		Route::post('administrador/nuevo-articulo/imagenes/procesar','AdminController@post_upload');
+		Route::post('administrador/modificar-articulo','AdminController@postMdfItem');
+		Route::post('administrador/cambiar-imagen','AdminController@changeItemImagen');
+
 		/**/
 		/*Ver articulos*/
 		Route::get('administrador/ver-articulo', 'AdminController@getShowArt');
@@ -100,6 +104,11 @@ Route::group(array('before' =>'auth'),function()
 
 		//eliminar
 		Route::post('colores/eliminar','AdminController@postElimColor');
+		//pagos
+		Route::get('administrador/ver-pagos','AdminController@getPayment');
+		Route::get('administrador/ver-factura/{id}','AdminController@getPurchases');
+		Route::post('administrador/ver-pagos/aprovar','AdminController@postPaymentAprove');
+		Route::post('administrador/ver-pagos/rechazar','AdminController@postPaymentReject');
 		//Nuevo admin
 		Route::get('administrador/crear-nuevo','AdminController@getNewAdmin');
 		Route::post('administrador/crear-nuevo/enviar','AdminController@postNewAdmin');
