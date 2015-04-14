@@ -27,7 +27,7 @@
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-12 inputRegister">
 							<p class="textoPromedio">Nombre de la categoria:</p>
-							<p class="bg-info textoPromedio" style="padding:0.5em;text-align:center;">* Nombre para las busquedas(sin acentro)</p>
+							<p class="bg-info textoPromedio" style="padding:0.5em;text-align:center;">* Nombre para las busquedas(sin acento)</p>
 						</div>
 						<div class="col-xs-12 inputRegister">
 							{{ Form::text('name_cat', Input::old('name_cat'),array('data-trigger' => "blur",'class' => 'form-control cat_nomb inputForm inputFondoNegro','placeholder' => 'Nombre de la categoria',)) }}
@@ -44,7 +44,7 @@
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-12 inputRegister">
 							<p class="textoPromedio">Título de la categoría:</p>
-							<p class="bg-info textoPromedio" style="padding:0.5em;text-align:center;">* Título para mostrar la categoria (puede tener acentro)</p>
+							<p class="bg-info textoPromedio" style="padding:0.5em;text-align:center;">* Título para mostrar la categoria (puede tener acento)</p>
 						</div>
 						<div class="col-xs-12 inputRegister">
 							{{ Form::text('desc_cat',Input::old('desc_cat'),array('class' => 'form-control inputForm cat_desc inputFondoNegro','placeholder' => 'Título de la categoría')) }}

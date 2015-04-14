@@ -43,7 +43,7 @@ class HomeController extends BaseController {
 		->groupBy('item.id')
 		->where('item.deleted','=',0)
 		->where('m.deleted','=',0)
-		->orderBy('item.created_at')
+		->orderBy('item.created_at','DESC')
 		->paginate(8,array(
 			'item.id',
 			'item.item_nomb',

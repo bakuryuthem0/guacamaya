@@ -28,7 +28,7 @@
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-12 inputRegister">
 							<p class="textoPromedio">Nombre de la color:</p>
-							<p class="bg-info textoPromedio" style="padding:0.5em;text-align:center;">* Nombre para las busquedas(sin acentro)</p>
+							<p class="bg-info textoPromedio" style="padding:0.5em;text-align:center;">* Nombre para las busquedas(sin acento)</p>
 						</div>
 						<div class="col-xs-12 inputRegister">
 							{{ Form::text('name_color', Input::old('name_color'),array('data-trigger' => "blur",'class' => 'form-control cat_nomb inputForm inputFondoNegro','placeholder' => 'Nombre de la color',)) }}
@@ -45,7 +45,7 @@
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-12 inputRegister">
 							<p class="textoPromedio">Título de la color:</p>
-							<p class="bg-info textoPromedio" style="padding:0.5em;text-align:center;">* Título para mostrar el color (puede tener acentro)</p>
+							<p class="bg-info textoPromedio" style="padding:0.5em;text-align:center;">* Título para mostrar el color (puede tener acento)</p>
 						</div>
 						<div class="col-xs-12 inputRegister">
 							{{ Form::text('desc_color',Input::old('desc_color'),array('class' => 'form-control inputForm cat_desc inputFondoNegro','placeholder' => 'Título de la categoría')) }}

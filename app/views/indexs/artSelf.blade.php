@@ -23,57 +23,60 @@
 					<ul id="cd-gallery-items" class="cd-container">
 						<li>
 							<ul class="cd-item-wrapper">
-								<?php $i = 0; ?>
+								<?php $j = 0; ?>
 								@foreach($art->images as $img)
 									@foreach($img as $i)
-										@if(count($art->images)>4)
-										@if($i == 0)
+										@if(count($img)>=4)
+										
+										@if($j == 0)
 											<li class="cd-item-front">
 												<a href="#0">
 													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
 												</a>
 											</li>
-										@elseif(($i+2) == count($art->images))
+										@elseif(($j+2) == count($img))
 										<li class="cd-item-back">
 											<a href="#0">
 												<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
 											</a>
 										</li>
-										@elseif(($i+1) == count($art->images))
+										@elseif(($j+1) == count($img))
 											<li class="cd-item-out">
 												<a href="#0">
 													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
 												</a>
 											</li>
 										@else
-											<li class="cd-item-middle cd-item-{{ $i }}">
+											<li class="cd-item-middle cd-item-{{ $j }}">
 												<a href="#0">
 													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
 												</a>
 											</li>
 										@endif
 									@else
-										@if($i == 0)
+										@if($j == 0)
 											<li class="cd-item-front">
 												<a href="#0">
 													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
 												</a>
 											</li>
-										@elseif(($i+2) == count($art->images))
+										@elseif(($j+2) == count($img))
 											<li class="cd-item-back">
 												<a href="#0">
 													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
 												</a>
 											</li>
 										@else
-											<li class="cd-item-middle cd-item-{{ $i }}">
+											<li class="cd-item-middle cd-item-{{ $j }}">
 												<a href="#0">
 													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
 												</a>
 											</li>
 										@endif
 									@endif
+									<?php $j++; ?> 
 									@endforeach
+
 								@endforeach
 							</ul> <!-- cd-item-wrapper -->
 
