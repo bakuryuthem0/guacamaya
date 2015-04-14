@@ -144,16 +144,19 @@ class HomeController extends BaseController {
 		->where('item.deleted','=',0)
 		->get(array(
 				'item.id',
+				'item.item_nomb',
 				'item.item_desc',
 				'item.item_precio',
 				'item.item_cod',
 				'i.image'
 			));
+		$type = "hola";
 		return View::make('indexs.busq')
 		->with('title',$title)
 		->with('art',$art)
 		->with('cat',$cat)
 		->with('subcat',$subcat)
+		->with('type',$type)
 		->with('busq',$auxcat->cat_desc);
 	}
 	public function getSubCatBuscar($subcat,$id)
@@ -178,6 +181,7 @@ class HomeController extends BaseController {
 			array(
 				'item.id',
 				'item.item_desc',
+				'item.item_nomb',
 				'item.item_precio',
 				'item.item_cod',
 				'i.image'

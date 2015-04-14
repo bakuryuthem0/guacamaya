@@ -26,9 +26,13 @@
       </div>
       <div class="col-xs-10 contdeColor" style="padding-right: 0px;">
         @if(count($art)>0)
+        @if(!isset($type))
         <div class="alert alert-success">
           <p class="textoPromedio" style="text-align:center;">Resultados encontrados para <strong>{{ $busq }}</strong></p>
         </div>
+        @else
+          <h2 style="text-align:center;">{{ $busq }}</h2>
+        @endif
 
         @foreach($art as $a)
           <a href="{{ URL::to('articulo/'.$a->id) }}">

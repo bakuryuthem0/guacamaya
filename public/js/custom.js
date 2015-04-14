@@ -1179,6 +1179,28 @@ $(document).ready(function() {
     });
 });
 
+jQuery(document).ready(function($) {
+	$('.ver').click(function(event) {
+		var id = $(this).val();
+		var username = $('.username-'+id).val();
+		var name = $('.name-'+id).val();
+		var email = $('.email-'+id).val();
+		var phone = $('.phone-'+id).val();
+		var dir = $('.dir-'+id).val();
+		var pagWeb = $('.est-'+id).val();
+		var carnet = $('.mun-'+id).val();
+		var nit = $('.par-'+id).val();
+		$('.usernameModal').html(username);
+		$('.nameModal').html(name);
+		$('.emailModal').html(email);
+		$('.dirModal').html(dir);
+		$('.phoneModal').html(phone);
+		$('.pagWebModal').html(pagWeb);
+		$('.carnetModal').html(carnet);
+		$('.nitModal').html(nit);
+	});
+});
+
 /*Plugin*/
 jQuery(document).ready(function($){
 	var visionTrigger = $('.cd-3d-trigger'),

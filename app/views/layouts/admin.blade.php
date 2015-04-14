@@ -41,7 +41,7 @@
                
                <div class="collapse navbar-collapse adminlayout" id="bs-example-navbar-collapse-1 col-xs-3">
                 @if(!Auth::check())
-                <h3 style="text-align:right;vertical-align:middle;">Sistema de administracion de guacamayastores</h3>
+                <h3 style="text-align:left;vertical-align:middle;">Bienvenido (a)<br>Al Centro De Administración De Guacamaya Stores Venezuela</h3>
                 @else
                   <ul class="nav navbar-nav">
                     <li class="dropdown myMenu">
@@ -121,6 +121,11 @@
                               <li>
                                 <a href="{{ URL::to('administrador/ver-pagos') }}">
                                   Ver pagos
+                                </a>
+                              </li>
+                              <li>
+                                <a href="{{ URL::to('administrador/ver-pagos-aprobados') }}">
+                                  Ver pagos aprobados
                                 </a>
                               </li>
                               

@@ -109,6 +109,7 @@ Route::group(array('before' =>'auth'),function()
 		Route::get('administrador/ver-factura/{id}','AdminController@getPurchases');
 		Route::post('administrador/ver-pagos/aprovar','AdminController@postPaymentAprove');
 		Route::post('administrador/ver-pagos/rechazar','AdminController@postPaymentReject');
+		Route::get('administrador/ver-pagos-aprobados','AdminController@getPaymentAproved');
 		//Nuevo admin
 		Route::get('administrador/crear-nuevo','AdminController@getNewAdmin');
 		Route::post('administrador/crear-nuevo/enviar','AdminController@postNewAdmin');

@@ -452,6 +452,16 @@ a.aConFormato:hover{
 	opacity: 0;
 }
 
+.btn-volver
+{
+  background-color: #EC0808;
+  color: white;
+}
+.btn-success,.btn-warning,.btn-danger
+{
+  background-image: none !important;
+}
+
 /*item plugin*/
 #cd-gallery-items{
   list-style: none;

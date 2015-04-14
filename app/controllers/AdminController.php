@@ -1146,4 +1146,34 @@ class AdminController extends BaseController {
 			return Response::json(array('type' => 'danger','msg' => 'Error al aprovar el pago.'));
 		}
 	}
+	public function getPaymentAproved()
+	{
+		$title = "Pagos aprobados";
+		$title = "Pagos | guacamayastores.com.ve";
+		$fac = Facturas::join('usuario','usuario.id','=','facturas.user_id')->where('facturas.pagada','=',1)
+		->leftJoin('estado','usuario.estado','=','estado.id')
+		->leftJoin('municipio','usuario.municipio','=','municipio.id')
+		->leftJoin('parroquia','usuario.parroquia','=','parroquia.id')
+		->orderBy('facturas.id','DESC')
+		->get(array(
+			'facturas.id',
+			'facturas.num_trans',
+			'facturas.dir',
+			'usuario.id as user_id',
+			'usuario.username',
+			'usuario.dir as user_dir',
+			'usuario.nombre',
+			'usuario.apellido',
+			'usuario.telefono',
+			'usuario.email',
+			'estado.nombre as est',
+			'municipio.nombre as mun',
+			'parroquia.nombre as par'
+		));
+		$type = "apr";
+		return View::make('admin.showPayment')
+		->with('title',$title)
+		->with('fac',$fac)
+		->with('type',$type);
+	}
 }

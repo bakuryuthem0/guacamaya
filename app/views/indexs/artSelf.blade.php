@@ -11,73 +11,56 @@
 						<label>Descripción</label>
 						{{ $art->item_desc }}
 						<div id="fb-root"></div>
-						<div
+						<div style="margin-top:2em;margin-bottom:2em;"
 						  class="fb-like"
 						  data-share="true"
 						  data-width="450"
 						  data-show-faces="true">
 						</div>
+						<a href="{{ URL::previous() }}" class="btn btn-volver">Volver</a>
 					</div>
 				</div>
 				<div class="col-xs-4">
 					<ul id="cd-gallery-items" class="cd-container">
 						<li>
 							<ul class="cd-item-wrapper">
-								<?php $j = 0; ?>
-								@foreach($art->images as $img)
-									@foreach($img as $i)
-										@if(count($img)>=4)
-										
-										@if($j == 0)
-											<li class="cd-item-front">
-												<a href="#0">
-													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
-												</a>
-											</li>
-										@elseif(($j+2) == count($img))
-										<li class="cd-item-back">
+								<?php 
+									$k = 0; 
+									$c = count($art->images);
+									$total = 0;
+									if ($c>1)
+									{
+										foreach ($art->images as $a)
+										{
+											$total += count($a);
+										}
+									}else
+									{
+										$total = count($art->images[0]);
+									}
+									for($i = 0;$i<count($art->images);$i++)
+									{
+										for ($j=0; $j <count($art->images[$i]) ; $j++) { 
+											$l = $art->images[$i][$j];
+								?>
+										<li class="
+										@if($k == 0) 
+											cd-item-front 
+										@elseif($k == 1)
+											cd-item-middle 
+										@elseif($k+1 == $total)
+											cd-item-back 
+										@else cd-item-out cd-item-{{ $k }} @endif">
 											<a href="#0">
-												<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
+												<img src="{{ asset('images/items/'.$l->image) }}" alt="{{ $art->item_nomb }}">
 											</a>
 										</li>
-										@elseif(($j+1) == count($img))
-											<li class="cd-item-out">
-												<a href="#0">
-													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
-												</a>
-											</li>
-										@else
-											<li class="cd-item-middle cd-item-{{ $j }}">
-												<a href="#0">
-													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
-												</a>
-											</li>
-										@endif
-									@else
-										@if($j == 0)
-											<li class="cd-item-front">
-												<a href="#0">
-													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
-												</a>
-											</li>
-										@elseif(($j+2) == count($img))
-											<li class="cd-item-back">
-												<a href="#0">
-													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
-												</a>
-											</li>
-										@else
-											<li class="cd-item-middle cd-item-{{ $j }}">
-												<a href="#0">
-													<img src="{{ asset('images/items/'.$i->image) }}" data-zoom-image="{{ asset('images/items/'.$i->image) }}" class="zoom_item" alt="{{ $art->item_nomb }}">
-												</a>
-											</li>
-										@endif
-									@endif
-									<?php $j++; ?> 
-									@endforeach
-
-								@endforeach
+								<?php
+											$k++;
+										}
+									}
+								?>
+								
 							</ul> <!-- cd-item-wrapper -->
 
 							<nav>
@@ -94,7 +77,7 @@
 
 				<div class="col-xs-4 textoPromedio">
 					<div class="col-xs-12">
-						<label>Precio en tienda:</label>
+						<label>PRECIO EN GUACAMAYA STORES:</label>
 
 						<h3 class="precio">Bs. {{ $art->item_precio }}</h3>
 					</div>
@@ -142,7 +125,7 @@
 					
 					@if(Auth::check() && Auth::user()->role != 1)
 					<div class="col-xs-12">
-							<button class="btn btn-warning btnAgg" data-price-value="{{ $art->item_precio}}" data-name-value="{{ $art->item_nomb }}" value="{{ $art->id }}">Agregar al carrito.</button>
+							<button class="btn btn-success btnAgg" data-cod-value="{{ $art->item_cod }}" data-price-value="{{ $art->item_precio}}" data-name-value="{{ $art->item_nomb }}" value="{{ $art->id }}">Agregar al carrito.</button>
 					</div>
 					@endif
 					<div class="col-xs-12">

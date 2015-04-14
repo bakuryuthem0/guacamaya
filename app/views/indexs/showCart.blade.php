@@ -58,10 +58,10 @@
                     <input class="form-control cantArt" id="input{{ $cart->id }}" value="{{ $cart->qty }}">
                   </td>
                   <td class="carItem">
-                    {{ $cart->price }}
+                    Bs.{{ $cart->price }}
                   </td>
                   <td class="carItem" id="input{{ $cart->id }}_subtotal">
-                    {{ $cart->subtotal }}
+                    Bs.{{ $cart->subtotal }} 
                   </td>
                   <th class="carItem">
                     <button class="btn btn-success btn-xs btnActualizar btn-carrito" data-field-value="#input{{ $cart->id }}" value="{{ $cart->rowid }}">
@@ -84,7 +84,7 @@
                 <td></td>
                 <td></td>
                 <td><h3>Total:</h3></td>
-                <td><h3 class="precio">{{ $total }}</h3></td>
+                <td><h3 class="precio">Bs.{{ $total }}</h3></td>
               </tr>
               @else
                 @foreach($items as $cart)
@@ -102,10 +102,10 @@
                     {{ $cart->qty }}
                   </td>
                   <td class="carItem">
-                    {{ $cart->item_precio }}
+                    Bs.{{ $cart->item_precio }}
                   </td>
                   <td class="carItem" id="input{{ $cart->id }}_subtotal">
-                    {{ $cart->qty*$cart->item_precio }}
+                    Bs.{{ $cart->qty*$cart->item_precio }}
                   </td>
                   <?php $total = $total+($cart->qty*$cart->item_precio); ?>
                 </tr>
@@ -114,9 +114,10 @@
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
 
                 <td><h3>Total:</h3></td>
-                <td><h3 class="precio total">{{ $total }}</h3></td>
+                <td><h3 class="precio total">Bs.{{ $total }}</h3></td>
               </tr>
               @endif
             </table>
@@ -199,7 +200,7 @@
     <div class="contdeColor col-xs-12" style="margin-top:2em;">
       <h3 style="text-align:center;">Metodos de pago</h3>
       <div class="col-xs-6">
-        <h3><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#transferencia"></i> Transferencia bancaria</h3>
+        <h3><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#transferencia"></i> Transferencia en linea</h3>
         <div class="col-xs-12 collapse" id="transferencia" style="padding:2em;">
           <p class="textoPromedio">Una vez haya realizado su pago, introduzca el número de transacción en la casilla</p>
           <form method="post" action="{{ URL::to('usuario/publicaciones/pago/enviar') }}">
