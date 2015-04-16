@@ -63,7 +63,7 @@
                         {{ ShowCat::show() }}
                       </ul>
                     </div><!-- /btn-group -->
-                     <input class="form-control inputBusqueda" placeholder="Busqueda por palabras claves,marcas o productos" name="busq">
+                     <input class="form-control inputBusqueda" placeholder="Búsqueda por productos" name="busq">
                     <button class="btn bt-buscar"><i class="fa fa-search"></i></button>
                  
                   
@@ -123,7 +123,7 @@
               </div>
             </div>
                
-              <div class="miniBanner" style="text-align:center;"><p class="textoPromedio bannerNegro" style="color:white;padding-top:1em">Envios gratis a toda venezuela.</p></div>
+              <div class="miniBanner" style="text-align:center;"><p class="textoPromedio bannerNegro" style="color:white;padding-top:1em">Envios gratis a toda venezuela</p></div>
             </nav>
         <div id="contCarrito">
           <div class="table-responsive">

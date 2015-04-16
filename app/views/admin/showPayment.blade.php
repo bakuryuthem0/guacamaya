@@ -35,13 +35,23 @@
 			</div>
 			<h3>Pagos realizados</h3>
 			<div class="clearfix"></div>
-			<table class="table table-striped table-hover" style="margin:5em 0">
+			<form action="#" method="get">
+				<div class="input-group">
+					<!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
+					<input class="form-control" id="buscar-usuario" name="q" placeholder="Busqueda general" required>
+					<span class="input-group-addon">
+						<i class="glyphicon glyphicon-search"></i>
+					</span>
+				</div>
+			</form>
+			<table id="tablesorter" class="tablesorter table table-striped table-condensed table-vertical-middle table-super-condensed table-bordered table-list-search table-hover">
 				<thead>
 					<tr>
 						<th>Codigo de factura</th>
 						<th>Numero de transacción</th>
 						<th>email</th>
 						<th>Dirección</th>
+						<th>Ver Factura</th>
 						@if(isset($type))<th>Datos del usuario</th>@endif
 					</tr>
 				</thead>
@@ -54,9 +64,9 @@
 						</td>
 						<td>{{ $f->email }}</td>
 						<td>{{ $f->dir }}</td>
+						<td><a href="{{ URL::to('administrador/ver-factura/'.$f->id) }}" class="btn btn-info btn-xs">Ver</a></td>
 						@if(!isset($type))
 
-						<td><a href="{{ URL::to('administrador/ver-factura/'.$f->id) }}" class="btn btn-info btn-xs">Ver</a></td>
 						<td><button class="btn btn-success btn-xs aprov-fac" value="{{ $f->id }}">Aprobar</button></td>
 						<td><button class="btn btn-danger btn-xs reject-fac" value="{{ $f->id }}" data-toggle="modal" data-target="#elimFac">Rechazar</button></td>
 						@else

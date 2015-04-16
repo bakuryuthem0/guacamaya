@@ -12,9 +12,11 @@
       @endif
 			       <table class="table table-hover tableCarrito">
                <tr class="textoPromedio">
+                 @if(isset($method))
                   <th>
-                    Codigo de articulo
+                    Codigo del articulo
                   </th>
+                  @endif
                   <th>
                    Imagen
                   </th>
@@ -84,7 +86,7 @@
                 <td></td>
                 <td></td>
                 <td><h3>Total:</h3></td>
-                <td><h3 class="precio">Bs.{{ $total }}</h3></td>
+                <td><h3 class="precio total">Bs.{{ $total }}</h3></td>
               </tr>
               @else
                 @foreach($items as $cart)

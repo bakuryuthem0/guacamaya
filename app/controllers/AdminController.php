@@ -942,10 +942,16 @@ class AdminController extends BaseController {
 	public function getMdfItem($id)
 	{
 		$item = Items::find($id);
-		$misc = Misc::where('item_id','=',$item->id)->first();
-		$images = Images::where('misc_id','=',$misc->id)->where('deleted','=',0)->get();
+		$misc = Misc::where('item_id','=',$item->id)->get();
+		$aux = array();
+		$j = 0;
+		foreach ($misc as $m) {
+			$aux[$j] = Images::where('misc_id','=',$m->id)->where('deleted','=',0)->get();
+			$j++;
+		}
+		$item->img = $aux;
+		
 		$item->misc = $misc;
-		$item->img  = $images;
 		$title = "Modificar articulo: ".$item->item_nomb;
 
 		$cat = Cat::where('deleted','=',0)->get();
@@ -975,14 +981,8 @@ class AdminController extends BaseController {
 		if ($validator->fails()) {
 			return Redirect::back()->withErrors($validation);
 		}
-		$misc = Misc::find($inp['misc']);
 		$item = Items::find($inp['item']);
-		if (!empty($inp['color'])) {
-			$misc->item_color = $inp['color'];
-		}
-		if (!empty($inp['talla'])) {
-			$misc->item_talla = $inp['talla'];
-		}
+
 		if (!empty($inp['cat'])) {
 			$item->item_cat = $inp['cat'];
 		}
@@ -1002,6 +1002,41 @@ class AdminController extends BaseController {
 		{
 			Session::flash('dager', 'Error al modificar el articulo.');
 			return Redirect::back();
+		}
+	}
+	public function postMdfMisc()
+	{
+		$inp = Input::all();
+		$misc = Misc::find($inp['misc']);
+		if (!empty($inp['talla']) && $inp['talla'] != $misc->item_talla) {
+			$misc->item_talla = $inp['talla'];
+		}elseif (!empty($inp['color']) && $inp['color'] != $misc->item_color) {
+			$misc->item_color = $inp['color'];
+		}
+		if($misc->save())
+		{
+			Session::flash('success', 'Articulo modificado satisfactoriamente.');
+			return Redirect::back();
+		}else
+		{
+			Session::flash('dager', 'Error al modificar el articulo.');
+			return Redirect::back();
+		}
+
+	}
+	public function postElimImg()
+	{
+		$id = Input::get('id');
+		$img = Images::find($id);
+		$img->deleted = 1;
+		if($img->save())
+		{
+			$image = $img->image;
+			File::delete('images/items/'.$image);
+			return Response::json(array('type' => 'success','msg' => 'Imagen borrada satisfactoriamente.'));
+		}else
+		{
+			return Response::json(array('type' => 'danger','msg' => 'Error al guardar la imagen.'));
 		}
 	}
 	public function changeItemImagen()
@@ -1103,6 +1138,14 @@ class AdminController extends BaseController {
 	{
 		$id  = Input::get('id');
 		$fac = Facturas::find($id);
+		$facturaitem = FacturaItem::where('factura_id','=',$fac->id)->get();
+		foreach($facturaitem as $fi)
+		{
+			$item = Items::find($fi->item_id);
+			$item->item_stock = $item->item_stock - $fi->item_qty;
+			$item->save();
+
+		}
 		$fac->pagada = 1;
 		$user = User::find($fac->user_id);
 		if($fac->save())

@@ -348,9 +348,9 @@ jQuery(document).ready(function($) {
 		to = boton.attr('data-url-value');
 		$.ajax({
 			//casa
-			url: '/guacamaya/public/'+to,
+			//url: '/guacamaya/public/'+to,
 			//trabajo
-			//url: '/prueba/guacamaya/public/'+to,
+			url: '/prueba/guacamaya/public/'+to,
 			type: 'POST',
 			dataType: 'json',
 			data: {'id':boton.val() },
@@ -401,9 +401,9 @@ jQuery(document).ready(function($) {
 		var to = boton.attr('data-url-value');
 			$.ajax({
 				//casa
-				url: '/guacamaya/public/'+to,
+				//url: '/guacamaya/public/'+to,
 				//trabajo
-				//url: '/prueba/guacamaya/public/'+to,
+				url: '/prueba/guacamaya/public/'+to,
 				type: 'POST',
 				dataType: 'json',
 				data: {'id':boton.val() },
@@ -477,9 +477,9 @@ jQuery(document).ready(function($) {
 		if (x) {
 			$.ajax({
 				//casa
-				url: '/guacamaya/public/vaciar-carrito',
+				//url: '/guacamaya/public/vaciar-carrito',
 				//trabajo
-				//url: '/prueba/guacamaya/public/vaciar-carrito',
+				url: '/prueba/guacamaya/public/vaciar-carrito',
 				type: 'POST',
 				dataType: 'json',
 				beforeSend:function()
@@ -565,9 +565,9 @@ jQuery(document).ready(function($) {
 					var row = '<tr class="carItems">';
 	                  row = row+'<td class="carItem" id="'+response.id+'">';
 	                    //casa
-	                    row = row+'<img src="/guacamaya/public/images/items/'+response.img+'" class="carImg">';
+	                    //row = row+'<img src="/guacamaya/public/images/items/'+response.img+'" class="carImg">';
 	                    //trabajo
-	                  //row = row+'<img src="/prueba/guacamaya/public/images/items/'+response.img+'" class="carImg">';
+	                  	row = row+'<img src="/prueba/guacamaya/public/images/items/'+response.img+'" class="carImg">';
 	                  row = row+'</td>';
 	                  row = row+'<td class="carItem">';
 	                    row = row+response.name;
@@ -640,9 +640,9 @@ jQuery(document).ready(function($) {
 			if (x) {
 				$.ajax({
 					//casa
-					url: '/guacamaya/public/quitar-item',
+					//url: '/guacamaya/public/quitar-item',
 					//trabajo
-					//url: '/prueba/guacamaya/public/quitar-item',
+					url: '/prueba/guacamaya/public/quitar-item',
 					type: 'POST',
 					dataType: 'json',
 					data: {'id':boton.val() },
@@ -695,9 +695,9 @@ jQuery(document).ready(function($) {
 		{
 			$.ajax({
 					//casa
-					url: '/guacamaya/public/actualizar-al-carrito',
+					//url: '/guacamaya/public/actualizar-al-carrito',
 					//trabajo
-					//url: '/prueba/guacamaya/public/actualizar-al-carrito',
+					url: '/prueba/guacamaya/public/actualizar-al-carrito',
 					type: 'POST',
 					dataType: 'json',
 					data: {
@@ -1034,7 +1034,7 @@ jQuery(document).ready(function($) {
 			//casa
 			url: 'ver-pagos/aprovar',
 			type: 'POST',
-			dataType: 'json',
+	dataType: 'json',
 			data: {'id':boton.val() },
 			beforeSend:function()
 			{
@@ -1200,7 +1200,67 @@ jQuery(document).ready(function($) {
 		$('.nitModal').html(nit);
 	});
 });
+jQuery(document).ready(function($) {
+	$('.btn-elim-img').click(function(event) {
+		var boton = $(this);
+		var id = $(this).val();
+		var x = confirm('¿Seguro desea eliminar la imagen? Esta acción es irreversible');
+		if (x) {
+			$.ajax({
+				url: 'eliminar-imagen',
+				type: 'POST',
+				dataType: 'json',
+				data: {'id': id},
+				beforeSend:function()
+				{
+					boton.before('<img src="../images/loading.gif" class="loading">');
+					$('.loading').css({
+						'display': 'block',
+						'margin': '2em auto'
+					}).animate({
+						'opacity': 1},
+						500,function(){
+							boton.css({
+								'display':'none'
+							});
+						});
+				},
+				success:function(response)
+				{
+					$('.loading').animate({
+						'opacity': 0},
+						500,function(){
+							boton.css({
+								'display':'block'
+							});
+							$(this).remove();
+						});
+					if (response.type == 'success') {
 
+						boton.parent().parent().remove();
+					};
+					$('.responseDanger').addClass('alert-'+response.type).html(response.msg).css({
+						'display': 'block'
+					}).animate({
+						'opacity': 1},
+						500);
+					setTimeout(function(){
+
+						$('.responseDanger').removeClass('success')
+						$('.responseDanger').removeClass('danger')
+						$('.responseDanger').stop().animate({
+							'opacity':0},
+							500, function() {
+							$(this).css({
+								'display':'none'
+							});
+						});
+					},6000);
+				}
+			})		
+		};
+	});
+});
 /*Plugin*/
 jQuery(document).ready(function($){
 	var visionTrigger = $('.cd-3d-trigger'),

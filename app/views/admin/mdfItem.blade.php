@@ -122,61 +122,77 @@
 				</div>
 				<div class="clearfix"></div>
 				<div class="col-xs-12">
-					<p class="bg-info textoPromedio" style="padding:0.5em;">Caracteristicas del articulo</p>
-				</div>
-				<div class="col-xs-12">
-					<p class="bg-info textoPromedio" style="padding:0.5em;">En caso de no desear cambiar la talla y el color, omita estos campos</p>
-				</div>
-				<div class="col-xs-6 inputForm">
-					<label class="textoPromedio">Seleccione la talla</label>
-					<?php $arr = array(
-						'' => 'Seleccione la talla');
-						 ?>
-					@if(!empty($tallas) && !is_null($tallas) && count($tallas)>0)
-						@foreach ($tallas as $talla)
-							<?php $arr = $arr+array($talla->id => strtoupper($talla->talla_nomb).' - '.ucfirst($talla->talla_desc));  ?>
-						@endforeach
-					@endif
-					{{ Form::select('talla',$arr,Input::old('talla'),array('class' => 'form-control','requied' => 'required')
-						)}}
-				</div>
-				<div class="col-xs-6 inputForm">
-					<label class="textoPromedio">Seleccione El color</label>
-					<?php $arr = array(
-						'' => 'Seleccione el color');
-						 ?>
-					@if(!empty($colores) && !is_null($colores) && count($colores)>0)
-						@foreach ($colores as $color)
-							<?php $arr = $arr+array($color->id => ucfirst($color->color_desc));  ?>
-						@endforeach
-					@endif
-					{{ Form::select('color',$arr,Input::old('color'),array('class' => 'form-control','requied' => 'required')
-						)}}
-					<input type="hidden" name="misc" value="{{ $item->misc->id }}">
-					<input type="hidden" name="item" value="{{ $item->id }}">
-				</div>
-				<div class="col-xs-12">
 					<button class="btn btn-success" style="margin-top:1em;">Enviar</button>
 				</div>
 				</form>
 			</div>
-			<div class="col-xs-12" style="margin-top:2em;">
+			<div class="col-xs-12" style="margin-top:2em;padding:0px;">
+				<div class="col-xs-12 contdeColor">
+					<div class="col-xs-12">
+						<p class="bg-info textoPromedio" style="padding:0.5em;">Caracteristicas del articulo</p>
+					</div>
+					<div class="col-xs-12">
+						<p class="bg-info textoPromedio" style="padding:0.5em;">En caso de no desear cambiar la talla y el color, omita estos campos</p>
+						<p class="bg-info textoPromedio" style="padding:0.5em;">Los cambios deben realizarce de uno en vez</p>
+					</div>
+					@foreach($item->misc as $m)
+					<div class="col-xs-12" style="margin-top:2em;margin-bottom:2em;"></div>
+					<form method="POST" action="{{ URL::to('administrador/modificar-miscelania') }}">
+						<div class="col-xs-6 inputForm">
+							<label class="textoPromedio">Seleccione la talla</label>
+							<select name="talla" class="form-control" required>
+								<option value="">Seleccione una talla</option>
+								@foreach ($tallas as $talla)
+									@if($talla->id == $m->item_talla)
+									<option value="{{ $talla->id }}" selected>{{ strtoupper($talla->talla_nomb).' - '.ucfirst($talla->talla_desc) }}</option>
+									@else
+									<option value="{{ $talla->id }}">{{ strtoupper($talla->talla_nomb).' - '.ucfirst($talla->talla_desc) }}</option>
+									@endif
+								@endforeach
+								</select>
+						</div>
+						<div class="col-xs-6 inputForm">
+							<label class="textoPromedio">Seleccione El color</label>
+							<select name="color" class="form-control" required>
+								<option value="">Seleccione una talla</option>
+								@foreach ($colores as $color)
+									@if($color->id == $m->item_color)
+									<option value="{{ $color->id }}" selected>{{ ucfirst($color->color_desc) }}</option>
+									@else
+									<option value="{{ $color->id }}">{{ ucfirst($color->color_desc) }}</option>
+									@endif
+								@endforeach
+								</select>
+							<input type="hidden" name="misc" value="{{ $m->id }}">
+							<input type="hidden" name="item" value="{{ $item->id }}">
+						</div>
+						<div class="col-xs-12">
+							<button class="btn btn-primary" style="margin-top:1em;">Cambiar</button>
+						</div>
+					</form>
+					@endforeach
+				</div>
+			</div>
+			<div class="col-xs-12" style="margin-top:2em;padding:0px;">
 				<div class="col-xs-12 contdeColor">
 					<p class="bg-info textoPromedio" style="padding:0.5em;">Recuerde que para modificar las imagenes, debe de ser de una en vez. </p>
 					<table class="table table-hover tablaImages">
 						<tbody>
-							@foreach($item->img as $i) 
-							<tr>
-								<td><img src="{{ asset('images/items/'.$i->image) }}"></td>
-								<td><form method="POST" action="{{ URL::to('administrador/cambiar-imagen') }}" enctype="multipart/form-data"><div class="fileUpload btn btn-primary">
-									    <span>Cambiar</span>
-									    
-									    	<input type="file" name="file" class="upload" />
-									    	<input type="hidden" name="id" value="{{ $i->id }}">
-									    	<input type="hidden" name="item_id" value="{{ $item->id }}">
-									   
-									</div> </form></td>
-							</tr>
+							@foreach($item->img as $img) 
+								@foreach($img as $i)
+								<tr>
+									<td><img src="{{ asset('images/items/'.$i->image) }}"></td>
+									<td><form method="POST" action="{{ URL::to('administrador/cambiar-imagen') }}" enctype="multipart/form-data"><div class="fileUpload btn btn-primary">
+										    <span>Cambiar</span>
+										    
+										    	<input type="file" name="file" class="upload" />
+										    	<input type="hidden" name="id" value="{{ $i->id }}">
+										    	<input type="hidden" name="item_id" value="{{ $item->id }}">
+										   
+										</div> </form></td>
+									<td><button class="btn btn-danger btn-elim-img" value="{{ $i->id }}">Eliminar</button></td>
+								</tr>
+								@endforeach
 							@endforeach
 						</tbody>
 					</table>

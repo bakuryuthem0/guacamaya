@@ -7,8 +7,8 @@
 			<div class="col-xs-12 contCentrado contdeColor">
 				<legend>{{ $art->item_nomb.' - '.$art->item_cod }}</legend>
 				<div class="col-xs-4 textoPromedio">
-					<div class="col-xs-12" style="word-break: break-all;">
-						<label>Descripción</label>
+					<div class="col-xs-12" style="word-break: break-word;">
+						<label class="description">Descripción</label>
 						{{ $art->item_desc }}
 						<div id="fb-root"></div>
 						<div style="margin-top:2em;margin-bottom:2em;"
@@ -125,13 +125,18 @@
 					
 					@if(Auth::check() && Auth::user()->role != 1)
 					<div class="col-xs-12">
-							<button class="btn btn-success btnAgg" data-cod-value="{{ $art->item_cod }}" data-price-value="{{ $art->item_precio}}" data-name-value="{{ $art->item_nomb }}" value="{{ $art->id }}">Agregar al carrito.</button>
+							<button class="btn btn-danger btnAgg" data-cod-value="{{ $art->item_cod }}" data-price-value="{{ $art->item_precio}}" data-name-value="{{ $art->item_nomb }}" value="{{ $art->id }}">Agregar al carrito.</button>
 					</div>
 					@endif
 					<div class="col-xs-12">
-						<label>Disponibles es stock: </label>
+						<label>Disponibles en stock: </label>
 						<h3 class="stock">{{ $art->item_stock }}</h3>
 						<input type="hidden" class="values" data-art-id="{{ $art->id }}" data-misc-id="">
+					</div>
+					<div class="col-xs-12">
+						<div class="col-xs-4 fa-container"><i class="fa fa-credit-card"></i><br><p>Tarjeta de Credito</p></div>
+						<div class="col-xs-4 fa-container"><i class="fa fa-refresh"></i><br><p>Transferencia y Depósito Bancario</p></div>
+						<div class="col-xs-4 fa-container"><i class="fa fa-truck"></i><br><p>Envios Gratis a Todo el Pais</p></div>
 					</div>
 				</div>
 				<div class="clearfix"></div>

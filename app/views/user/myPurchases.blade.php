@@ -49,7 +49,7 @@
 							<td><a href="{{ URL::to('compra/procesar/'.$f->id) }}" class="btn btn-success btn-xs">Pagar</a></td>
 						@else
 							<td>@if($f->pagada == 1) 
-								<a href="{{ URL::to('') }}">Ver factura</a>
+								<a href="{{ URL::to('usuario/ver-factura/'.$f->id) }}" target="_blank" class="btn btn-xs btn-info">Ver factura</a>
 								@endif
 							</td>
 						@endif

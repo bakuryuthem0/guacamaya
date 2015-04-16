@@ -120,9 +120,6 @@ class ItemController extends BaseController {
 				$itemFac->item_id    = $c->id;
 				$itemFac->item_qty	 = $c->qty;
 				$itemFac->save();
-				$item = Items::find($c->id);
-				$item->item_stock = $item->item_stock-$c->qty;
-				$item->save();
 			}
 			Cart::destroy();
 			return Redirect::to('compra/procesar/'.$fac->id);			
@@ -159,9 +156,6 @@ class ItemController extends BaseController {
 					$itemFac->item_id    = $c->id;
 					$itemFac->item_qty	 = $c->qty;
 					$itemFac->save();
-					$item = Items::find($c->id);
-					$item->item_stock = $item_stock-$c->qty;
-					$item->save();
 				}
 				Cart::destroy();
 				return Redirect::to('compra/procesar/'.$fac->id);			

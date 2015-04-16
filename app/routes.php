@@ -50,6 +50,7 @@ Route::group(array('before' =>'auth'),function()
 	Route::get('mis-compras/pago/enviar','ItemController@postPayment');
 
 	Route::get('usuario/mis-compras','UserController@getMyPurchases');
+	Route::get('usuario/ver-factura/{id}','UserController@getMyPurchase');
 	Route::post('usuario/publicaciones/pago/enviar','ItemController@postSendPayment');
 
 	Route::group(array('before' => 'check_role'), function(){
@@ -64,6 +65,8 @@ Route::group(array('before' =>'auth'),function()
 		Route::post('administrador/nuevo-articulo/continuar/guardar-cerrar/{id}/{misc_id}','AdminController@postSaveNew');
 		Route::post('administrador/nuevo-articulo/imagenes/procesar','AdminController@post_upload');
 		Route::post('administrador/modificar-articulo','AdminController@postMdfItem');
+		Route::post('administrador/modificar-miscelania','AdminController@postMdfMisc');
+		Route::post('administrador/editar-articulo/eliminar-imagen','AdminController@postElimImg');
 		Route::post('administrador/cambiar-imagen','AdminController@changeItemImagen');
 
 		/**/

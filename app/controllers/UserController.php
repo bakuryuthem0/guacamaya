@@ -73,4 +73,26 @@ class UserController extends Controller {
 		->with('title',$title)
 		->with('fac',$fac);
 	}
+	public function getMyPurchase($id)
+	{
+		$title = "Factura";
+		$fac   = Facturas::find($id);
+		$user = User::find($fac->user_id);
+		$aux = FacturaItem::where('factura_id','=',$id)->get(array('item_id','item_qty'));
+		$i = 0;
+		foreach ($aux as $a) {
+			$b = Items::find($a->item_id);
+			$b->qty = $a->item_qty;
+			$aux = Misc::where('item_id','=',$a->item_id)->where('deleted','=',0)->first();
+			$b->img = Images::where('misc_id','=',$aux->id)->where('deleted','=',0)->first(); 
+			$item[$i] = $b;
+			$i++;
+
+		}
+		return View::make('user.factura')
+		->with('fact',$item)
+		->with('title',$title)
+		->with('user',$user)
+		->with('factura',$fac);
+	}
 }
