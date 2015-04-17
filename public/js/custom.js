@@ -1,4 +1,10 @@
 jQuery(document).ready(function($) {
+	$('.iniciar-sesion').popover('show');
+	$('.iniciar-sesion').click(function(){
+		$('.popover').remove();
+	})
+});
+jQuery(document).ready(function($) {
 	$('.logout').click(function(event) {
 		var x = confirm('¿Seguro desea salir?');
 		if (!x) {

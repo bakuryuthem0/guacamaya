@@ -29,7 +29,6 @@ class AuthController extends BaseController {
 	}
 	public function postLogin()
 	{
-
 		$input = Input::all();
 		if (isset($input['remember'])) {
 			$valor = true;
@@ -53,12 +52,12 @@ class AuthController extends BaseController {
 				return Redirect::to('administrador/inicio');	
 			}else
 			{
-				return Redirect::to('inicio');
+				return Redirect::back();
 			}
 		}else
 		{
 			Session::flash('error', 'Usuario o contraseña incorrectos');
-			return Redirect::to('iniciar-sesion');
+			return Redirect::back();
 		}
 		
 	}

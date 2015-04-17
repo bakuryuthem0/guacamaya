@@ -134,10 +134,10 @@
 </div>
 <div class="col-xs-12 contCentrado bannerBottom" style="margin-top:2em;">
   <div class="col-xs-12" style="margin-bottom:1em;">
-    <a href="{{ URL::to('articulo/'.$top->item_id) }}"><img src="{{ asset('images/pub/'.$top->image) }}" style="width:100%;"></a>
+    <img src="{{ asset('images/pub/'.$top->image) }}" style="width:100%;">
   </div>
-  <div class="col-xs-6"><a href="{{ URL::to('articulo/'.$left->item_id) }}"><img src="{{ asset('images/pub/'.$left->image) }}" style="width:100%;"></a></div>
-  <div class="col-xs-6"><a href="{{ URL::to('articulo/'.$right->item_id) }}"><img src="{{ asset('images/pub/'.$right->image) }}" style="width:100%;"></a></div>
+  <div class="col-xs-6"><img src="{{ asset('images/pub/'.$left->image) }}" style="width:100%;"></div>
+  <div class="col-xs-6"><img src="{{ asset('images/pub/'.$right->image) }}" style="width:100%;"></div>
 </div>
 <div class="clearfix"></div>
 @stop
@@ -155,19 +155,7 @@
               speed: 300,
               slidesToShow: 1,
             });
-            $('.fade').slick()
             
-            /*$('.fade').slick({
-              dots: true,
-              infinite: true,
-              speed: 500,
-              fade: true,
-              cssEase: 'linear',
-              adaptiveHeight: true,
-              autoplay    : true,
-              autoplaySpeed : 5000
-            });
-            */
           });
     </script>
 @stop
