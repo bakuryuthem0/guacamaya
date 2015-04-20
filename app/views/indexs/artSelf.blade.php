@@ -81,46 +81,33 @@
 
 						<h3 class="precio">Bs. {{ $art->item_precio }}</h3>
 					</div>
-					<div class="col-xs-12">
+					<div class="col-xs-12 formulario">
 						<label>Talla</label>
-						<ul>
+						<select class="choose form-control">
+							<option value="">Seleccione una talla</option>
 							@foreach($tallas as $t)
 								<?php $n = 0;?>
 								@foreach($art->tallas as $at)
 									@if($at->item_talla == $t->id || $at->item_talla == "all")
 										<?php $n = 0;?>
-										<li value="{{ $t->id }}">{{ strtoupper($t->talla_nomb).' - '.ucfirst($t->talla_desc) }}</li>
+										<option value="{{ $t->id }}">{{ strtoupper($t->talla_nomb).' - '.ucfirst($t->talla_desc) }}</option>
 										<?php break;?>
 									@else
 										<?php $n = 1;?>
 									@endif
 								@endforeach
 								@if($n == 1)
-								<li class="disabled" disabled value="{{ $t->id }}">{{ strtoupper($t->talla_nomb).' - '.ucfirst($t->talla_desc) }}</li>
+									<option class="disabled" disabled value="{{ $t->id }}">{{ strtoupper($t->talla_nomb).' - '.ucfirst($t->talla_desc) }}</option>
 								@endif
 							@endforeach
-						</ul>
+						</select>
 					</div>
-					<div class="col-xs-12">
+					<div class="col-xs-12 formulario">
 						<label>Color</label>
-						<ul>
-							@foreach($colores as $c)
-								<?php $nop = 1;?>
-
-								@foreach($art->colores as $ac)
-									@if($ac->item_color == $c->id || $ac->item_color == "all")
-										<?php $nop = 0;?>
-									@endif
-								@endforeach
-
-								@if($nop == 0)
-									<li value="{{ $c->id }}">{{ ucfirst($c->color_desc) }}</li>
-								@else
-									<li class="disabled" disabled>{{ ucfirst($c->color_desc) }}</li>
-								@endif
-
-							@endforeach
+						<ul class="colores">
+							<li class="removable">Elija una talla</li>
 						</ul>
+						<input type="hidden" class="values" value="{{ $art->id }}" data-misc-id="">
 					</div>
 					
 					@if(Auth::check() && Auth::user()->role != 1)
@@ -128,11 +115,7 @@
 							<button class="btn btn-danger btnAgg" data-cod-value="{{ $art->item_cod }}" data-price-value="{{ $art->item_precio}}" data-name-value="{{ $art->item_nomb }}" value="{{ $art->id }}">Agregar al carrito.</button>
 					</div>
 					@endif
-					<div class="col-xs-12">
-						<label>Disponibles en stock: </label>
-						<h3 class="stock">{{ $art->item_stock }}</h3>
-						<input type="hidden" class="values" data-art-id="{{ $art->id }}" data-misc-id="">
-					</div>
+
 					<div class="col-xs-12">
 						<div class="col-xs-4 fa-container"><i class="fa fa-credit-card"></i><br><p>Tarjeta de Credito</p></div>
 						<div class="col-xs-4 fa-container"><i class="fa fa-refresh"></i><br><p>Transferencia y Depósito Bancario</p></div>

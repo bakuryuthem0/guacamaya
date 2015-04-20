@@ -91,7 +91,6 @@ class AdminController extends BaseController {
 			'item_cod'  => 'required|unique:item',
 			'item_nomb' => 'required|min:4',
 			'item_desc' => 'required|min:4',
-			'item_stock'=> 'required|min:1'
 		);
 		$msg = array(
 			'required' => 'El campo :attribute es obligatorio',
@@ -104,7 +103,6 @@ class AdminController extends BaseController {
 			'item_cod'   => 'artículo',
 			'item_nomb'  => 'artículo',
 			'item_desc'  => 'artículo',
-			'item_stock' => 'cantidad de artículos'
 		);
 		$validation = Validator::make($input, $rules, $msg, $attr);
 		if ($validation->fails()) {
@@ -120,7 +118,6 @@ class AdminController extends BaseController {
 			$item->item_cod   = $input['item_cod'];
 			$item->item_nomb  = $input['item_nomb'];
 			$item->item_desc  = $input['item_desc'];
-			$item->item_stock = $input['item_stock'];
 			$item->item_precio= $input['item_precio'];
 			$item->save();
 			$id = $item->id;
@@ -251,17 +248,19 @@ class AdminController extends BaseController {
 	{
 		$input = Input::all();
 		$rules = array(
-			'talla' => 'required',
-			'color' => 'required'
+			'item_stock' 	=> 'required|min:1',
+			'talla' 		=> 'required',
+			'color' 		=> 'required'
 		);
 		$msg = array('required' => 'El campo :attribute es obligatorio');
 		$validator = Validator::make($input, $rules,$msg);
 		if ($validator->fails()) {
-			return Redirect::to('administrador/nuevo-articulo/continuar/'.$input['art'].'/'.$input['misc'])->withErrors($Validator);
+			return Redirect::to('administrador/nuevo-articulo/continuar/'.$input['art'].'/'.$input['misc'])->withErrors($validator);
 		}
 		$misc = Misc::find($input['misc']);
 		$misc->item_talla = $input['talla'];
 		$misc->item_color = $input['color'];
+		$misc->item_stock = $input['item_stock'];
 		if ($misc->save()) {
 			$misc = new Misc;
 			$misc->item_id = $input['art'];
@@ -272,17 +271,19 @@ class AdminController extends BaseController {
 	public function postSaveNew(){
 		$input = Input::all();
 		$rules = array(
-			'talla' => 'required',
-			'color' => 'required'
+			'item_stock' => 'required',
+			'talla' 	 => 'required',
+			'color' 	 => 'required'
 		);
 		$msg = array('required' => 'El campo :attribute es obligatorio');
 		$validator = Validator::make($input, $rules,$msg);
 		if ($validator->fails()) {
-			return Redirect::to('administrador/nuevo-articulo/continuar/'.$input['art'].'/'.$input['misc'])->withErrors($Validator);
+			return Redirect::to('administrador/nuevo-articulo/continuar/'.$input['art'].'/'.$input['misc'])->withErrors($validator);
 		}
 		$misc = Misc::find($input['misc']);
 		$misc->item_talla = $input['talla'];
 		$misc->item_color = $input['color'];
+		$misc->item_stock = $input['item_stock'];
 		if ($misc->save()) {
 			Session::flash('success', 'Articulo creado correctamente.');
 			return Redirect::to('administrador/inicio');
@@ -294,7 +295,6 @@ class AdminController extends BaseController {
 		$art = Items::where('deleted','=',0)->get(array(
 			'item.item_cod',
 			'item.item_nomb',
-			'item.item_stock',
 			'item.id'
 		));
 		return View::make('admin.showArt')

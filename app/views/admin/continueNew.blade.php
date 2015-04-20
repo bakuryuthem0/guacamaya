@@ -7,8 +7,21 @@
 		<div class="col-xs-12 contCentrado contdeColor">
 			<div class="col-xs-12">
 				<legend>Seleccione las caracteristicas del articulo</legend>
+				<p class="bg-warning textoPromedio" style="padding:0.5em;"><i class="fa fa-exclamation-triangle"></i>En caso de error si ya subio las imagenes no las resuba solo llene los campos.</p>
 			</div>
 			<form class="formCart" method="POST">
+			<div class="col-xs-12 inputForm">	
+				<label class="textoPromedio">(*) Cantidad de artículos</label>
+				{{ Form::text('item_stock', Input::old('item_nomb'), array('class' => 'form-control','placeholder' => 'Cantidad de artículos')) }}
+				@if ($errors->has('item_stock'))
+					 @foreach($errors->get('item_stock') as $err)
+					 	<div class="alert alert-danger">
+					 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					 		<p class="textoPromedio ">{{ $err }}</p>
+					 	</div>
+					 @endforeach
+				@endif
+			</div>
 			<div class="col-xs-6 inputForm">
 				<label class="textoPromedio">Seleccione la talla</label>
 				@if(!empty($tallas) && !is_null($tallas) && count($tallas)>0)
@@ -28,6 +41,7 @@
 				
 				@if(!empty($colores) && !is_null($colores) && count($colores)>0)
 				<select name="color" class="form-control" requied>
+					<option value="">Seleccione un color</option>
 					@foreach ($colores as $color)
 						<option value="{{$color->id}}">{{ucfirst($color->color_desc)}}</option>
 					@endforeach

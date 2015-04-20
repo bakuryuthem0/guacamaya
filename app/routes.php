@@ -21,6 +21,7 @@ Route::group(array('before' =>'no_auth'),function()
 });
 
 Route::get('articulo/{id}','HomeController@getShowItem');
+Route::post('articulo/buscar/colores','HomeController@getColors');
 
 Route::get('categorias/{subcat}/{id}','HomeController@getSubCatBuscar');
 Route::get('categorias/{id}','HomeController@getCatBuscar');

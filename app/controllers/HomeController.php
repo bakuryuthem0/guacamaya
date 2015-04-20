@@ -48,7 +48,6 @@ class HomeController extends BaseController {
 			'item.id',
 			'item.item_nomb',
 			'item.item_cod',
-			'item.item_stock',
 			'item.item_precio',
 			'm.id as misc_id',
 		));
@@ -282,5 +281,13 @@ class HomeController extends BaseController {
 			});
 			Session::flash('success', 'Mensaje enviado correctamente. pronto nuestros agentes se pondrán en contacto con usted.');
 			return Redirect::to('contactenos');
+	}
+	public function getColors()
+	{
+		$id = Input::get('id');
+		$item_id = Input::get('item_id');
+		$col = Misc::join('colores','colores.id','=','miscelanias.item_color')
+		->where('miscelanias.item_id','=',$item_id)->where('miscelanias.item_talla','=',$id)->get();
+		return Response::json($col);
 	}
 }

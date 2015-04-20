@@ -54,7 +54,47 @@ jQuery(document).ready(function($) {
 		}
 	});
 });
-
+jQuery(document).ready(function($) {
+	$('.choose').change(function(event) {
+		var id = $(this).val();
+		var item_id = $('.values').val();
+		if (id == "") {
+			$('.removable').remove();
+			$('.colores').append('<li class="removable">Elija una talla</li>')
+		}else
+		{
+			$.ajax({
+				url: 'buscar/colores',
+				type: 'POST',
+				dataType: 'json',
+				data: {'id': id,'item_id':item_id},
+				beforeSend:function(){
+					$('.choose').after('<img src="../images/loading.gif" class="loading">');
+					$('.loading').css({
+						'display': 'block',
+						'margin': '2em auto'
+					}).animate({
+						'opacity': 1},
+						500);
+				},
+				success:function(response){
+					$('.loading').animate({
+						'opacity': 0},
+						500,function(){
+							$(this).remove();
+						});
+					if (response != "undefined" && response.length > 0) {
+						$('.removable').remove();
+						for(var i = 0;i<response.length;i++)
+						{
+							$('.colores').append('<li class="removable">'+response[i].color_desc+' - '+response[i].item_stock+'</li>')
+						}	
+					};
+				}
+			})		
+		}
+	});
+});
 /*olvide la contraseña esto me ayuda*/
 jQuery(document).ready(function($) {
 	$('.forgot').click(function(event) {
