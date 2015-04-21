@@ -11,18 +11,34 @@ class ItemController extends BaseController {
 	{
 		if (Request::ajax()) {
 			$inp = Input::all();
-			$misc = Misc::where('item_id','=',$inp['id'])->where('deleted','=',0)->first();
+			$misc = Misc::where('item_id','=',$inp['id'])->where('item_talla','=',$inp['talla'])->where('item_color','=',$inp['color'])->where('deleted','=',0)->first();
+			$aux = Misc::where('item_id','=',$inp['id'])->where('deleted','=',0)->first();
 
-			$img = Images::where('deleted','!=',1)->where('misc_id','=',$misc->id)->first();
-			Cart::add(array('id' => $inp['id'],'name' => $inp['name'],'qty' => 1,'options' =>array('img' => $img->image),'price' => $inp['price']));
+			$img = Images::where('deleted','!=',1)->where('misc_id','=',$aux->id)->first();
+			Cart::add(array(
+				'id' => $inp['id'],
+				'name' => $inp['name'],
+				'qty' => 1,
+				'options' =>array(
+					'img' 	=> $img->image,
+					'talla'	=> $inp['talla'],
+					'color'	=> $inp['color']
+					),
+				'price' => $inp['price']
+				));
 			$rowid = Cart::search(array('id' => $inp['id']));
 			$item = Cart::get($rowid[0]);
 
+			$talla = Tallas::find($inp['talla']);
+			$color = Colores::find($inp['color']);
+			
 			return Response::json(array(
 				'rowid'		=> $rowid[0],
 				'img' 		=> $img->image,
 				'id' 		=> $item->id,
 				'name' 		=> $item->name,
+				'talla'		=> $talla->talla_desc,
+				'color'		=> $color->color_desc,
 				'qty' 		=> $item->qty,
 				'price' 	=> $item->price,
 				'subtotal'	=>$item->subtotal,

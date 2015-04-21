@@ -123,11 +123,11 @@
               </tr>
               @endif
             </table>
-            @if(!isset($method))<buttom class="btn btn-success" data-toggle="collapse" href="#continuar">Continuar</buttom>@endif
+            @if(!isset($method))<buttom class="btn btn-success continuar" data-toggle="collapse" href="#continuar">Continuar</buttom>@endif
             
 		</div>
     @if(!isset($method))
-    <div class="collapse contdeColor col-xs-12" id="continuar" style="margin-top:2em;">
+    <div class="collapse contdeColor col-xs-12 scrollTo" id="continuar" style="margin-top:2em;">
       <div class="col-xs-6">
       
        @if((!empty(Auth::user()->dir) && !is_null(Auth::user()->dir)) || count($dir) > 0)
@@ -199,7 +199,7 @@
       </div>
     </div>
     @else
-    <div class="contdeColor col-xs-12" style="margin-top:2em;">
+    <div class="contdeColor col-xs-12 scrollTo" style="margin-top:2em;">
       <h3 style="text-align:center;">Metodos de pago</h3>
       <div class="col-xs-6">
         <h3><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#transferencia"></i> Transferencia en linea</h3>

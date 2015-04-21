@@ -111,12 +111,16 @@
 					</div>
 					
 					@if(Auth::check() && Auth::user()->role != 1)
-					<div class="col-xs-12">
-							<button class="btn btn-danger btnAgg" data-cod-value="{{ $art->item_cod }}" data-price-value="{{ $art->item_precio}}" data-name-value="{{ $art->item_nomb }}" value="{{ $art->id }}">Agregar al carrito.</button>
+					<div class="col-xs-12 formulario">
+							<button class="btn btn-danger btnAgg" data-toggle="modal" data-target="#addCart" data-cod-value="{{ $art->item_cod }}" data-price-value="{{ $art->item_precio}}" data-name-value="{{ $art->item_nomb }}" value="{{ $art->id }}">Agregar al carrito.</button>
+					</div>
+					@else
+					<div class="col-xs-12 formulario">
+							<button class="btn btn-danger" data-toggle="modal" data-target="#loginModal">Agregar al carrito.</button>
 					</div>
 					@endif
 
-					<div class="col-xs-12">
+					<div class="col-xs-12 formulario">
 						<div class="col-xs-4 fa-container"><i class="fa fa-credit-card"></i><br><p>Tarjeta de Credito</p></div>
 						<div class="col-xs-4 fa-container"><i class="fa fa-refresh"></i><br><p>Transferencia y Depósito Bancario</p></div>
 						<div class="col-xs-4 fa-container"><i class="fa fa-truck"></i><br><p>Envios Gratis a Todo el Pais</p></div>
@@ -127,7 +131,50 @@
 		</div>
 	</div>
 </div>
-
+<div class="modal fade" id="addCart" tabindex="-1" role="dialog" aria-labelledby="modalForggo" aria-hidden="true">
+          <div class="forgotPass modal-dialog imgLiderUp">
+            <div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				</div>
+        		<div class="">
+                    <h3>Agregar al carrito </h3>
+              	</div>
+               	<div class="col-xs-12 formulario textoPromedio">
+						<label>Talla</label>
+						<select class="chooseModal form-control">
+							<option value="">Seleccione una talla</option>
+							@foreach($tallas as $t)
+								<?php $n = 0;?>
+								@foreach($art->tallas as $at)
+									@if($at->item_talla == $t->id || $at->item_talla == "all")
+										<?php $n = 0;?>
+										<option value="{{ $t->id }}">{{ strtoupper($t->talla_nomb).' - '.ucfirst($t->talla_desc) }}</option>
+										<?php break;?>
+									@else
+										<?php $n = 1;?>
+									@endif
+								@endforeach
+								@if($n == 1)
+									<option class="disabled" disabled value="{{ $t->id }}">{{ strtoupper($t->talla_nomb).' - '.ucfirst($t->talla_desc) }}</option>
+								@endif
+							@endforeach
+						</select>
+					</div>
+					<div class="col-xs-12 formulario textoPromedio">
+						<label>Color</label>
+						<select class="colorModal form-control">
+							<option value="">Seleccione un color</option>
+						</select>
+						<input type="hidden" class="values" value="{{ $art->id }}" data-misc-id="">
+					</div>
+					<div class="clearfix"></div>
+					<div class="modal-footer">
+						<button class="btn btn-danger btnAddCart disabled">Agregar</button>
+					</div>
+            </div>
+          </div>
+      </div>
 @stop
 
 @section('postscript')

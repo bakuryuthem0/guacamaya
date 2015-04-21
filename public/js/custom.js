@@ -519,6 +519,7 @@ jQuery(document).ready(function($) {
 		}
 	});
 	$('.btnVaciar').click(function(event) {
+		$(this).unbind('click')
 		var x = confirm('¿Seguro desea vaciar el carrito?');
 		if (x) {
 			$.ajax({
@@ -563,6 +564,7 @@ jQuery(document).ready(function($) {
 					$('.carItems').remove();
 					$('.catnArt').html(0)
 					$('.total').html(0)
+					location.reload(true);
 					
 				}
 			})
@@ -570,109 +572,187 @@ jQuery(document).ready(function($) {
 		}
 	});
 	$('.btnAgg').click(function(event) {
+		$(this).unbind('click');
 		$('.btn-carrito').unbind('click')
-		var dataPost = {
-			'id'	: $(this).val(),
-			'name'  : $(this).attr('data-name-value'),
-			'price' : $(this).attr('data-price-value')
-		}
-		$.ajax({
-			url: 'agregar-al-carrito',
-			type: 'POST',
-			dataType: 'json',
-			data: dataPost,
-			beforeSend:function()
+			var id		= $(this).val();
+			var name  	= $(this).attr('data-name-value');
+			var price 	= $(this).attr('data-price-value');
+
+		jQuery(document).ready(function($) {
+		$('.chooseModal').change(function(event) {
+			var id = $(this).val();
+			var item_id = $('.values').val();
+			if (id == "" || $('.colorModal').val() == "") {
+				$('.btnAddCart').addClass('disabled')
+			}else
 			{
-				$('.btnAgg').addClass('disabled');
-				$('.btnAgg').after('<img src="../images/loading.gif" class="loading">');
-				$('.loading').css({
-						'display': 'inline-block'
-					}).animate({
-						'opacity': 1},
-						500);
-			},
-			success:function(response)
-			{
-
-				$('.btnAgg').removeClass('disabled');
-				$('.loading').animate({
-						'opacity': 0},
-						500,function(){
-							$(this).remove();
-						});
-				$('.catnArt').html(response.cantArt);
-				$('.total').html(response.total);
-				if($('.btn-no').length > 0)
-				{
-					$('.btn-no').addClass('btn-comprar').removeClass('btn-no');
-				}
-				if($('#'+response.id).length<1)
-				{
-					var row = '<tr class="carItems">';
-	                  row = row+'<td class="carItem" id="'+response.id+'">';
-	                    //casa
-	                    //row = row+'<img src="/guacamaya/public/images/items/'+response.img+'" class="carImg">';
-	                    //trabajo
-	                  	row = row+'<img src="/prueba/guacamaya/public/images/items/'+response.img+'" class="carImg">';
-	                  row = row+'</td>';
-	                  row = row+'<td class="carItem">';
-	                    row = row+response.name;
-	                  row = row+'</td>';
-	                  row = row+'<td class="carItem">';
-	                    row = row+response.qty;
-	                  row = row+'</td>';
-	                  row = row+'<td class="carItem">';
-	                    row = row+response.price;
-	                  row = row+'</td>';
-	                  row = row+'<td class="carItem">';
-	                    row = row+response.subtotal;
-	                  row = row+'</td>';
-	                  row = row+'<td class="carItem">';
-	                    row = row+'<button class="btn btn-success btn-xs btnAdd btn-carrito" data-url-value="agregar-item" value="'+response.rowid+'">';
-	                      row = row+'Agregar';
-	                    row = row+'</button>';
-	                  row = row+'</td>';
-	                  row = row+'<td class="carItem">';
-	                    row = row+'<button class="btn btn-warning btn-xs btnRestar btn-carrito" data-url-value="restar-item" value="'+response.rowid+'">';
-	                      row = row+'Restar';
-	                    row = row+'</button>';
-	                  row = row+'</td>';
-	                  row = row+'<td class="carItem">';
-	                    row = row+'<button class="btn btn-danger btn-xs btnQuitar btn-carrito" data-url-value="quitar-item" value="'+response.rowid+'">';
-	                      row = row+'Quitar';
-	                    row = row+'</button>';
-	                  row = row+'</td>';
-	                row = row+'</tr>';
-	                $('.tableCarrito').append(row);
-				}else
-				{
-					$('#'+response.id+'> .carItem:nth-child(3)').html(response.qty);
-					$('#'+response.id+'> .carItem:nth-child(5)').html(response.subtotal);
-					
-				}
-				$('.btnAdd').click(function(event) {
-					var esto = $(this);
-					doAjax(esto);
-
-				});
-				$('.btnRestar').click(function(event) {
-					var esto = $(this);
-					doAjax(esto);
-
-				});
-				$('.btnQuitar').click(function(event) {
-					var x = confirm('¿Seguro desea quitar el item?');
-					if (x) {
-						var esto = $(this);
-						doQuitarAjax(esto);
-
-					}
-				});
+				$('.disabled').removeClass('disabled');
 			}
-		})
-		
+			if (id == "") {
+				$('.removable').remove();
+				$('.colores').append('<option class="removable">Elija una talla</option>')
+			}else
+			{
+				$.ajax({
+					url: 'buscar/colores',
+					type: 'POST',
+					dataType: 'json',
+					data: {'id': id,'item_id':item_id},
+					beforeSend:function(){
+						$('.chooseModal').after('<img src="../images/loading.gif" class="loading">');
+						$('.loading').css({
+							'display': 'block',
+							'margin': '2em auto'
+						}).animate({
+							'opacity': 1},
+							500);
+					},
+					success:function(response){
+						$('.loading').animate({
+							'opacity': 0},
+							500,function(){
+								$(this).remove();
+							});
+						if (response != "undefined" && response.length > 0) {
+							$('.removable').remove();
+							for(var i = 0;i<response.length;i++)
+							{
+								$('.colorModal').append('<option class="removable" value="'+response[i].id+'">'+response[i].color_desc+' - '+response[i].item_stock+'</option>')
+							}	
+						};
+					}
+				})		
+			}
+		});
+		$('.colorModal').change(function(event) {
+			if ($(this).val() == "" || $('.chooseModal').val() == "") {
+				$('.btnAddCart').addClass('disabled')
+			}else
+			{
+				$('.disabled').removeClass('disabled');
+			}
+		});
+		$('.btnAddCart').click(function(event) {
+			if ($('.colorModal').val() == "" || $('.chooseModal').val() == "") {
+				alert('Debes elegir la talla y el color.')
+			}else
+			{
+				var talla = $('.chooseModal').val();
+				var color = $('.colorModal').val();
+				dataPost = 
+				{
+					'id'		: id,
+					'name'  	: name,
+					'price' 	: price,
+					'talla'		: talla,
+					'color'		: color
+				}
+				$.ajax({
+					url: 'agregar-al-carrito',
+					type: 'POST',
+					dataType: 'json',
+					data: dataPost,
+					beforeSend:function()
+					{
+						$('.btnAddCart').addClass('disabled');
+						$('.btnAddCart').before('<img src="../images/loading.gif" class="loading">');
+						$('.loading').css({
+								'display': 'inline-block'
+							}).animate({
+								'opacity': 1},
+								500);
+					},
+					success:function(response)
+					{
+						$('.carritoAgregado').popover('show');
+						$('.carritoAgregado').click(function(){
+							$('.popover').remove();
+						})
+						$('.btnAddCart').removeClass('disabled');
+						$('.loading').animate({
+								'opacity': 0},
+								500,function(){
+									$(this).remove();
+								});
+						$('.catnArt').html(response.cantArt);
+						$('.total').html(response.total);
+						if($('.btn-no').length > 0)
+						{
+							$('.btn-no').addClass('btn-comprar').removeClass('btn-no');
+						}
+						if($('#'+response.id).length<1)
+						{
+							var row = '<tr class="carItems">';
+			                  row = row+'<td class="carItem" id="'+response.id+'">';
+			                    //casa
+			                    //row = row+'<img src="/guacamaya/public/images/items/'+response.img+'" class="carImg">';
+			                    //trabajo
+			                  	row = row+'<img src="/prueba/guacamaya/public/images/items/'+response.img+'" class="carImg">';
+			                  row = row+'</td>';
+			                  row = row+'<td class="carItem">';
+			                    row = row+response.name;
+			                  row = row+'</td>';
+			                   row = row+'<td class="carItem">';
+			                    row = row+response.talla;
+			                  row = row+'</td>';
+			                   row = row+'<td class="carItem">';
+			                    row = row+response.color;
+			                  row = row+'</td>';
+			                  row = row+'<td class="carItem">';
+			                    row = row+response.qty;
+			                  row = row+'</td>';
+			                  row = row+'<td class="carItem">';
+			                    row = row+response.price;
+			                  row = row+'</td>';
+			                  row = row+'<td class="carItem">';
+			                    row = row+response.subtotal;
+			                  row = row+'</td>';
+			                  row = row+'<td class="carItem">';
+			                    row = row+'<button class="btn btn-success btn-xs btnAdd btn-carrito" data-url-value="agregar-item" value="'+response.rowid+'">';
+			                      row = row+'Agregar';
+			                    row = row+'</button>';
+			                  row = row+'</td>';
+			                  row = row+'<td class="carItem">';
+			                    row = row+'<button class="btn btn-warning btn-xs btnRestar btn-carrito" data-url-value="restar-item" value="'+response.rowid+'">';
+			                      row = row+'Restar';
+			                    row = row+'</button>';
+			                  row = row+'</td>';
+			                  row = row+'<td class="carItem">';
+			                    row = row+'<button class="btn btn-danger btn-xs btnQuitar btn-carrito" data-url-value="quitar-item" value="'+response.rowid+'">';
+			                      row = row+'Quitar';
+			                    row = row+'</button>';
+			                  row = row+'</td>';
+			                row = row+'</tr>';
+			                $('.tableCarrito').append(row);
+						}else
+						{
+							$('#'+response.id+'> .carItem:nth-child(3)').html(response.qty);
+							$('#'+response.id+'> .carItem:nth-child(5)').html(response.subtotal);
+							
+						}
+						$('.btnAdd').click(function(event) {
+							var esto = $(this);
+							doAjax(esto);
+
+						});
+						$('.btnRestar').click(function(event) {
+							var esto = $(this);
+							doAjax(esto);
+
+						});
+						$('.btnQuitar').click(function(event) {
+							var x = confirm('¿Seguro desea quitar el item?');
+							if (x) {
+								var esto = $(this);
+								doQuitarAjax(esto);
+
+							}
+						});
+					}
+				})
+			}
+		});
 	});
-	$('.talla').change(function(event) {
 		
 	});
 });
@@ -1306,6 +1386,12 @@ jQuery(document).ready(function($) {
 			})		
 		};
 	});
+});
+jQuery(document).ready(function($) {
+	$('#continuar').on('shown.bs.collapse',function(){
+		var pos = $('.continuar').position();
+		$(window).scrollTop(pos.top)
+	})
 });
 /*Plugin*/
 jQuery(document).ready(function($){

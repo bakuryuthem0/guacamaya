@@ -112,7 +112,7 @@
                       </td>
                     </tr>
                     <tr data-toggle="collapse" href="#contCarrito" id="carrito">
-                      <td style="text-align:center;">  
+                      <td class="carritoAgregado" style="text-align:center;" data-toggle="popover" data-placement="left" data-content="Se ha agregado un item"title="" data-original-title="Aviso">  
                          <label style="cursor:pointer;"><i class="fa fa-shopping-cart"></i> Cantidad de artículos: <span class="catnArt">{{ Cart::count() }}</span></label>
                       </td>
                     </tr>
@@ -137,6 +137,12 @@
                   </th>
                   <th>
                    Artículo
+                  </th>
+                  <th>
+                   Talla
+                  </th>
+                  <th>
+                   Color
                   </th>
                   <th>
                     Cantidad
@@ -166,6 +172,12 @@
                   </td>
                   <td class="carItem">
                     {{ $cart->name }}
+                  </td>
+                  <td class="carItem">
+                    {{ Tallas::find($cart->options['talla'])->pluck('talla_nomb') }}
+                  </td>
+                  <td class="carItem">
+                    {{ Colores::find($cart->options['color'])->pluck('color_desc') }}
                   </td>
                   <td class="carItem">
                     {{ $cart->qty }}
@@ -304,26 +316,26 @@
           </div>
         </div>
         <div class="modal fade" id="changePass" tabindex="-1" role="dialog" aria-labelledby="modalForggo" aria-hidden="true">
-        <div class="forgotPass modal-dialog imgLiderUp">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-              <div class="modal-body">
-                  <legend>Recuperar Contraseña</legend>
-                </div>
-              <div class="modal-footer " style="text-align:center;">
-                <div class="alert responseDanger">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                </div>
-                <form methos="POST" action="{{ URL::to('recuperar/password') }}">
-                  <p class="textoPromedio">Introduzca el email con el cual creó su cuenta</p>
-                  <input class="form-control emailForgot" name="email" placeholder="Email">
-                  <button class="btn btn-success envForgot" style="margin-top:2em;">Enviar</button> 
-                </form>
+          <div class="forgotPass modal-dialog imgLiderUp">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
               </div>
+                <div class="modal-body">
+                    <legend>Recuperar Contraseña</legend>
+                  </div>
+                <div class="modal-footer " style="text-align:center;">
+                  <div class="alert responseDanger">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                  </div>
+                  <form methos="POST" action="{{ URL::to('recuperar/password') }}">
+                    <p class="textoPromedio">Introduzca el email con el cual creó su cuenta</p>
+                    <input class="form-control emailForgot" name="email" placeholder="Email">
+                    <button class="btn btn-success envForgot" style="margin-top:2em;">Enviar</button> 
+                  </form>
+                </div>
+            </div>
           </div>
-        </div>
       </div>
     </body>
 </html>
