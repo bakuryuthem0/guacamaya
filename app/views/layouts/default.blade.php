@@ -174,10 +174,10 @@
                     {{ $cart->name }}
                   </td>
                   <td class="carItem">
-                    {{ Tallas::find($cart->options['talla'])->pluck('talla_nomb') }}
+                    {{ $cart->options['talla_desc'] }}
                   </td>
                   <td class="carItem">
-                    {{ Colores::find($cart->options['color'])->pluck('color_desc') }}
+                    {{ $cart->options['color_desc'] }}
                   </td>
                   <td class="carItem">
                     {{ $cart->qty }}

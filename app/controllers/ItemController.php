@@ -15,22 +15,24 @@ class ItemController extends BaseController {
 			$aux = Misc::where('item_id','=',$inp['id'])->where('deleted','=',0)->first();
 
 			$img = Images::where('deleted','!=',1)->where('misc_id','=',$aux->id)->first();
+			$talla = Tallas::find($inp['talla']);
+			$color = Colores::find($inp['color']);
 			Cart::add(array(
 				'id' => $inp['id'],
 				'name' => $inp['name'],
 				'qty' => 1,
 				'options' =>array(
-					'img' 	=> $img->image,
-					'talla'	=> $inp['talla'],
-					'color'	=> $inp['color']
+					'img' 			=> $img->image,
+					'talla'			=> $inp['talla'],
+					'talla_desc'	=> $talla->talla_desc,
+					'color'			=> $inp['color'],
+					'color_desc'	=> $color->color_desc
 					),
 				'price' => $inp['price']
 				));
-			$rowid = Cart::search(array('id' => $inp['id']));
+			$rowid = Cart::search(array('id' => $inp['id'],'options' => array('talla' => $inp['talla'],'color' => $inp['color'])));
 			$item = Cart::get($rowid[0]);
 
-			$talla = Tallas::find($inp['talla']);
-			$color = Colores::find($inp['color']);
 			
 			return Response::json(array(
 				'rowid'		=> $rowid[0],
@@ -41,7 +43,7 @@ class ItemController extends BaseController {
 				'color'		=> $color->color_desc,
 				'qty' 		=> $item->qty,
 				'price' 	=> $item->price,
-				'subtotal'	=>$item->subtotal,
+				'subtotal'	=> $item->subtotal,
 				'cantArt' 	=> Cart::count(),
 				'total' 	=> Cart::total()
 			));
