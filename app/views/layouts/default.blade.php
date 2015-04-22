@@ -231,6 +231,7 @@
         <div class="col-xs-12 footerTerm">
               <p class="textoPromedio"><i class="fa fa-copyright"></i> 2015 Guacamaya stores 2015, c.a. J-40566930-6 | Todos los derechos reservados.<br> Desarrolado por <a href="{{ URL::to('http://tecnographic.com.ve') }}" target="_blank">Tecnographic Venezuela c.a.</a></p>
             </div>
+        {{ HTML::script('js/jquery.js') }}
         {{ HTML::script("http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js") }}
         <script>window.jQuery || document.write('<script src="js/jquery.js"><\/script>')</script>
         {{ HTML::script('js/bootstrap.min.js') }}
