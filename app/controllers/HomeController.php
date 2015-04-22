@@ -82,7 +82,6 @@ class HomeController extends BaseController {
 		$a = new stdClass;
 		$a->id = $art->id;
 		$a->item_nomb 		= $art->item_nomb;
-		$a->item_stock		= $art->item_stock;
 		$a->item_desc 		= $art->item_desc;
 		$a->item_cod 	 	= $art->item_cod;
 		$a->item_precio 	= $art->item_precio;
@@ -209,7 +208,6 @@ class HomeController extends BaseController {
 		$art = DB::select("SELECT DISTINCT `item`.`id`,	
 										   `item`.`item_nomb`,
 										   `item`.`item_cod`,
-										   `item`.`item_stock`,
 										   `item`.`item_precio`,
 										   `m`.`id` AS misc_id,
 										   `i`.`image`
