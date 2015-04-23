@@ -22,6 +22,7 @@ class ItemController extends BaseController {
 				'name' => $inp['name'],
 				'qty' => 1,
 				'options' =>array(
+					'misc' 			=> $misc->id, 
 					'img' 			=> $img->image,
 					'talla'			=> $inp['talla'],
 					'talla_desc'	=> $talla->talla_desc,
@@ -122,17 +123,24 @@ class ItemController extends BaseController {
 	{
 		$id = Input::get('dir');
 		if ($id == 'user_id') {
-			$dir = array('dir' =>Auth::user()->dir,'email' => Auth::user()->email);
-		}else
-		{
-			$dir = Dir::find($id);
+			$dir = new Dir;
+			$dir->user_id = Auth::user()->id;
+			$dir->email   = Auth::user()->email;
+			$dir->dir 	  = Auth::user()->dir;
+			$dir->save();
+			$id = $dir->id;
 		}
 		$fac = new Facturas;
 		$fac->user_id =  Auth::user()->id;
-		$fac->dir     = $dir['dir'];
+		$fac->dir     = $id;
 		if($fac->save())
 		{
 			foreach (Cart::content() as $c) {
+				
+				$misc = Misc::find($c->options['misc']);
+				$misc->item_stock = $misc->item_stock-$c->qty;
+				$misc->save();
+
 				$itemFac = new FacturaItem;
 				$itemFac->factura_id = $fac->id;
 				$itemFac->item_id    = $c->id;
@@ -165,10 +173,15 @@ class ItemController extends BaseController {
 		if ($dir->save()) {
 			$fac = new Facturas;
 			$fac->user_id =  Auth::user()->id;
-			$fac->dir 	  = $dir->dir;
+			$fac->dir 	  = $dir->id;
 			if($fac->save())
 			{
 				foreach (Cart::content() as $c) {
+					
+					$misc = Misc::find($c->options['misc']);
+					$misc->item_stock = $misc->item_stock-$c->qty;
+					$misc->save();
+
 					$itemFac = new FacturaItem;
 					$itemFac->factura_id = $fac->id;
 					$itemFac->item_id    = $c->id;

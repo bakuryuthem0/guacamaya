@@ -394,9 +394,9 @@ jQuery(document).ready(function($) {
 		to = boton.attr('data-url-value');
 		$.ajax({
 			//casa
-			//url: '/guacamaya/public/'+to,
+			url: '/guacamaya/public/'+to,
 			//trabajo
-			url: '/prueba/guacamaya/public/'+to,
+			//url: '/prueba/guacamaya/public/'+to,
 			type: 'POST',
 			dataType: 'json',
 			data: {'id':boton.val() },
@@ -431,8 +431,8 @@ jQuery(document).ready(function($) {
 								'opacity': 1},
 								250);
 						});
-				$('#'+response.id+'> .carItem:nth-child(3)').html(response.qty);
-				$('#'+response.id+'> .carItem:nth-child(5)').html(response.subtotal);
+				$('#'+response.id+'> .carItem:nth-child(5)').html(response.qty);
+				$('#'+response.id+'> .carItem:nth-child(7)').html(response.subtotal);
 				$('.catnArt').html(response.count)
 				$('.total').html(response.total)				
 			
@@ -447,9 +447,9 @@ jQuery(document).ready(function($) {
 		var to = boton.attr('data-url-value');
 			$.ajax({
 				//casa
-				//url: '/guacamaya/public/'+to,
+				url: '/guacamaya/public/'+to,
 				//trabajo
-				url: '/prueba/guacamaya/public/'+to,
+				//url: '/prueba/guacamaya/public/'+to,
 				type: 'POST',
 				dataType: 'json',
 				data: {'id':boton.val() },
@@ -500,16 +500,19 @@ jQuery(document).ready(function($) {
 			})
 	}
 	$('.btnAdd').click(function(event) {
+		$(this).unbind('click');
 		var esto = $(this);
 		doAjax(esto);
 
 	});
 	$('.btnRestar').click(function(event) {
+		$(this).unbind('click');
 		var esto = $(this);
 		doAjax(esto);
 
 	});
 	$('.btnQuitar').click(function(event) {
+		$(this).unbind('click');
 		$('.btnQuitar').unbind('click');
 		var x = confirm('¿Seguro desea quitar el item?');
 		if (x) {
@@ -524,9 +527,9 @@ jQuery(document).ready(function($) {
 		if (x) {
 			$.ajax({
 				//casa
-				//url: '/guacamaya/public/vaciar-carrito',
+				url: '/guacamaya/public/vaciar-carrito',
 				//trabajo
-				url: '/prueba/guacamaya/public/vaciar-carrito',
+				//url: '/prueba/guacamaya/public/vaciar-carrito',
 				type: 'POST',
 				dataType: 'json',
 				beforeSend:function()
@@ -564,7 +567,6 @@ jQuery(document).ready(function($) {
 					$('.carItems').remove();
 					$('.catnArt').html(0)
 					$('.total').html(0)
-					location.reload(true);
 					
 				}
 			})
@@ -680,14 +682,14 @@ jQuery(document).ready(function($) {
 						{
 							$('.btn-no').addClass('btn-comprar').removeClass('btn-no');
 						}
-						if($('#'+response.id).length<1)
+						if($('#'+response.rowid).length<1)
 						{
-							var row = '<tr class="carItems">';
+							var row = '<tr class="carItems"'+response.rowid+'>';
 			                  row = row+'<td class="carItem" id="'+response.id+'">';
 			                    //casa
-			                    //row = row+'<img src="/guacamaya/public/images/items/'+response.img+'" class="carImg">';
+			                    row = row+'<img src="/guacamaya/public/images/items/'+response.img+'" class="carImg">';
 			                    //trabajo
-			                  	row = row+'<img src="/prueba/guacamaya/public/images/items/'+response.img+'" class="carImg">';
+			                  	//row = row+'<img src="/prueba/guacamaya/public/images/items/'+response.img+'" class="carImg">';
 			                  row = row+'</td>';
 			                  row = row+'<td class="carItem">';
 			                    row = row+response.name;
@@ -726,8 +728,8 @@ jQuery(document).ready(function($) {
 			                $('.tableCarrito').append(row);
 						}else
 						{
-							$('#'+response.id+'> .carItem:nth-child(3)').html(response.qty);
-							$('#'+response.id+'> .carItem:nth-child(5)').html(response.subtotal);
+							$('#'+response.id+'> .carItem:nth-child(5)').html(response.qty);
+							$('#'+response.id+'> .carItem:nth-child(7)').html(response.subtotal);
 							
 						}
 						$('.btnAdd').click(function(event) {
@@ -766,9 +768,9 @@ jQuery(document).ready(function($) {
 			if (x) {
 				$.ajax({
 					//casa
-					//url: '/guacamaya/public/quitar-item',
+					url: '/guacamaya/public/quitar-item',
 					//trabajo
-					url: '/prueba/guacamaya/public/quitar-item',
+					//url: '/prueba/guacamaya/public/quitar-item',
 					type: 'POST',
 					dataType: 'json',
 					data: {'id':boton.val() },
@@ -821,9 +823,9 @@ jQuery(document).ready(function($) {
 		{
 			$.ajax({
 					//casa
-					//url: '/guacamaya/public/actualizar-al-carrito',
+					url: '/guacamaya/public/actualizar-al-carrito',
 					//trabajo
-					url: '/prueba/guacamaya/public/actualizar-al-carrito',
+					//url: '/prueba/guacamaya/public/actualizar-al-carrito',
 					type: 'POST',
 					dataType: 'json',
 					data: {
@@ -860,8 +862,8 @@ jQuery(document).ready(function($) {
 										'opacity': 1},
 										250);
 								});
-						$('#'+response.id+'> .carItem:nth-child(3)').html(response.qty);
-						$('#'+response.id+'> .carItem:nth-child(5)').html(response.subtotal);
+						$('#'+response.id+'> .carItem:nth-child(5)').html(response.qty);
+						$('#'+response.id+'> .carItem:nth-child(7)').html(response.subtotal);
 						$(boton.attr('data-field-value')+'_subtotal').html(response.subtotal);
 						$('.catnArt').html(response.count)
 						$('.total').html(response.total)				
