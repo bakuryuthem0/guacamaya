@@ -474,6 +474,13 @@ a.aConFormato:hover{
 	list-style: none;
 	padding:0px;
 }
+.ui-datepicker {
+  width: 35em !important;
+}
+.ui-datepicker table
+{
+  font-size: 2em !important;
+}
 .volver
 {
 	display: none;

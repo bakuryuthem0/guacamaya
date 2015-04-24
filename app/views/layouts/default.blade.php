@@ -252,6 +252,7 @@
         {{ HTML::script('js/slick/slick.min.js') }}
         {{ HTML::script('js/custom.js') }}
         {{ HTML::script('js/jquery.elevateZoom-3.0.8.min.js') }}
+        {{ HTML::script('js/jquery-ui-1.9.2.custom.min.js') }}
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -24,6 +24,12 @@
                    Artículo
                   </th>
                   <th>
+                   Talla del Artículo
+                  </th>
+                  <th>
+                   Color del Artículo
+                  </th>
+                  <th>
                     Cantidad
                   </th>
                   <th>
@@ -56,6 +62,12 @@
                   <td class="carItem">
                     {{ $cart->name }}
                   </td>
+                  <td class="carItem">
+                    {{ $cart->options['talla_desc'] }}
+                  </td>
+                  <td class="carItem">
+                    {{ $cart->options['color_desc'] }}
+                  </td>
                   <td class="carItem columnCant">
                     <input class="form-control cantArt" id="input{{ $cart->id }}" value="{{ $cart->qty }}">
                   </td>
@@ -85,6 +97,8 @@
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
+                <td></td>
                 <td><h3>Total:</h3></td>
                 <td><h3 class="precio total">Bs.{{ $total }}</h3></td>
               </tr>
@@ -100,6 +114,12 @@
                   <td class="carItem">
                     {{ $cart->item_nomb }}
                   </td>
+                  <td class="carItem">
+                    {{ $cart->item_talla }}
+                  </td>
+                  <td class="carItem">
+                    {{ $cart->item_color }}
+                  </td>
                   <td class="carItem columnCant">
                     {{ $cart->qty }}
                   </td>
@@ -113,6 +133,8 @@
                 </tr>
               @endforeach
               <tr>
+                <td></td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -207,7 +229,20 @@
           <p class="textoPromedio">Una vez haya realizado su pago, introduzca el número de transacción en la casilla</p>
           <form method="post" action="{{ URL::to('usuario/publicaciones/pago/enviar') }}">
             <div class="col-xs-12">
-                <input type="text" id="numTransVal" name="transNumber" placehlder="Numero de transaccion" class="form-control textoPromedio" >
+              <div class="col-xs-12 formulario">
+                <label>Banco</label>
+                  <select name="Bancos" class="form-control">
+                    <option value="">Seleccione el banco</option>
+                  </select>
+              </div>
+              <div class="col-xs-12 formulario">
+                <label>Fecha de transacción</label>
+                <input type="text" id="fecha" name="fecha" placehlder="DD-MM-YYYY" class="form-control" >
+              </div>
+              <div class="col-xs-12 formulario textoPromedio">
+                <label>Numero de transacción</label>
+                <input type="text" id="numTransVal" name="transNumber" placehlder="Numero de transaccion" class="form-control">
+              </div>
                 <input type="hidden" name="factId" value="{{ $id }}">
                 <input type="hidden" name="total" value="{{ $total }}">
                 @if ($errors->has('transNumber'))
@@ -228,7 +263,7 @@
       <div class="col-xs-6">
         <h3><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#mpago"></i> Mercado pago</h3>
         <div class="col-xs-12 collapse" id="mpago" style="padding:2em;">
-          <a href="<?php echo $preference['response']['init_point']; ?>" name="MP-Checkout" class="lightblue-M-Ov-ArOn">Pagar</a>
+          <a href="<?php //echo $preference['response']['init_point']; ?>" name="MP-Checkout" class="lightblue-M-Ov-ArOn">Pagar</a>
           <script type="text/javascript" src="https://www.mercadopago.com/org-img/jsapi/mptools/buttons/render.js"></script>
         </div>
       </div>
@@ -236,4 +271,17 @@
     @endif
 	</div>
 </div>
+@stop
+
+@section('postscript')
+<script type="text/javascript">
+
+       $( "#fecha" ).datepicker({
+
+      inline: true,
+      showAnim: 'fadeIn',
+      dateFormat: 'dd-mm-yyyy',
+      minDate: 0
+    });
+</script>
 @stop
