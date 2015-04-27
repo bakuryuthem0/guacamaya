@@ -885,16 +885,36 @@ class AdminController extends BaseController {
 	{
 		$title = "Agregar/Quitar items";
 		$prom = Publicidad::find($id);
-		$item = Items::join('miscelanias as m','m.item_id','=','item.id')
-		->join('images as i','i.misc_id','=','m.id')
-		->where('item.deleted','=','0')
-		->get();
-		return $item;
+		$b = Items::where('deleted','=','0')
+		->get(array('item_cod','id','item_prom'));
+		$item = array();
+		$i = 0;
+		foreach($b as $a){
+			$aux		= Misc::where('item_id','=',$a->id)->where('deleted','=',0)->first();
+			$b->img[$i]	= Images::where('misc_id','=',$aux->id)->where('deleted','=',0)->pluck('image'); 
+			$item[$i] 	= $b;
+			$i++;
+
+		}
 		return View::make('admin.mdfPromItem')
 		->with('title',$title)
 		->with('prom',$prom)
 		->with('items',$item);
 
+	}
+	public function postAddDelItemProm()
+	{
+		$id   = Input::get('id');
+		$val  = Input::get('val');
+		$item = Items::where('id','=',$id)->first();
+		$item->item_prom = $val;
+		if($item->save())
+		{
+			return Response::json(array('type' => 'success','msg' => 'Articulo agregado satisfactoriamente.'));
+		}else
+		{
+			return Response::json(array('type' => 'danger','msg' => 'Error al agregar el articulo.'));
+		}
 	}
 	public function postNewPub()
 	{

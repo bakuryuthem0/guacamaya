@@ -36,10 +36,11 @@ class HomeController extends BaseController {
 		$top    = Publicidad::where('id','=',1)->first(array('image','item_id'));
 		$left   = Publicidad::where('id','=',2)->first(array('image','item_id'));
 		$right  = Publicidad::where('id','=',3)->first(array('image','item_id'));
-		$first  = Publicidad::where('id','=',4)->first(array('image','item_id'));
-		$second = Publicidad::where('id','=',5)->first(array('image','item_id'));
+		$first  = Publicidad::where('id','=',4)->first(array('image','id','active'));
+		$second = Publicidad::where('id','=',5)->first(array('image','id','active'));
 
 		$art    = Items::leftJoin('miscelanias as m','m.item_id','=','item.id')
+		->leftJoin('publicidad','item.item_prom','=','publicidad.id')
 		->groupBy('item.id')
 		->where('item.deleted','=',0)
 		->where('m.deleted','=',0)
@@ -50,6 +51,7 @@ class HomeController extends BaseController {
 			'item.item_cod',
 			'item.item_precio',
 			'm.id as misc_id',
+			'publicidad.percent'
 		));
 		$img = array();
 		foreach ($art as $a) {
@@ -287,5 +289,32 @@ class HomeController extends BaseController {
 		$col = Misc::join('colores','colores.id','=','miscelanias.item_color')
 		->where('miscelanias.item_id','=',$item_id)->where('miscelanias.item_talla','=',$id)->get();
 		return Response::json($col);
+	}
+	public function getPromotions($id)
+	{
+		$title  = "Promocion | guacamayastores.com.ve";
+		$art    = Items::leftJoin('miscelanias as m','m.item_id','=','item.id')
+		->leftJoin('publicidad','item.item_prom','=','publicidad.id')
+		->groupBy('item.id')
+		->where('item.deleted','=',0)
+		->where('m.deleted','=',0)
+		->where('publicidad.id','=',$id)
+		->orderBy('item.created_at','DESC')
+		->paginate(8,array(
+			'item.id',
+			'item.item_nomb',
+			'item.item_cod',
+			'item.item_precio',
+			'm.id as misc_id',
+			'publicidad.percent'
+		));
+		$img = array();
+		foreach ($art as $a) {
+			$img[$a->id] = Images::where('deleted','=',0)->where('misc_id','=',$a->misc_id)->first(array('image'));
+		}
+		return View::make('indexs.promotions')
+		->with('title',$title)
+		->with('art',$art)
+		->with('img',$img);
 	}
 }

@@ -127,8 +127,17 @@
         </nav> <!-- cd-pagination-wrapper -->
       </div>
       <div class="col-xs-2">
-        <div class="col-xs-12"><a href="{{ URL::to('images/pub/'.$first->item_id) }}"><img src="{{ asset('images/pub/'.$first->image) }}"></a></div>
-        <div class="col-xs-12" style="margin-top:2em;"><a href="{{ URL::to('images/pub/'.$second->item_id) }}"><img src="{{ asset('images/pub/'.$second->image) }}"></a></div>
+        <div class="col-xs-12">
+          @if($first->active == 1)
+            <a href="{{ URL::to('articulos/promocion/'.$first->id) }}"><img src="{{ asset('images/pub/'.$first->image) }}"></a>
+          @endif
+        </div>
+        <div class="col-xs-12" style="margin-top:2em;">
+          @if($second->active == 1)
+            <a href="{{ URL::to('images/pub/'.$second->item_id) }}">
+              <img src="{{ asset('images/pub/'.$second->image) }}"></a>
+          @endif
+        </div>
       </div>
     </div>
 </div>

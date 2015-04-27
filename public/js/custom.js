@@ -1395,6 +1395,75 @@ jQuery(document).ready(function($) {
 		$(window).scrollTop(pos.top)
 	})
 });
+
+jQuery(document).ready(function($) {
+	$('.btn-deactive').click(function(event) {
+		var id = $(this).val(),prom = $('.promValue').val(),val,boton = $(this);
+		if ($(this).hasClass('active')) {
+			val = 0;
+		}else
+		{
+			val = prom;
+		}
+		$.ajax({
+			url: 'enviar',
+			type: 'POST',
+			dataType: 'json',
+			data: {'id': id,'val':val},
+			beforeSend:function () {
+				boton.after('<img src="../../../images/loading.gif" class="loading">');
+				boton.animate({
+						'opacity': 0},
+						250,function(){
+							$(this).css({
+								'display':'none'
+							});
+							$('.loading').css({
+								'display': 'inline-block'
+							}).animate({
+								'opacity': 1},
+								250);
+						}
+				);
+			},success:function(response) {
+				$('.loading').animate({
+					'opacity': 0},
+					250,function(){
+						$(this).remove();
+						boton.css({
+							'display': 'inline-block'
+						}).animate({
+							'opacity': 1},
+							250);
+					});
+				if (boton.hasClass('active')) {
+					boton.removeClass('active')
+					boton.html('Activar')
+				}else
+				{
+					boton.addClass('active')
+					boton.html('Desactivar')
+				}
+				
+				$('.responseDanger').removeClass('alert-danger');
+					$('.responseDanger').removeClass('alert-success');
+					$('.responseDanger').stop().css({'display':'block'}).addClass('alert-'+response.type).html('<p class="textoPromedio">'+response.msg+'</p>').animate({
+						'opacity': 1},
+						500);
+				setTimeout(function(){ 
+					$('.responseDanger').animate({
+						'opacity':0},
+						400, function() {
+						$(this).css({
+							
+							'display':'none'
+						});
+					});
+				}, 3000);
+			}
+		})
+	});
+});
 /*Plugin*/
 jQuery(document).ready(function($){
 	var visionTrigger = $('.cd-3d-trigger'),

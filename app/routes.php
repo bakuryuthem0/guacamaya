@@ -137,6 +137,9 @@ Route::group(array('before' =>'auth'),function()
 		Route::get('administrador/editar-promocio/{pos}','AdminController@getPosPromotion');
 		Route::post('administrador/nueva-promocion/procesar','AdminController@postProcPub');
 		Route::get('administrador/promocion/agregar-quitar-articulos/{id}','AdminController@getAddDelItemProm');
+		Route::post('administrador/promocion/agregar-quitar-articulos/enviar','AdminController@postAddDelItemProm');
+
+		Route::get('articulos/promocion/{id}','HomeController@getPromotions');
 
 	});
 	
