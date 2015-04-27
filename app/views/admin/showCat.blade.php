@@ -8,7 +8,7 @@
 			<div class="table-responsive">
 				<table class="table table-striped table-hover textoPromedio">
 					<thead>
-						<tr>
+						<tr class="textoNegro">
 							<th>Código</th>
 							<th>Nombre</th>
 							<th>Título</th>
@@ -19,9 +19,9 @@
 					<tbody>
 						@foreach($cat as $c)
 						<tr>
-							<td>{{ $c->id }}</td>
-							<td>{{ ucfirst(strtolower($c->cat_nomb)) }}</td>
-							<td>{{ ucfirst(strtolower($c->cat_desc)) }}</td>
+							<td class="textoNegro">{{ $c->id }}</td>
+							<td class="textoNegro">{{ ucfirst(strtolower($c->cat_nomb)) }}</td>
+							<td class="textoNegro">{{ ucfirst(strtolower($c->cat_desc)) }}</td>
 							<td><a class="btn btn-xs btn-warning" href="{{ URL::to('administrador/ver-categoria/'.$c->id) }}">Modificar</a></td>
 							<td><button class="btn btn-xs btn-danger elimBtn" value="{{ $c->id }}" data-toggle="modal" data-target="#elimModal">Eliminar</button></td>
 						</tr>

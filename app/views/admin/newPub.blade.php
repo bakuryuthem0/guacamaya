@@ -44,18 +44,7 @@
 							 	</div>
 							 @endforeach
 						@endif
-						<br>
-						<p class="bg-info " style="padding:0.5em;">Introduzca el codigo del articulo</p>
-						<label>Articulo:</label>
-						<input type="text" name="item" placeholder="Codigo del articulo" class="form-control">
-						@if ($errors->has('item'))
-							 @foreach($errors->get('item') as $err)
-							 	<div class="alert alert-danger error">
-							 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-							 		<p class="">{{ $err }}</p>
-							 	</div>
-							 @endforeach
-						@endif
+						
 						<button class="btn btn-success btn-xs" style="margin-top:1em;">Enviar</button>
 						<input type="hidden" name="position" value="top">
 					</form>
@@ -72,18 +61,7 @@
 							 	</div>
 							 @endforeach
 						@endif
-						<br>
-						<p class="bg-info " style="padding:0.5em;">Introduzca el codigo del articulo</p>
-						<label>Articulo:</label>
-						<input type="text" name="item" placeholder="Codigo del articulo" class="form-control">
-						@if ($errors->has('item'))
-							 @foreach($errors->get('item') as $err)
-							 	<div class="alert alert-danger error">
-							 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-							 		<p class="">{{ $err }}</p>
-							 	</div>
-							 @endforeach
-						@endif
+						
 						<button class="btn btn-success btn-xs" style="margin-top:1em;">Enviar</button>
 						<input type="hidden" name="position" value="left">
 					</form>
@@ -100,18 +78,7 @@
 							 	</div>
 							 @endforeach
 						@endif
-						<br>
-						<p class="bg-info " style="padding:0.5em;">Introduzca el codigo del articulo</p>
-						<label>Articulo:</label>
-						<input type="text" name="item" placeholder="Codigo del articulo" class="form-control">
-						@if ($errors->has('item'))
-							 @foreach($errors->get('item') as $err)
-							 	<div class="alert alert-danger error">
-							 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-							 		<p class="">{{ $err }}</p>
-							 	</div>
-							 @endforeach
-						@endif
+						
 						<button class="btn btn-success btn-xs" style="margin-top:1em;">Enviar</button>
 						<input type="hidden" name="position" value="right">
 					</form>

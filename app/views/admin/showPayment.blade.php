@@ -62,15 +62,15 @@
 						<td>
 							{{ $f->num_trans }}
 						</td>
-						<td>{{ $f->email }}</td>
-						<td>{{ $f->dir }}</td>
-						<td><a href="{{ URL::to('administrador/ver-factura/'.$f->id) }}" class="btn btn-info btn-xs">Ver</a></td>
+						<td>{{ $f->user_mail }}</td>
+						<td>{{ $f->dir_name }}</td>
+						<td><a target="_blank" href="{{ URL::to('administrador/ver-factura/'.$f->id) }}" class="btn btn-info btn-xs">Ver</a></td>
 						@if(!isset($type))
 
 						<td><button class="btn btn-success btn-xs aprov-fac" value="{{ $f->id }}">Aprobar</button></td>
 						<td><button class="btn btn-danger btn-xs reject-fac" value="{{ $f->id }}" data-toggle="modal" data-target="#elimFac">Rechazar</button></td>
-						@else
-						<td class="textoMedio noMovil"><button class="btn btn-primary btn-xs ver" data-toggle="modal" data-target="#showUserData" value="{{ $f->id }}">Ver</button></td>
+						@endif
+						<td class="textoMedio"><button class="btn btn-primary btn-xs ver" data-toggle="modal" data-target="#showUserData" value="{{ $f->id }}">Ver</button></td>
 						<input type="hidden" class="username-{{ $f->id }}" value="{{ $f->username }}">
 						<input type="hidden" class="name-{{ $f->id }}" value="{{ $f->nombre.' '.$f->apellido }}">
 						<input type="hidden" class="email-{{ $f->id }}" value="{{ $f->email }}">
@@ -79,7 +79,6 @@
 						<input type="hidden" class="est-{{ $f->id }}" value="{{ $f->est }}">
 						<input type="hidden" class="mun-{{ $f->id }}" value="{{ $f->mun }}">
 						<input type="hidden" class="par-{{ $f->id }}" value="{{ $f->par }}">
-						@endif
 					</tr>
 					@endforeach
 

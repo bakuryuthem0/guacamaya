@@ -85,10 +85,11 @@ fieldset[disabled] .btn-success.active {
          <ul>
             <li>Este mensaje le fue enviado mediante el sitio web de <strong>guacamayastores.com.ve</strong>.</li>
          </ul>
-         <p class="bg-primary" style="padding:0.5em;">Gracias por su compra en guacamayastores.com.ve, su pago para la  factura N° : {{ $fac }} ha sido rechazada</p>
-         <p class="bg-primary" style="padding:0.5em;">Fecha de envio: {{ $fecha }}</p>
+         <p class="bg-primary" style="padding:0.5em;">Estimado usuario, su pago para la  factura N° : {{ $fac }} ha sido rechazada</p>
          <hr>
+         <legend>Motivo</legend>
          <p>{{ $motivo }}</p>
+         <p class="bg-primary" style="padding:0.5em;">Fecha de envio: {{ $fecha }}</p>
 	      <p  style="text-align:center;"><span class="bg-primary" style="color:white;padding:0.5em;">guacamayastores.com.ve</span></p>
 	  </div>
    </body>

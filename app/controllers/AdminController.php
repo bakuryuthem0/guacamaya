@@ -799,30 +799,123 @@ class AdminController extends BaseController {
 		$title ="Nueva promocion";
 		return View::make('admin.newPromotion')->with('title',$title);
 	}
+	public function getPosPromotion($pos)
+	{
+		$title = "Modificar promocion";
+		$prom = Publicidad::where('position','=',$pos)->first();
+		return View::make('admin.mdfProm')
+		->with('title',$title)
+		->with('prom',$prom);
+	}
+	public function postProcPub()
+	{
+		$id = Input::get('pos');
+		$inp = Input::all();
+		$prom = Publicidad::find($id);
+		if (Input::hasFile('img')) {
+			$file = Input::file('img');
+			if (file_exists('images/pub/'.$file->getClientOriginalName())) {
+				//guardamos la imagen en public/imgs con el nombre original
+	            $i = 0;//indice para el while
+	            //separamos el nombre de la img y la extensión
+	            $info = explode(".",$file->getClientOriginalName());
+	            //asignamos de nuevo el nombre de la imagen completo
+	            $miImg = $file->getClientOriginalName();
+	            //mientras el archivo exista iteramos y aumentamos i
+	            while(file_exists('images/pub/'.$miImg)){
+	                $i++;
+	                $miImg = $info[0]."(".$i.")".".".$info[1];              
+	            }
+	            //guardamos la imagen con otro nombre ej foto(1).jpg || foto(2).jpg etc
+	            $file->move("images/pub/",$miImg);
+				$img = Image::make('images/pub/'.$miImg);
+				if ($img->width() > $img->height()) {
+					$img->widen(200);
+				}else
+				{
+					$img->heighten(200);
+				}
+				$blank = Image::make('images/blank2.jpg');
+				$blank->insert($img,'center')
+	           ->interlace()
+	           ->save('images/pub/'.$miImg);
+	            if($miImg != $file->getClientOriginalName()){
+	            	$prom->image = $miImg;
+	            }
+			}else
+			{
+				$file->move("images/pub/",$file->getClientOriginalName());
+				$img = Image::make('images/pub/'.$file->getClientOriginalName());
+				if ($img->width() > $img->height()) {
+					$img->widen(200);
+				}else
+				{
+					$img->heighten(200);
+				}
+				$blank = Image::make('images/blank2.jpg');
+		        $blank->insert($img,'center')
+	            ->interlace()
+            	->save('images/pub/'.$file->getClientOriginalName());
+				
+				
+	          	$prom->image = $file->getClientOriginalName();
+			}
+		}
+		if (!empty($inp['descuento'])) {
+			$prom->percent = $inp['descuento'];		
+		}
+		if (Input::has('active')) {
+			if ($prom->active == 0) {
+				$prom->active = 1;
+			}else
+			{
+				$prom->active = 0;
+			}
+		}
+		if ($prom->save()) {
+			Session::flash('success', 'Promocion editada satisfactoriamente.');
+			return Redirect::to('administrador/promocion/agregar-quitar-articulos/'.$id);
+		}else
+		{
+			Session::flash('error', 'Error al guardar la promocion');
+			return Redirect::back();
+		}
+	}
+	public function getAddDelItemProm($id)
+	{
+		$title = "Agregar/Quitar items";
+		$prom = Publicidad::find($id);
+		$item = Items::join('miscelanias as m','m.item_id','=','item.id')
+		->join('images as i','i.misc_id','=','m.id')
+		->where('item.deleted','=','0')
+		->get();
+		return $item;
+		return View::make('admin.mdfPromItem')
+		->with('title',$title)
+		->with('prom',$prom)
+		->with('items',$item);
+
+	}
 	public function postNewPub()
 	{
 		$input = Input::all();
 		$rules = array(
 			'img'  		=> 'required|image|max:2000',
-			'item' 		=> 'required|exists:item,item_cod,deleted,0',
 			'position'  => 'required'
 		);
 		$msg = array(
 			'required' => ':attribute es obligatorio',
 			'image'	   => ':attribute debe ser una imagen',
 			'max'	   => 'La imagen no debe ser mayor a 2Mb',
-			'exists'   => 'El articulo no existe o a sido borrado'
 		);
 		$attr = array(
 			'img' 	=> 'El campo imagen',
-			'item'  => 'El campo codigo del articulo',
 			'position' => 'Error al enviar algunos datos'
 		);
 		$validator = Validator::make($input, $rules, $msg, $attr);
 		if ($validator->fails()) {
 			return Redirect::back()->withErrors($validator);
 		}
-		$id = Items::where('item_cod','=',$input['item'])->pluck('id');
 		if ($input['position'] == 'top') {
 			$pub = Publicidad::find(1);
 		}elseif($input['position'] == 'left')
@@ -831,91 +924,19 @@ class AdminController extends BaseController {
 		}elseif($input['position'] == 'right')
 		{
 			$pub = Publicidad::find(3);
-		}elseif($input['position'] == 'first')
-		{
-			$pub = Publicidad::find(4);
-		}elseif($input['position'] == 'second')
-		{
-			$pub = Publicidad::find(5);
 		}
 
-		$file = Input::file('img');
-		if (file_exists('images/pub/'.$file->getClientOriginalName())) {
-			//guardamos la imagen en public/imgs con el nombre original
-            $i = 0;//indice para el while
-            //separamos el nombre de la img y la extensión
-            $info = explode(".",$file->getClientOriginalName());
-            //asignamos de nuevo el nombre de la imagen completo
-            $miImg = $file->getClientOriginalName();
-            //mientras el archivo exista iteramos y aumentamos i
-            while(file_exists('images/pub/'.$miImg)){
-                $i++;
-                $miImg = $info[0]."(".$i.")".".".$info[1];              
-            }
-            //guardamos la imagen con otro nombre ej foto(1).jpg || foto(2).jpg etc
-            $file->move("images/pub/",$miImg);
-            if($input['position'] == 'first' || $input['position'] == 'second')
-			{
-				$img = Image::make('images/pub/'.$miImg);
-				if ($img->width() > 200) {
-					$img->widen(200);
-				}elseif($img->height() > 200)
-				{
-					$img->heighten(200);
-				}
-				$blank = Image::make('images/blank2.jpg');
-				$blank->insert($img,'center')
-	           ->interlace()
-	           ->save('images/pub/'.$miImg);
-			}else
-			{
-	            $img = Image::make('images/pub/'.$miImg)
-		           ->interlace()
-		           ->save('images/pub/'.$miImg);
-			}
-            if($miImg != $file->getClientOriginalName()){
-            	$pub->image = $miImg;
-            }
-		}else
-		{
-			$file->move("images/pub/",$file->getClientOriginalName());
-			if($input['position'] == 'first' || $input['position'] == 'second')
-			{
-				$img = Image::make('images/pub/'.$file->getClientOriginalName());
-				if ($img->width > 200) {
-					$img->widen(200);
-				}elseif($img->height() > 200)
-				{
-					$img->heighten(200);
-				}
-				$blank = Image::make('images/blank2.jpg');
-		        $blank->insert($img,'center')
-	            ->interlace()
-            	->save('images/pub/'.$file->getClientOriginalName());
-			}else
-			{
-	            $img = Image::make('images/pub/'.$file->getClientOriginalName())->interlace()
-            	->save('images/pub/'.$file->getClientOriginalName());
-			}
-			
-          	$pub->image = $file->getClientOriginalName();
-		}
-		$pub->item_id = $id;
+		
 		if($pub->save())
 		{
-			if($input['position'] == 'first' || $input['position'] == 'second')
-			{
-				$url = "administrador/nueva-promocion";
-			}else
-			{
-				$url = "administrador/nueva-publicidad";
-			}
+		
+			$url = "administrador/nueva-publicidad";
 			Session::flash('success','Publicidad guardada correctamente');
 			return Redirect::to($url);
 		}else
 		{
 			Session::flash('danger','Error al guardar la publicidad');
-			return Redirect::to($url);
+			return Redirect::back();
 		}
 	}
 	public function postElimItem()
@@ -1105,7 +1126,29 @@ class AdminController extends BaseController {
 	public function getPayment()
 	{
 		$title = "Pagos | guacamayastores.com.ve";
-		$fac = Facturas::where('pagada','=',-1)->orderBy('id','DESC')->get();
+		$fac = Facturas::join('direcciones','direcciones.id','=','facturas.dir')
+		->join('usuario','usuario.id','=','facturas.user_id')
+		->leftJoin('estado','usuario.estado','=','estado.id')
+		->leftJoin('municipio','usuario.municipio','=','municipio.id')
+		->leftJoin('parroquia','usuario.parroquia','=','parroquia.id')
+		->where('pagada','=',-1)->orderBy('facturas.id','DESC')
+		->get(
+			array(
+				'usuario.id as user_id',
+				'usuario.username',
+				'usuario.dir as user_dir',
+				'usuario.nombre',
+				'usuario.apellido',
+				'usuario.telefono',
+				'usuario.email',
+				'estado.nombre as est',
+				'municipio.nombre as mun',
+				'parroquia.nombre as par',
+				'facturas.*',
+				'direcciones.email',
+				'direcciones.dir as dir_name'
+			)
+		);
 		return View::make('admin.showPayment')
 		->with('title',$title)
 		->with('fac',$fac);
@@ -1138,14 +1181,6 @@ class AdminController extends BaseController {
 	{
 		$id  = Input::get('id');
 		$fac = Facturas::find($id);
-		$facturaitem = FacturaItem::where('factura_id','=',$fac->id)->get();
-		foreach($facturaitem as $fi)
-		{
-			$item = Items::find($fi->item_id);
-			$item->item_stock = $item->item_stock - $fi->item_qty;
-			$item->save();
-
-		}
 		$fac->pagada = 1;
 		$user = User::find($fac->user_id);
 		if($fac->save())
@@ -1193,7 +1228,8 @@ class AdminController extends BaseController {
 	{
 		$title = "Pagos aprobados";
 		$title = "Pagos | guacamayastores.com.ve";
-		$fac = Facturas::join('usuario','usuario.id','=','facturas.user_id')->where('facturas.pagada','=',1)
+		$fac = Facturas::join('direcciones','direcciones.id','=','facturas.dir')
+		->join('usuario','usuario.id','=','facturas.user_id')->where('facturas.pagada','=',1)
 		->leftJoin('estado','usuario.estado','=','estado.id')
 		->leftJoin('municipio','usuario.municipio','=','municipio.id')
 		->leftJoin('parroquia','usuario.parroquia','=','parroquia.id')
@@ -1211,7 +1247,9 @@ class AdminController extends BaseController {
 			'usuario.email',
 			'estado.nombre as est',
 			'municipio.nombre as mun',
-			'parroquia.nombre as par'
+			'parroquia.nombre as par',
+			'direcciones.dir as dir_name',
+			'direcciones.email as user_mail'
 		));
 		$type = "apr";
 		return View::make('admin.showPayment')

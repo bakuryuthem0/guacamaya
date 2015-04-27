@@ -181,8 +181,25 @@
                             <ul class="dropdown-menu" role="menu">
                               <li>
                                 <a href="{{ URL::to('administrador/nueva-promocion') }}">
-                                  Agregar Promociones
+                                  Editar promociones
                                 </a>
+                              </li>
+                              <li class="dropdown-submenu">
+                                <a href="#">
+                                  Agregar/Quitar item
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                  <li>
+                                    <a href="{{ URL::to('administrador/promocion/agregar-quitar-articulos/4') }}">
+                                     Promocion superior
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a href="{{ URL::to('administrador/promocion/agregar-quitar-articulos/5') }}">
+                                     Promocion inferior
+                                    </a>
+                                  </li>
+                                </ul>
                               </li>
                             </ul>
                           </li>

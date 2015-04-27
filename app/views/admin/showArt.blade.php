@@ -25,7 +25,7 @@
 			</form>
 			<table id="tablesorter" class="tablesorter table table-striped table-condensed table-vertical-middle table-super-condensed table-bordered table-list-search table-hover">
 				<thead>
-					<tr>
+					<tr class="textoNegro">
 						<th>Código</th>
 						<th>Nombre</th>
 						<th>Inventario</th>
@@ -37,9 +37,9 @@
 				<tbody>
 					@foreach($art as $a)
 					<tr>
-						<td>{{ $a->item_cod }}</td>
-						<td>{{ $a->item_nomb }}</td>
-						<td>{{ $a->item_stock }}</td>
+						<td class="textoNegro">{{ $a->item_cod }}</td>
+						<td class="textoNegro">{{ $a->item_nomb }}</td>
+						<td class="textoNegro">{{ $a->item_stock }}</td>
 						<td><a class="btn btn-xs btn-success" href="{{ URL::to('administrador/ver-articulo/'.$a->id) }}">Ver</a></td>
 						<td><a href="{{ URL::to('administrador/editar-articulo/'.$a->id) }}" class="btn btn-xs btn-warning btnMdfItem">Modificar</a></td>
 						<td><button class="btn btn-xs btn-danger btnElimItem" data-toggle="modal" data-target="#elimModal" value="{{ $a->id }}">Eliminar</button></td>
