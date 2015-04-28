@@ -43,7 +43,12 @@
                   <label class="aSinFormato">{{ $a->item_nomb.' - Cod: '.$a->item_cod }}</label>
                 </li>
                 <li>
-                  <p class="precio" style="color:red;">Bs.{{ $a->item_precio }}</p>
+                  @if(!is_null($a->percent))
+                    <p class="precio" style="color:red;">Percio de Promoción: Bs.{{ $a->item_precio-($a->item_precio*$a->percent/100) }}</p>
+                    <li class="disabled">Precio Anterior: Bs.{{ $a->item_precio }}</li>
+                  @else
+                    <p class="precio" style="color:red;">Bs.{{ $a->item_precio }}</p>
+                  @endif
                 </li>
               </ul>
             </div>

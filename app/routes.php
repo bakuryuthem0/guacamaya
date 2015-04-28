@@ -139,8 +139,13 @@ Route::group(array('before' =>'auth'),function()
 		Route::get('administrador/promocion/agregar-quitar-articulos/{id}','AdminController@getAddDelItemProm');
 		Route::post('administrador/promocion/agregar-quitar-articulos/enviar','AdminController@postAddDelItemProm');
 
-		
-
+		//bancos
+		Route::get('administrador/agregar-bancos','AdminController@getNewBank');
+		Route::post('administrador/agregar-bancos/enviar','AdminController@postNewBank');
+		Route::get('administrador/editar-banco','AdminController@getEditBank');
+		Route::get('administrador/editar-banco/{id}','AdminController@getEditBankId');
+		Route::post('administrador/editar-bancos/enviar/{id}','AdminController@postEditBankId');
+		Route::post('administrador/editar-bancos/eliminar','AdminController@postElimBank');
 	});
 	
 });

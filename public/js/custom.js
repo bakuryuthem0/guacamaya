@@ -1395,7 +1395,67 @@ jQuery(document).ready(function($) {
 		$(window).scrollTop(pos.top)
 	})
 });
+jQuery(document).ready(function($) {
+	$('.btnElimBank').click(function(event) {
+		var id = $(this).val();
+		var boton = $(this);
+		var x = confirm('¿Seguro desea eliminar el banco? Esta acción es irreversible');
+		if (x) {
+			$.ajax({
+				url: 'editar-bancos/eliminar',
+				type: 'POST',
+				dataType: 'json',
+				data: {'id': id},
+				beforeSend:function()
+				{
+					boton.before('<img src="../images/loading.gif" class="loading">');
+					$('.loading').css({
+						'display': 'block',
+						'margin': '2em auto'
+					}).animate({
+						'opacity': 1},
+						500,function(){
+							boton.css({
+								'display':'none'
+							});
+						});
+				},
+				success:function(response)
+				{
+					$('.loading').animate({
+						'opacity': 0},
+						500,function(){
+							boton.css({
+								'display':'block'
+							});
+							$(this).remove();
+						});
+					if (response.type == 'success') {
 
+						boton.parent().parent().remove();
+					};
+					$('.responseDanger').addClass('alert-'+response.type).html(response.msg).css({
+						'display': 'block'
+					}).animate({
+						'opacity': 1},
+						500);
+					setTimeout(function(){
+
+						$('.responseDanger').removeClass('success')
+						$('.responseDanger').removeClass('danger')
+						$('.responseDanger').stop().animate({
+							'opacity':0},
+							500, function() {
+							$(this).css({
+								'display':'none'
+							});
+						});
+					},6000);
+				}
+			})		
+		};
+	});
+});
 jQuery(document).ready(function($) {
 	$('.btn-deactive').click(function(event) {
 		var id = $(this).val(),prom = $('.promValue').val(),val,boton = $(this);

@@ -87,6 +87,9 @@ class HomeController extends BaseController {
 		$a->item_desc 		= $art->item_desc;
 		$a->item_cod 	 	= $art->item_cod;
 		$a->item_precio 	= $art->item_precio;
+		if (!is_null($art->percent)) {
+			$a->percent = $art->percent;
+		}
 		$a->misc 			= array();
 		$a->tallas    		= array();
 		$a->colores   		= array();

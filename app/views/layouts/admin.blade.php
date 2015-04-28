@@ -131,6 +131,24 @@
                               
                             </ul>
                           </li>
+                          <li class="dropdown-submenu">
+                            <a href="#" >
+                              Bancos
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                              <li>
+                                <a href="{{ URL::to('administrador/agregar-bancos') }}">
+                                  Agregar
+                                </a>
+                              </li>
+                              <li>
+                                <a href="{{ URL::to('administrador/editar-banco') }}">
+                                  Editar
+                                </a>
+                              </li>
+                              
+                            </ul>
+                          </li>
                         </ul>
                       </li>
                       <li class="dropdown myMenu">

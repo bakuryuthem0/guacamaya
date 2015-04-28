@@ -78,10 +78,14 @@
 				<div class="col-xs-4 textoPromedio">
 					<div class="col-xs-12">
 						<label>PRECIO EN GUACAMAYA STORES:</label>
+
 							@if(isset($art->percent))
-								{{ $art->percent }}
+								<h3 class="precio">Precio Actual: Bs. {{ $art->item_precio-($art->item_precio*$art->percent/100) }}</h3>
+								<li class="disabled">Precio Anterior: Bs. {{ $art->item_precio }}</li>
+							@else
+								<h3 class="precio">Bs. {{ $art->item_precio }}</h3>
 							@endif
-						<h3 class="precio">Bs. {{ $art->item_precio }}</h3>
+
 					</div>
 					<div class="col-xs-12 formulario">
 						<label>Talla</label>
@@ -114,7 +118,11 @@
 					
 					@if(Auth::check() && Auth::user()->role != 1)
 					<div class="col-xs-12 formulario">
+						@if(isset($art->percent))
+							<button class="btn btn-danger btnAgg" data-toggle="modal" data-target="#addCart" data-cod-value="{{ $art->item_cod }}" data-price-value="{{ $art->item_precio-($art->item_precio*$art->percent/100) }}" data-name-value="{{ $art->item_nomb }}" value="{{ $art->id }}">Agregar al carrito.</button>
+						@else
 							<button class="btn btn-danger btnAgg" data-toggle="modal" data-target="#addCart" data-cod-value="{{ $art->item_cod }}" data-price-value="{{ $art->item_precio}}" data-name-value="{{ $art->item_nomb }}" value="{{ $art->id }}">Agregar al carrito.</button>
+						@endif
 					</div>
 					@else
 					<div class="col-xs-12 formulario">

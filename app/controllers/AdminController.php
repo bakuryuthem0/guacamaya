@@ -867,8 +867,14 @@ class AdminController extends BaseController {
 		if (Input::has('active')) {
 			$prom->active = 1;
 		}else
-		{
+		{			
 			$prom->active = 0;
+			$items = Items::where('deleted','=',0)->where('item_prom','=',$prom->id)->get();
+			foreach($items as $i)
+			{
+				$i->item_prom = 0;
+				$i->save();
+			}
 		}
 		if ($prom->save()) {
 			Session::flash('success', 'Promocion editada satisfactoriamente.');
@@ -1279,5 +1285,202 @@ class AdminController extends BaseController {
 		->with('title',$title)
 		->with('fac',$fac)
 		->with('type',$type);
+	}
+	public function getNewBank()
+	{
+		$title = "Nuevo banco";
+		return View::make('admin.newBank')
+		->with('title',$title);
+	}
+	public function postNewBank()
+	{
+		$inp 	= Input::all();
+		$rules  = array(
+			'banco' 		=> 'required',
+			'numCuenta'		=> 'required',
+			'tipoCuenta'	=> 'required',
+			'img'			=> 'required|image|max:3000'
+		);
+
+		$msg 	= array(
+			'required'	=> 'El campo es obligatorio',
+			'image'		=> 'El archivo debe ser una imagen',
+			'max'		=> 'El archivo no debe tener mas de 3Mb'
+		);
+		$validator = Validator::make($inp,$rules,$msg);
+		if ($validator->fails()) {
+			return Redirect::back()->withErrors($validator)->withInput();
+		}
+
+		$banco = new Bancos;
+		$banco->banco 		= $inp['banco'];
+		$banco->num_cuenta	= $inp['numCuenta'];
+		$banco->tipo 		= $inp['tipoCuenta'];
+		$file = Input::file('img');
+		if (file_exists('images/bancos/'.$file->getClientOriginalName())) {
+			//guardamos la imagen en public/imgs con el nombre original
+            $i = 0;//indice para el while
+            //separamos el nombre de la img y la extensión
+            $info = explode(".",$file->getClientOriginalName());
+            //asignamos de nuevo el nombre de la imagen completo
+            $miImg = $file->getClientOriginalName();
+            //mientras el archivo exista iteramos y aumentamos i
+            while(file_exists('images/bancos/'. $miImg)){
+                $i++;
+                $miImg = $info[0]."(".$i.")".".".$info[1];              
+            }
+            //guardamos la imagen con otro nombre ej foto(1).jpg || foto(2).jpg etc
+            $file->move("images/bancos/",$miImg);
+            $blank = Image::make('images/blank400x200.jpg');
+
+            $img = Image::make('images/bancos/'.$miImg);
+            if ($img->width() > $img->height()) {
+            	$img->widen(400);
+            }else
+            {
+            	$img->heighten(200);
+            }
+            
+	        $blank->insert($img,'center')
+	           ->interlace()
+	           ->save('images/bancos/'.$miImg);
+            if($miImg != $file->getClientOriginalName()){
+            	$banco->imagen = $miImg;
+            }
+		}else
+		{
+			$file->move("images/bancos/",$file->getClientOriginalName());
+			$blank = Image::make('images/blank.jpg');
+			$img = Image::make('images/bancos/'.$file->getClientOriginalName());
+            if ($img->width() > $img->height()) {
+            	$img->widen(400);
+            }else
+            {
+            	$img->heighten(200);
+            }
+
+            $blank->insert($img,'center')
+           ->interlace()
+           ->save('images/bancos/'.$file->getClientOriginalName());
+           $banco->imagen = $file->getClientOriginalName();
+		}
+		if ($banco->save()) {
+			Session::flash('success', 'Banco creado satisfactoriamente');
+			return Redirect::to('administrador/editar-banco');
+		}else
+		{
+			Session::flash('error','Error al crear el banco');
+			return Redirect::back();
+		}
+	}
+	public function getEditBank()
+	{
+		$title = "Editar bancos";
+		$bancos = Bancos::where('deleted','=',0)->get();
+		return View::make('admin.editBanks')
+		->with('title',$title)
+		->with('bancos',$bancos);
+	}
+	public function getEditBankId($id)
+	{
+		$title ="Editar banco";
+		$banco = Bancos::find($id);
+		return View::make('admin.editBankSelf')
+		->with('title',$title)
+		->with('banco',$banco);
+	}
+	public function postEditBankId($id)
+	{
+		$inp 	= Input::all();
+		$rules  = array(
+			'banco' 		=> 'required',
+			'numCuenta'		=> 'required',
+			'tipoCuenta'	=> 'required'
+		);
+
+		$msg 	= array(
+			'required'	=> 'El campo es obligatorio'
+		);
+		$validator = Validator::make($inp,$rules,$msg);
+		if ($validator->fails()) {
+			return Redirect::back()->withErrors($validator)->withInput();
+		}
+
+		$banco 				= Bancos::find($id);
+		$banco->banco 		= $inp['banco'];
+		$banco->num_cuenta	= $inp['numCuenta'];
+		$banco->tipo 		= $inp['tipoCuenta'];
+		if (Input::hasFile('img')) {
+			$file = Input::file('img');
+			if (file_exists('images/bancos/'.$file->getClientOriginalName())) {
+				//guardamos la imagen en public/imgs con el nombre original
+	            $i = 0;//indice para el while
+	            //separamos el nombre de la img y la extensión
+	            $info = explode(".",$file->getClientOriginalName());
+	            //asignamos de nuevo el nombre de la imagen completo
+	            $miImg = $file->getClientOriginalName();
+	            //mientras el archivo exista iteramos y aumentamos i
+	            while(file_exists('images/bancos/'. $miImg)){
+	                $i++;
+	                $miImg = $info[0]."(".$i.")".".".$info[1];              
+	            }
+	            //guardamos la imagen con otro nombre ej foto(1).jpg || foto(2).jpg etc
+	            $file->move("images/bancos/",$miImg);
+	            $blank = Image::make('images/blank400x200.jpg');
+
+	            $img = Image::make('images/bancos/'.$miImg);
+	            if ($img->width() > $img->height()) {
+	            	$img->widen(400);
+	            }else
+	            {
+	            	$img->heighten(200);
+	            }
+	            
+		        $blank->insert($img,'center')
+		           ->interlace()
+		           ->save('images/bancos/'.$miImg);
+	            if($miImg != $file->getClientOriginalName()){
+	            	$banco->imagen = $miImg;
+	            }
+			}else
+			{
+				$file->move("images/bancos/",$file->getClientOriginalName());
+				$blank = Image::make('images/blank.jpg');
+				$img = Image::make('images/bancos/'.$file->getClientOriginalName());
+	            if ($img->width() > $img->height()) {
+	            	$img->widen(400);
+	            }else
+	            {
+	            	$img->heighten(200);
+	            }
+
+	            $blank->insert($img,'center')
+	           ->interlace()
+	           ->save('images/bancos/'.$file->getClientOriginalName());
+	           $banco->imagen = $file->getClientOriginalName();
+			}
+		}
+		if ($banco->save()) {
+			Session::flash('success', 'Banco creado satisfactoriamente');
+			return Redirect::to('administrador/editar-banco');
+		}else
+		{
+			Session::flash('error','Error al crear el banco');
+			return Redirect::back();
+		}
+	}
+	public function postElimBank()
+	{
+		if (Request::ajax()) {
+			$id = Input::get('id');
+			$banco = Bancos::find($id);
+			$banco->deleted = 1;
+			if ($banco->save()) {
+				return Response::json(array('type' => 'success','msg' => 'Banco eliminado satisfactoriamente'));
+			}else
+			{
+				return Response::json(array('type' => 'danger','msg' => 'Error al eliminar el banco'));
+			}
+		}
 	}
 }

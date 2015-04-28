@@ -136,7 +136,6 @@ class ItemController extends BaseController {
 		if($fac->save())
 		{
 			foreach (Cart::content() as $c) {
-				
 				$misc = Misc::find($c->options['misc']);
 				$misc->item_stock = $misc->item_stock-$c->qty;
 				$misc->save();
@@ -147,6 +146,7 @@ class ItemController extends BaseController {
 				$itemFac->item_qty	 = $c->qty;
 				$itemFac->item_talla = $c->options['talla'];
 				$itemFac->item_color = $c->options['color'];
+				$itemFac->item_precio= $c->price;
 				$itemFac->save();
 			}
 			Cart::destroy();
@@ -178,8 +178,9 @@ class ItemController extends BaseController {
 			$fac->dir 	  = $dir->id;
 			if($fac->save())
 			{
+
 				foreach (Cart::content() as $c) {
-					
+					return $c;	
 					$misc = Misc::find($c->options['misc']);
 					$misc->item_stock = $misc->item_stock-$c->qty;
 					$misc->save();
@@ -190,6 +191,7 @@ class ItemController extends BaseController {
 					$itemFac->item_qty	 = $c->qty;
 					$itemFac->item_talla = $c->options['talla'];
 					$itemFac->item_color = $c->options['color'];
+					$itemFac->item_precio= $c->price;
 					$itemFac->save();
 				}
 				Cart::destroy();
@@ -202,15 +204,16 @@ class ItemController extends BaseController {
 		$title = "Metodo de pago | guacamayastores.com.ve";
 		$fac = Facturas::find($id);
 		$x 	 = FacturaItem::where('factura_id','=',$id)->sum('item_qty');
-		$aux = FacturaItem::where('factura_id','=',$id)->get(array('item_id','item_qty','item_talla','item_color'));
+		$aux = FacturaItem::where('factura_id','=',$id)->get(array('item_id','item_qty','item_talla','item_color','item_precio'));
 		$i = 0;
 		$auxT = 0;
 		$auxQ = 0;
 		$p = '';
 		foreach ($aux as $a) {
-			$b = Items::find($a->item_id);
+			$b = Items::leftJoin('publicidad','publicidad.id','=','item.item_prom')->where('item.id','=',$a->item_id)->first();
 			$p = $p.$b->item_nomb.', ';
 			$b->qty = $a->item_qty;
+			$b->precio = $a->item_precio;
 			$b->item_talla = Tallas::where('id','=',$a->item_talla)->pluck('talla_desc');
 			$b->item_color = Colores::where('id','=',$a->item_color)->pluck('color_desc');
 			$auxT = $auxT+($b->qty*$b->item_precio);
@@ -223,7 +226,7 @@ class ItemController extends BaseController {
 		}
 		$total = 0;
 		$method= "hola";
-		/*$mp = new MP('8718886882978199','K1SlqcrxB2kKnnrhxt6PCyLtC6RuSuux');
+		$mp = new MP('8718886882978199','K1SlqcrxB2kKnnrhxt6PCyLtC6RuSuux');
 		$preference_data = array(
     			"items" => array(
        			array(
@@ -234,15 +237,16 @@ class ItemController extends BaseController {
        			)
     			)
 		);
-		$preference = $mp->create_preference ($preference_data);*/
-		$preference = 'hola';
+		$preference = $mp->create_preference ($preference_data);
+		$bancos = Bancos::where('deleted','=',0)->get();
 		return View::make('indexs.showCart')
 		->with('title',$title)
 		->with('method',$method)
 		->with('total',$total)
 		->with('items',$item)
 		->with('preference',$preference)
-		->with('id',$id);
+		->with('id',$id)
+		->with('bancos',$bancos);
 	}
 
 	public function postSendPayment(){

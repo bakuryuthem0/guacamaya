@@ -13,7 +13,7 @@
 				@elseif(Session::has('danger'))
 				<div class="alert alert-danger">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					<p class="textoPromedio">{ Session::get('danger') }}</p>
+					<p class="textoPromedio">{{ Session::get('danger') }}</p>
 				</div>
 				@endif
 				<legend>Nueva Publicidad</legend>

@@ -124,12 +124,12 @@
                     {{ $cart->qty }}
                   </td>
                   <td class="carItem">
-                    Bs.{{ $cart->item_precio }}
+                    Bs.{{ $cart->precio }}
                   </td>
                   <td class="carItem" id="input{{ $cart->id }}_subtotal">
-                    Bs.{{ $cart->qty*$cart->item_precio }}
+                    Bs.{{ $cart->qty*$cart->precio }}
                   </td>
-                  <?php $total = $total+($cart->qty*$cart->item_precio); ?>
+                  <?php $total = $total+($cart->qty*$cart->precio); ?>
                 </tr>
               @endforeach
               <tr>
@@ -229,13 +229,13 @@
           <p class="textoPromedio">Una vez haya realizado su pago, introduzca el número de transacción en la casilla</p>
           <form method="post" action="{{ URL::to('usuario/publicaciones/pago/enviar') }}">
             <div class="col-xs-12">
-              <div class="col-xs-12 formulario">
+              <div class="col-xs-12 formulario textoPromedio">
                 <label>Banco</label>
                   <select name="Bancos" class="form-control">
                     <option value="">Seleccione el banco</option>
                   </select>
               </div>
-              <div class="col-xs-12 formulario">
+              <div class="col-xs-12 formulario textoPromedio">
                 <label>Fecha de transacción</label>
                 <input type="text" id="fecha" name="fecha" placehlder="DD-MM-YYYY" class="form-control" >
               </div>
