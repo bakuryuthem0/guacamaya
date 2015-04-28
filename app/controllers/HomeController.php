@@ -80,7 +80,7 @@ class HomeController extends BaseController {
 	}
 	public function getShowItem($id)
 	{
-		$art = Items::find($id);
+		$art = Items::leftJoin('publicidad','publicidad.id','=','item.item_prom')->where('item.id','=',$id)->first(array('item.*','publicidad.percent','publicidad.active'));
 		$a = new stdClass;
 		$a->id = $art->id;
 		$a->item_nomb 		= $art->item_nomb;

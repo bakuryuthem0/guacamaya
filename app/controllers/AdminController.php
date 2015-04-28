@@ -865,12 +865,10 @@ class AdminController extends BaseController {
 			$prom->percent = $inp['descuento'];		
 		}
 		if (Input::has('active')) {
-			if ($prom->active == 0) {
-				$prom->active = 1;
-			}else
-			{
-				$prom->active = 0;
-			}
+			$prom->active = 1;
+		}else
+		{
+			$prom->active = 0;
 		}
 		if ($prom->save()) {
 			Session::flash('success', 'Promocion editada satisfactoriamente.');
@@ -886,6 +884,11 @@ class AdminController extends BaseController {
 		$title = "Agregar/Quitar items";
 		$prom = Publicidad::find($id);
 		$b = Items::where('deleted','=','0')
+		->where(function($query) use ($id)
+		{
+			$query->where('item_prom','=',0)
+			->orWhere('item_prom','=',$id);
+		})
 		->get(array('item_cod','id','item_prom'));
 		$item = array();
 		$i = 0;

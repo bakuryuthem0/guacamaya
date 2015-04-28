@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.default')
 
 @section('content')
 
@@ -15,7 +15,10 @@
 	                  <label class="aSinFormato">{{ $a->item_nomb.' - Cod: '.$a->item_cod }}</label>
 	                </li>
 	                <li>
-	                  <p class="precio" style="color:red;">Bs.{{ $a->item_precio }}</p>
+	                  <p class="precio" style="color:red;">Precio actual: Bs.{{ ($a->item_precio - ($a->item_precio*$a->percent)/100) }}</p> 
+	                </li>
+	                <li class="disabled">
+	                	<p style="color:red;">Precio anterior: Bs.{{ $a->item_precio }}</p>
 	                </li>
 	              </ul>
 	            </div>

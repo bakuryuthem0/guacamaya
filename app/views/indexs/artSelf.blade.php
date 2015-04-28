@@ -78,7 +78,9 @@
 				<div class="col-xs-4 textoPromedio">
 					<div class="col-xs-12">
 						<label>PRECIO EN GUACAMAYA STORES:</label>
-
+							@if(isset($art->percent))
+								{{ $art->percent }}
+							@endif
 						<h3 class="precio">Bs. {{ $art->item_precio }}</h3>
 					</div>
 					<div class="col-xs-12 formulario">

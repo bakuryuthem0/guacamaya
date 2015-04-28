@@ -19,6 +19,7 @@ Route::group(array('before' =>'no_auth'),function()
 	Route::get('iniciar-sesion','HomeController@getLogin');
 	Route::post('iniciar-sesion/autenticar','AuthController@postLogin');
 });
+Route::get('articulos/promocion/{id}','HomeController@getPromotions');
 
 Route::get('articulo/{id}','HomeController@getShowItem');
 Route::post('articulo/buscar/colores','HomeController@getColors');
@@ -30,7 +31,6 @@ Route::post('busqueda','HomeController@search');
 
 Route::get('administrador', 'AdminController@getLogin');
 Route::post('administrador/iniciar-sesion/autenticar','AdminController@postLogin');
-
 Route::group(array('before' =>'auth'),function()
 {
 	/*Rutas del carrito*/
@@ -139,7 +139,7 @@ Route::group(array('before' =>'auth'),function()
 		Route::get('administrador/promocion/agregar-quitar-articulos/{id}','AdminController@getAddDelItemProm');
 		Route::post('administrador/promocion/agregar-quitar-articulos/enviar','AdminController@postAddDelItemProm');
 
-		Route::get('articulos/promocion/{id}','HomeController@getPromotions');
+		
 
 	});
 	
