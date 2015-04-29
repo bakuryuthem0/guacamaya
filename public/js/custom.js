@@ -1258,6 +1258,57 @@ jQuery(document).ready(function($) {
 			
 		});
 	});
+$('.elim-fac').click(function(event) {
+		var boton = $(this);
+		$('.responseDanger').removeClass('alert-danger');
+		$('.responseDanger').removeClass('alert-success');
+		$('.responseDanger').css({
+			'display': 'none',
+			'opacity': 0
+		});
+		$('.envElim').val(boton.val());
+		$('.envElim').click(function(event) {
+			var boton2 = $(this);
+			var motivo = $('#motivoElim').val();
+			$.ajax({
+				url: 'ver-pagos/eliminar',
+				type: 'POST',
+				dataType: 'json',
+				data: {'id': $(this).val(),'motivo': motivo},
+				beforeSend:function()
+				{
+					boton2.before('<img src="../images/loading.gif" class="loading">');
+					$('.loading').css({
+						'display': 'block',
+						'margin': '2em auto'
+					}).animate({
+						'opacity': 1},
+						500);
+					boton2.addClass('disabled');
+				},
+				success:function(response)
+				{
+					boton2.removeClass('disabled');
+					$('.loading').animate({
+						'opacity': 0},
+						500,function(){
+							$(this).remove();
+						});
+					if (response.type == 'success') {
+
+						boton.parent().parent().remove();
+					};
+					$('.responseDanger').addClass('alert-'+response.type).html(response.msg).css({
+						'display': 'block'
+					}).animate({
+						'opacity': 1},
+						500);
+				}
+			})
+			
+			
+		});
+	});
 });
 
 $(document).ready(function() {
@@ -1454,6 +1505,11 @@ jQuery(document).ready(function($) {
 				}
 			})		
 		};
+	});
+});
+jQuery(document).ready(function($) {
+	$('.dirShow').click(function(event) {
+		$('.dirBody').html($(this).html());
 	});
 });
 jQuery(document).ready(function($) {

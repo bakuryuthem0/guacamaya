@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="modal fade" id="elimFac" tabindex="-1" role="dialog" aria-labelledby="modalForggo" aria-hidden="true">
+<div class="modal fade" id="rejectFac" tabindex="-1" role="dialog" aria-labelledby="modalForggo" aria-hidden="true">
 	<div class="forgotPass modal-dialog imgLiderUp">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -17,6 +17,26 @@
 					<p class="textoPromedio">¿Seguro que desea rechazar este pago?</p>
 					<textarea name="motivo" class="form-control" id="motivo"></textarea>
 					<button class="btn btn-success envReject" style="margin-top:2em;">Rechazar</button>	
+				</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="elimFac" tabindex="-1" role="dialog" aria-labelledby="modalForggo" aria-hidden="true">
+	<div class="forgotPass modal-dialog imgLiderUp">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			</div>
+				<div class="modal-body">
+						<legend>Eliminar factura</legend>
+					</div>
+				<div class="modal-footer " style="text-align:center;">
+					<div class="alert responseDanger">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					</div>
+					<p class="textoPromedio">¿Seguro que desea eliminar esta factura?</p>
+					<textarea name="motivo" class="form-control" id="motivoElim"></textarea>
+					<button class="btn btn-success envElim" style="margin-top:2em;">Eliminar</button>	
 				</div>
 		</div>
 	</div>
@@ -48,7 +68,9 @@
 				<thead>
 					<tr>
 						<th>Codigo de factura</th>
+						<th>Banco</th>
 						<th>Numero de transacción</th>
+						<th>Fecha de transacción</th>
 						<th>email</th>
 						<th>Dirección</th>
 						<th>Ver Factura</th>
@@ -59,16 +81,18 @@
 					@foreach($fac as $f)
 					<tr class="textoPromedio">
 						<td>{{ $f->id }}</td>
+						<td>{{ $f->banco }}</td>
 						<td>
 							{{ $f->num_trans }}
 						</td>
-						<td>{{ $f->user_mail }}</td>
-						<td>{{ $f->dir_name }}</td>
+						<td>{{ $f->fech_trans }}</td>
+						<td>{{ $f->email }}</td>
+						<td class="dirShow" data-toggle="modal" data-target="#showDirData">{{ $f->dir_name }}</td>
 						<td><a target="_blank" href="{{ URL::to('administrador/ver-factura/'.$f->id) }}" class="btn btn-info btn-xs">Ver</a></td>
 						@if(!isset($type))
 
 						<td><button class="btn btn-success btn-xs aprov-fac" value="{{ $f->id }}">Aprobar</button></td>
-						<td><button class="btn btn-danger btn-xs reject-fac" value="{{ $f->id }}" data-toggle="modal" data-target="#elimFac">Rechazar</button></td>
+						<td><button class="btn btn-danger btn-xs reject-fac" value="{{ $f->id }}" data-toggle="modal" data-target="#rejectFac">Rechazar</button></td>
 						@endif
 						<td class="textoMedio"><button class="btn btn-primary btn-xs ver" data-toggle="modal" data-target="#showUserData" value="{{ $f->id }}">Ver</button></td>
 						<input type="hidden" class="username-{{ $f->id }}" value="{{ $f->username }}">
@@ -84,6 +108,59 @@
 
 				</tbody>
 			</table>
+
+			@if(isset($facNot) && count($facNot)>0)
+				<div class="formulario" style="margin-top:5em;">
+					<legend>Facturas no pagadas</legend>
+					<table id="tablesorter" class="tablesorter table table-striped table-condensed table-vertical-middle table-super-condensed table-bordered table-list-search table-hover">
+					<thead>
+						<tr>
+							<th>Codigo de factura</th>
+							<th>email</th>
+							<th>Dirección</th>
+							<th>Ver Factura</th>
+							@if(isset($type))<th>Datos del usuario</th>@endif
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($facNot as $f)
+						<tr class="textoPromedio">
+							<td>{{ $f->id }}</td>
+							<td>{{ $f->email }}</td>
+							<td class="dirShow" data-toggle="modal" data-target="#showDirData">{{ $f->dir_name }}</td>
+							<td><a target="_blank" href="{{ URL::to('administrador/ver-factura/'.$f->id) }}" class="btn btn-info btn-xs">Ver</a></td>
+							@if(!isset($type))
+							<td><button class="btn btn-danger btn-xs elim-fac" value="{{ $f->id }}" data-toggle="modal" data-target="#elimFac">Eliminar</button></td>
+							@endif
+							<td class="textoMedio"><button class="btn btn-primary btn-xs ver" data-toggle="modal" data-target="#showUserData" value="{{ $f->id }}">Ver</button></td>
+							<input type="hidden" class="username-{{ $f->id }}" value="{{ $f->username }}">
+							<input type="hidden" class="name-{{ $f->id }}" value="{{ $f->nombre.' '.$f->apellido }}">
+							<input type="hidden" class="email-{{ $f->id }}" value="{{ $f->email }}">
+							<input type="hidden" class="dir-{{ $f->id }}" value="{{ $f->user_dir }}">
+							<input type="hidden" class="phone-{{ $f->id }}" value="{{ $f->telefono }}">
+							<input type="hidden" class="est-{{ $f->id }}" value="{{ $f->est }}">
+							<input type="hidden" class="mun-{{ $f->id }}" value="{{ $f->mun }}">
+							<input type="hidden" class="par-{{ $f->id }}" value="{{ $f->par }}">
+						</tr>
+						@endforeach
+
+					</tbody>
+				</table>
+				@endif
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="showDirData" tabindex="-1" role="dialog" aria-labelledby="modalForggo" aria-hidden="true">
+	<div class="forgotPass modal-dialog imgLiderUp">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myModalLabel">Dirección de envio.</h4>
+			</div>
+			<div class="modal-body">
+				<div class="dirBody textoPromedio"></div>
+			</div>
 		</div>
 	</div>
 </div>

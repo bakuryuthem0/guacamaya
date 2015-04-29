@@ -231,8 +231,11 @@
             <div class="col-xs-12">
               <div class="col-xs-12 formulario textoPromedio">
                 <label>Banco</label>
-                  <select name="Bancos" class="form-control">
+                  <select name="banco" class="form-control">
                     <option value="">Seleccione el banco</option>
+                    @foreach($bancos as $b)
+                      <option value="{{ $b->id }}">{{ $b->banco.' - '.$b->num_cuenta }}</option>
+                    @endforeach
                   </select>
               </div>
               <div class="col-xs-12 formulario textoPromedio">
@@ -263,13 +266,31 @@
       <div class="col-xs-6">
         <h3><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#mpago"></i> Mercado pago</h3>
         <div class="col-xs-12 collapse" id="mpago" style="padding:2em;">
-          <a href="<?php //echo $preference['response']['init_point']; ?>" name="MP-Checkout" class="lightblue-M-Ov-ArOn">Pagar</a>
+          <a href="<?php echo $preference['response']['init_point']; ?>" name="MP-Checkout" class="lightblue-M-Ov-ArOn">Pagar</a>
           <script type="text/javascript" src="https://www.mercadopago.com/org-img/jsapi/mptools/buttons/render.js"></script>
         </div>
       </div>
     </div>
     @endif
 	</div>
+</div>
+<div class="modal fade" id="myModalBancos" tabindex="-1" role="dialog" aria-labelledby="myModalBancos" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="myModalLabel">Lista de bancos.</h4>
+          @foreach($bancos as $b)
+          <div class="col-xs-12 formulario textoPromedio">
+            <label>{{ $b->banco }}</label>
+            <li>Numero de cuenta: {{ $b->num_cuenta.' - Tipo de cuenta: '.$b->tipo }}</li>
+            <img src="{{ URL::to('images/bancos/'.$b->imagen) }}" style="  margin: 0 auto;display: block;">
+          </div>
+          @endforeach
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
 </div>
 @stop
 

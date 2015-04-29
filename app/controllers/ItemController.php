@@ -252,8 +252,15 @@ class ItemController extends BaseController {
 	public function postSendPayment(){
 		$input = Input::all();
 		$id = $input['factId'];
-		$rules = array('transNumber' => 'required|numeric');
-		$messages = array('required' => 'El numero de transacción es obligatorio.','numeric' => 'El campo debe ser un número.');
+		$rules = array(
+			'transNumber' => 'required|numeric',
+			'banco'		  => 'required',
+			'fecha'		  => 'required'
+		);
+		$messages = array(
+			'required' => 'El campo es obligatorio.',
+			'numeric' => 'El campo debe ser un número.',
+			);
 		$validator = Validator::make($input, $rules, $messages);
 		if ($validator->fails()) {
 			return Redirect::back()->withErrors($validator);
@@ -261,6 +268,8 @@ class ItemController extends BaseController {
 		$fac 			= Facturas::find($id);
 
 		$fac->num_trans = $input['transNumber'];
+		$fac->banco 	= $input['banco'];
+		$fac->fech_trans= $input['fecha'];
 		$fac->pagada 	= -1;
 		if ($fac->save()) {
 			$subject = "Correo de administrador";

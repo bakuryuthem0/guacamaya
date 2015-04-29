@@ -1160,6 +1160,7 @@ class AdminController extends BaseController {
 		->leftJoin('estado','usuario.estado','=','estado.id')
 		->leftJoin('municipio','usuario.municipio','=','municipio.id')
 		->leftJoin('parroquia','usuario.parroquia','=','parroquia.id')
+		->leftJoin('bancos','bancos.id','=','facturas.banco')
 		->where('pagada','=',-1)->orderBy('facturas.id','DESC')
 		->get(
 			array(
@@ -1175,12 +1176,39 @@ class AdminController extends BaseController {
 				'parroquia.nombre as par',
 				'facturas.*',
 				'direcciones.email',
-				'direcciones.dir as dir_name'
+				'direcciones.dir as dir_name',
+				'bancos.banco'
+			)
+		);
+		$facNot  = Facturas::join('direcciones','direcciones.id','=','facturas.dir')
+		->join('usuario','usuario.id','=','facturas.user_id')
+		->leftJoin('estado','usuario.estado','=','estado.id')
+		->leftJoin('municipio','usuario.municipio','=','municipio.id')
+		->leftJoin('parroquia','usuario.parroquia','=','parroquia.id')
+		->where('facturas.deleted','=',0)
+		->where('facturas.created_at','<=',date('Y-m-d',(time()-(86400*5))))
+		->where('pagada','=',0)->orderBy('facturas.id','DESC')
+		->get(
+			array(
+				'usuario.id as user_id',
+				'usuario.username',
+				'usuario.dir as user_dir',
+				'usuario.nombre',
+				'usuario.apellido',
+				'usuario.telefono',
+				'usuario.email',
+				'estado.nombre as est',
+				'municipio.nombre as mun',
+				'parroquia.nombre as par',
+				'facturas.*',
+				'direcciones.email',
+				'direcciones.dir as dir_name',
 			)
 		);
 		return View::make('admin.showPayment')
 		->with('title',$title)
-		->with('fac',$fac);
+		->with('fac',$fac)
+		->with('facNot',$facNot);
 	}
 	public function getPurchases($id)
 	{
@@ -1220,7 +1248,42 @@ class AdminController extends BaseController {
 				'fecha'	   => date('d-m-Y',time())
 			);
 			Mail::send('emails.aprob', $data, function ($message) use ($id){
-				    $message->subject('Correo de confirmación guacamayastores.com.ve');
+				    $message->subject('Correo de aviso guacamayastores.com.ve');
+				    $message->to('someemail@guacamayastores.com.ve');
+			});
+			return Response::json(array('type' => 'success','msg' => 'Pago Aprovado correctamente.'));
+		}else
+		{
+			return Response::json(array('type' => 'danger','msg' => 'Error al aprovar el pago.'));
+		}
+	}
+	public function postPaymentElim()
+	{
+		$id = Input::get('id');
+		$motivo = Input::get('motivo');
+		$fac = Facturas::find($id);
+		$fi  = FacturaItem::where('factura_id','=',$fac->id)->get();
+		foreach ($fi as $f) {
+			$item = Misc::where('item_id','=',$f->item_id)
+			->where('item_talla','=',$f->item_talla)
+			->where('item_color','=',$f->item_color)
+			->first();
+			$item->item_stock = $item->item_stock+$f->item_qty;
+			$item->save();
+
+		}
+		$fac->deleted = 1;
+		$fac->save();
+		$user = User::find($fac->user_id);
+		if ($fac->save()) {
+			$data = array(
+				'username' => Auth::user()->username,
+				'fac'  	   => $id,
+				'fecha'	   => date('d-m-Y',time()),
+				'motivo'   => $motivo,
+			);
+			Mail::send('emails.reject', $data, function ($message) use ($id,$motivo){
+				    $message->subject('Correo de aviso guacamayastores.com.ve');
 				    $message->to('someemail@guacamayastores.com.ve');
 			});
 			return Response::json(array('type' => 'success','msg' => 'Pago Aprovado correctamente.'));
@@ -1244,7 +1307,7 @@ class AdminController extends BaseController {
 				'motivo'   => $motivo,
 			);
 			Mail::send('emails.reject', $data, function ($message) use ($id,$motivo){
-				    $message->subject('Correo de confirmación guacamayastores.com.ve');
+				    $message->subject('Correo de aviso guacamayastores.com.ve');
 				    $message->to('someemail@guacamayastores.com.ve');
 			});
 			return Response::json(array('type' => 'success','msg' => 'Pago Aprovado correctamente.'));
@@ -1258,28 +1321,30 @@ class AdminController extends BaseController {
 		$title = "Pagos aprobados";
 		$title = "Pagos | guacamayastores.com.ve";
 		$fac = Facturas::join('direcciones','direcciones.id','=','facturas.dir')
-		->join('usuario','usuario.id','=','facturas.user_id')->where('facturas.pagada','=',1)
+		->join('usuario','usuario.id','=','facturas.user_id')
 		->leftJoin('estado','usuario.estado','=','estado.id')
 		->leftJoin('municipio','usuario.municipio','=','municipio.id')
 		->leftJoin('parroquia','usuario.parroquia','=','parroquia.id')
-		->orderBy('facturas.id','DESC')
-		->get(array(
-			'facturas.id',
-			'facturas.num_trans',
-			'facturas.dir',
-			'usuario.id as user_id',
-			'usuario.username',
-			'usuario.dir as user_dir',
-			'usuario.nombre',
-			'usuario.apellido',
-			'usuario.telefono',
-			'usuario.email',
-			'estado.nombre as est',
-			'municipio.nombre as mun',
-			'parroquia.nombre as par',
-			'direcciones.dir as dir_name',
-			'direcciones.email as user_mail'
-		));
+		->leftJoin('bancos','bancos.id','=','facturas.banco')
+		->where('pagada','=',1)->orderBy('facturas.id','DESC')
+		->get(
+			array(
+				'usuario.id as user_id',
+				'usuario.username',
+				'usuario.dir as user_dir',
+				'usuario.nombre',
+				'usuario.apellido',
+				'usuario.telefono',
+				'usuario.email',
+				'estado.nombre as est',
+				'municipio.nombre as mun',
+				'parroquia.nombre as par',
+				'facturas.*',
+				'direcciones.email',
+				'direcciones.dir as dir_name',
+				'bancos.banco'
+			)
+		);
 		$type = "apr";
 		return View::make('admin.showPayment')
 		->with('title',$title)
@@ -1430,10 +1495,10 @@ class AdminController extends BaseController {
 
 	            $img = Image::make('images/bancos/'.$miImg);
 	            if ($img->width() > $img->height()) {
-	            	$img->widen(400);
+	            	$img->widen(600);
 	            }else
 	            {
-	            	$img->heighten(200);
+	            	$img->heighten(300);
 	            }
 	            
 		        $blank->insert($img,'center')
@@ -1448,10 +1513,10 @@ class AdminController extends BaseController {
 				$blank = Image::make('images/blank.jpg');
 				$img = Image::make('images/bancos/'.$file->getClientOriginalName());
 	            if ($img->width() > $img->height()) {
-	            	$img->widen(400);
+	            	$img->widen(600);
 	            }else
 	            {
-	            	$img->heighten(200);
+	            	$img->heighten(300);
 	            }
 
 	            $blank->insert($img,'center')

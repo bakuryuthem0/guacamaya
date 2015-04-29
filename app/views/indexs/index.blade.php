@@ -37,6 +37,9 @@
         @foreach($art as $a)
           <a href="{{ URL::to('articulo/'.$a->id) }}">
             <div class="col-xs-2 contArtPrinc">
+              @if(!is_null($a->percent))
+                <img src="{{ asset('images/prom.png') }}" class="imgArtPrinc imgPrinc promImage">
+              @endif
               <img src="{{ asset('images/items/'.$img[$a->id]['image']) }}" class="imgArtPrinc imgPrinc">
               <ul class="textoPromedio ulNoStyle">
                 <li>

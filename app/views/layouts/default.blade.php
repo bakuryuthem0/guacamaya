@@ -41,21 +41,13 @@
     </head>
     <body id="body">
       
-            <nav class="navbar navbar-default">
-              <div class="container-fluid">
+            <nav class="header">
+              <div class="">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="col-xs-3">
                   <a href="{{ URL::to('inicio') }}"><img src="{{ asset('images/logo.png') }}" class="logo"></a>
                 </div>
 
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
-                </div>
                 <div class="col-xs-6 myBuscador">
                   <form method="POST" action="{{ URL::to('busqueda') }}">
                     <div class="input-group-btn">
