@@ -280,6 +280,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
           <h4 class="modal-title" id="myModalLabel">Lista de bancos.</h4>
+          @if(isset($bancos))
           @foreach($bancos as $b)
           <div class="col-xs-12 formulario textoPromedio">
             <label>{{ $b->banco }}</label>
@@ -287,6 +288,7 @@
             <img src="{{ URL::to('images/bancos/'.$b->imagen) }}" style="  margin: 0 auto;display: block;">
           </div>
           @endforeach
+          @endif
           <div class="clearfix"></div>
         </div>
       </div>

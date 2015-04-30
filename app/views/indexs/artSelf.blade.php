@@ -2,7 +2,6 @@
 @section('content')
 
 <div class="row">
-	<div class="container">
 		<div class="col-xs-12">
 			<div class="col-xs-12 contCentrado contdeColor">
 				<legend>{{ $art->item_nomb.' - '.$art->item_cod }}</legend>
@@ -139,7 +138,6 @@
 				<div class="clearfix"></div>
 			</div>
 		</div>
-	</div>
 </div>
 <div class="modal fade" id="addCart" tabindex="-1" role="dialog" aria-labelledby="modalForggo" aria-hidden="true">
           <div class="forgotPass modal-dialog imgLiderUp">

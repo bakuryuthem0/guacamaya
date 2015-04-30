@@ -87,11 +87,11 @@ a.aConFormato:hover{
 {
 	background-color: #6EB52F;
 	color: white;
-	-webkit-transform: translate(-5px,-2px);
-     -moz-transform: translate(-5px,-2px);
-      -ms-transform: translate(-5px,-2px);
-       -o-transform: translate(-5px,-2px);
-          transform: translate(-5px,-2px);
+	-webkit-transform: translate(-5px,-3px);
+     -moz-transform: translate(-5px,-3px);
+      -ms-transform: translate(-5px,-3px);
+       -o-transform: translate(-5px,-3px);
+          transform: translate(-5px,-3px);
   border-radius: 0 4px 4px 0;
 }
 .btn-buscar-cat
@@ -260,6 +260,7 @@ a.aConFormato:hover{
 .fa-container
 {
   text-align: center;
+  padding: 0em;
 }
 .fa-container > p
 {
@@ -288,7 +289,20 @@ a.aConFormato:hover{
   position: fixed;
   top: 0;
   width: 100%;
-
+  z-index: 1000;
+  box-shadow: 0px -2px 1px 3px black;
+  background: white;
+}
+.header > .headerIn
+{
+  display: table;
+  width: 100%;
+}
+.header > .headerIn > div
+{
+  float: none;
+  vertical-align: middle;
+  display: inline-block;
 }
 .imgArtPrinc
 {
@@ -324,7 +338,7 @@ a.aConFormato:hover{
 } 
 .inputBusqueda
 {
-  width: 70% !important;
+  width: 60% !important;
   display: inline-block !important;
 }
 .inputFondoNegro
@@ -426,12 +440,12 @@ a.aConFormato:hover{
   min-height: 20px;
   min-width: 20px;
 }
-.slick-prev{
-	left: 0px !important;
-}
 .slick-next
 {
-	right: 40px !important;
+  right: 25px !important;
+}
+.slick-prev{
+  left: 25px !important;
 }
 .slick-slide img
 {
@@ -445,6 +459,10 @@ a.aConFormato:hover{
 .textoPromedio
 {
 	font-size: 1.5em;
+}
+.textoSmall
+{
+  font-size: 1.3em;
 }
 .table
 {
@@ -1226,4 +1244,16 @@ animated buttons - animate the text inside prev and next buttons
   -ms-transform: translateX(-50%) rotate(180deg) translateY(50px);
   -o-transform: translateX(-50%) rotate(180deg) translateY(50px);
   transform: translateX(-50%) rotate(180deg) translateY(50px);
+}
+
+
+@media(min-width: 767px) and (max-width: 991px){
+  .input-group-btn
+  {
+    display: none !important;
+  }
+  .contArtPrinc
+  {
+    width: 32.33%;
+  }
 }

@@ -34,7 +34,7 @@ CREATE TABLE `bancos` (
   `tipo` varchar(45) DEFAULT NULL,
   `imagen` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `bancos` (
 
 LOCK TABLES `bancos` WRITE;
 /*!40000 ALTER TABLE `bancos` DISABLE KEYS */;
-INSERT INTO `bancos` VALUES (1,'Mercantil','1322343252352','2015-04-28','2015-04-28',1,'corriente','facilitador.png');
+INSERT INTO `bancos` VALUES (1,'Mercantil','1322343252352','2015-04-28','2015-04-28',1,'corriente','facilitador.png'),(2,'Mercantil','1322343252352','2015-04-29','2015-04-29',0,'ahorro','construccion800.png'),(3,'Banesco','1322343252352','2015-04-29','2015-04-29',0,'corriente','construccion200.png');
 /*!40000 ALTER TABLE `bancos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +118,7 @@ CREATE TABLE `direcciones` (
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +127,7 @@ CREATE TABLE `direcciones` (
 
 LOCK TABLES `direcciones` WRITE;
 /*!40000 ALTER TABLE `direcciones` DISABLE KEYS */;
-INSERT INTO `direcciones` VALUES (1,2,'acgua /aragua','shenlong_12@hotmail.com','2015-04-09','2015-04-09'),(2,2,' cagua','shenlong_12@hotmail.com','2015-04-23','2015-04-23'),(3,2,' cagua','shenlong_12@hotmail.com','2015-04-23','2015-04-23'),(4,2,' cagua','shenlong_12@hotmail.com','2015-04-24','2015-04-24'),(5,2,' cagua','shenlong_12@hotmail.com','2015-04-28','2015-04-28'),(6,2,' cagua','shenlong_12@hotmail.com','2015-04-28','2015-04-28'),(7,2,' cagua','shenlong_12@hotmail.com','2015-04-28','2015-04-28'),(8,2,' cagua','shenlong_12@hotmail.com','2015-04-28','2015-04-28');
+INSERT INTO `direcciones` VALUES (1,2,'acgua /aragua','shenlong_12@hotmail.com','2015-04-09','2015-04-09'),(2,2,' cagua','shenlong_12@hotmail.com','2015-04-23','2015-04-23'),(3,2,' cagua','shenlong_12@hotmail.com','2015-04-23','2015-04-23'),(4,2,' cagua','shenlong_12@hotmail.com','2015-04-24','2015-04-24'),(5,2,' cagua','shenlong_12@hotmail.com','2015-04-28','2015-04-28'),(6,2,' cagua','shenlong_12@hotmail.com','2015-04-28','2015-04-28'),(7,2,' cagua','shenlong_12@hotmail.com','2015-04-28','2015-04-28'),(8,2,' cagua','shenlong_12@hotmail.com','2015-04-28','2015-04-28'),(9,2,' cagua','shenlong_12@hotmail.com','2015-04-29','2015-04-29'),(10,2,' cagua','shenlong_12@hotmail.com','2015-04-30','2015-04-30');
 /*!40000 ALTER TABLE `direcciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,7 +177,7 @@ CREATE TABLE `factura_item` (
   `item_color` int(11) DEFAULT NULL,
   `item_precio` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,7 +186,7 @@ CREATE TABLE `factura_item` (
 
 LOCK TABLES `factura_item` WRITE;
 /*!40000 ALTER TABLE `factura_item` DISABLE KEYS */;
-INSERT INTO `factura_item` VALUES (1,1,2,1,'2015-04-28','2015-04-28',1,3,900),(2,1,3,1,'2015-04-28','2015-04-28',1,2,37.5);
+INSERT INTO `factura_item` VALUES (1,1,2,1,'2015-04-28','2015-04-28',1,3,900),(2,1,3,1,'2015-04-28','2015-04-28',1,2,37.5),(3,2,3,1,'2015-04-29','2015-04-29',1,2,37.5),(4,3,4,1,'2015-04-30','2015-04-30',1,2,5000);
 /*!40000 ALTER TABLE `factura_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,9 +206,10 @@ CREATE TABLE `facturas` (
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
   `banco` int(11) DEFAULT NULL,
-  `fech_trans` date DEFAULT NULL,
+  `fech_trans` varchar(12) DEFAULT NULL,
+  `deleted` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,7 +218,7 @@ CREATE TABLE `facturas` (
 
 LOCK TABLES `facturas` WRITE;
 /*!40000 ALTER TABLE `facturas` DISABLE KEYS */;
-INSERT INTO `facturas` VALUES (1,2,0,NULL,'8','2015-04-28','2015-04-28',NULL,NULL);
+INSERT INTO `facturas` VALUES (1,2,0,NULL,'8','2015-04-23','2015-04-29',NULL,NULL,1),(2,2,1,1516513513,'9','2015-04-29','2015-04-29',2,'0000-00-00',0),(3,2,1,12345678,'10','2015-04-30','2015-04-30',2,'12/11/2015',0);
 /*!40000 ALTER TABLE `facturas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -309,7 +310,7 @@ CREATE TABLE `miscelanias` (
 
 LOCK TABLES `miscelanias` WRITE;
 /*!40000 ALTER TABLE `miscelanias` DISABLE KEYS */;
-INSERT INTO `miscelanias` VALUES (1,1,'1','1','2015-04-27','2015-04-20',1,'47'),(2,1,'1','3','2015-04-23','2015-04-20',0,'99'),(3,1,'3','3','2015-04-24','2015-04-20',0,'98'),(4,2,'1','3','2015-04-28','2015-04-27',0,'97'),(5,2,'2','1','2015-04-27','2015-04-27',0,'100'),(6,3,'1','2','2015-04-28','2015-04-27',0,'998'),(7,4,'1','2','2015-04-28','2015-04-28',0,'1000');
+INSERT INTO `miscelanias` VALUES (1,1,'1','1','2015-04-27','2015-04-20',1,'47'),(2,1,'1','3','2015-04-23','2015-04-20',0,'99'),(3,1,'3','3','2015-04-24','2015-04-20',0,'98'),(4,2,'1','3','2015-04-29','2015-04-27',0,'98'),(5,2,'2','1','2015-04-27','2015-04-27',0,'100'),(6,3,'1','2','2015-04-29','2015-04-27',0,'998'),(7,4,'1','2','2015-04-30','2015-04-28',0,'999');
 /*!40000 ALTER TABLE `miscelanias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -573,7 +574,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'admin','$2y$08$EiGNW.dQp1X2X0/4GvWgGuGXLPUwWdsqe3zhZarOV8e1tkKcnV96m',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL,1,0,'',0,'1hwvyp3yu2fUCbHgonce6xwLlKc45BsjhHvx2LOacwtneX9RP6yg8xHa1Ldv'),(2,'carlos','$2y$08$EiGNW.dQp1X2X0/4GvWgGuGXLPUwWdsqe3zhZarOV8e1tkKcnV96m',' cagua','shenlong_12@hotmail.com',NULL,NULL,'2015-03-12','2015-04-10','carlos','salazar','263','75','7',0,0,'9b26f36e3f37a5d1841d3599a226e087',0,'NUWenp06zmGnvvIQmhxqpev1VIjdqzu1DtZKIRZo9WuayGkLzN1VlDGW0qVe'),(3,'pepe','$2y$08$8ZykLDy/Xx2K5lweVstBK.3izd2oFxpyNzLxKnznGxGLZ2TeK3a6S',NULL,'pepe@pepe.com',NULL,NULL,'2015-03-12','2015-03-12','pepe','pepe','1','1','1',0,0,'31fc7f18e6dc5f5d7cb09a40d1fa7115',0,'W754R9johJkDrVA0GbjejJNT0itE8YkT3gma6uIHwXc5mb35RwdAJh84ighZ'),(4,'carlosqw','$2y$08$ckqZ644SPK904MS1oiOiiO3.9Uq7ct12XCphVHWOLG4r27LJkkKGS',NULL,'carlosqw@guacamayastores.com.ve',NULL,NULL,'2015-04-04','2015-04-04',NULL,NULL,'',NULL,NULL,0,0,'',0,''),(5,'pepetonioadminw','$2y$08$sjohuwRyVZqfx9jnid7jAeUYHCGkLEyl0GiKsylpcA7hNWZ7efHI2',NULL,'pepetonioadminw@guacamayastores.com.ve',NULL,NULL,'2015-04-04','2015-04-04',NULL,NULL,'',NULL,NULL,1,0,'',0,'');
+INSERT INTO `usuario` VALUES (1,'admin','$2y$08$EiGNW.dQp1X2X0/4GvWgGuGXLPUwWdsqe3zhZarOV8e1tkKcnV96m',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL,1,0,'',0,'Zuo7u66Ctq6bGhCa16sl1Nw1sVM5FLPjedKkBN78rzjLdWfYOyBrImx7LwcB'),(2,'carlos','$2y$08$EiGNW.dQp1X2X0/4GvWgGuGXLPUwWdsqe3zhZarOV8e1tkKcnV96m',' cagua','shenlong_12@hotmail.com',NULL,NULL,'2015-03-12','2015-04-10','carlos','salazar','263','75','7',0,0,'9b26f36e3f37a5d1841d3599a226e087',0,'39HwcSssXQfubw2jmum1s0AbKExVP40p55gjFKtHNdXrsgr10oF0u2DpZDpV'),(3,'pepe','$2y$08$8ZykLDy/Xx2K5lweVstBK.3izd2oFxpyNzLxKnznGxGLZ2TeK3a6S',NULL,'pepe@pepe.com',NULL,NULL,'2015-03-12','2015-03-12','pepe','pepe','1','1','1',0,0,'31fc7f18e6dc5f5d7cb09a40d1fa7115',0,'W754R9johJkDrVA0GbjejJNT0itE8YkT3gma6uIHwXc5mb35RwdAJh84ighZ'),(4,'carlosqw','$2y$08$ckqZ644SPK904MS1oiOiiO3.9Uq7ct12XCphVHWOLG4r27LJkkKGS',NULL,'carlosqw@guacamayastores.com.ve',NULL,NULL,'2015-04-04','2015-04-04',NULL,NULL,'',NULL,NULL,0,0,'',0,''),(5,'pepetonioadminw','$2y$08$sjohuwRyVZqfx9jnid7jAeUYHCGkLEyl0GiKsylpcA7hNWZ7efHI2',NULL,'pepetonioadminw@guacamayastores.com.ve',NULL,NULL,'2015-04-04','2015-04-04',NULL,NULL,'',NULL,NULL,1,0,'',0,'');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -586,4 +587,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-28 16:53:45
+-- Dump completed on 2015-04-30 16:50:43

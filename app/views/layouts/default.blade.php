@@ -42,13 +42,13 @@
     <body id="body">
       
             <nav class="header">
-              <div class="">
+              <div class="headerIn">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="col-xs-3">
                   <a href="{{ URL::to('inicio') }}"><img src="{{ asset('images/logo.png') }}" class="logo"></a>
                 </div>
 
-                <div class="col-xs-6 myBuscador">
+                <div class="col-xs-6">
                   <form method="POST" action="{{ URL::to('busqueda') }}">
                     <div class="input-group-btn">
                       <button type="button" class="btn dropdown-toggle btn-buscar-cat" data-toggle="dropdown" aria-expanded="false">Categorias <span class="caret"></span></button>
@@ -56,7 +56,7 @@
                         {{ ShowCat::show() }}
                       </ul>
                     </div><!-- /btn-group -->
-                     <input class="form-control inputBusqueda" placeholder="Búsqueda por productos" name="busq">
+                    <input class="form-control inputBusqueda" placeholder="Búsqueda por productos" name="busq">
                     <button class="btn bt-buscar"><i class="fa fa-search"></i></button>
                  
                   
