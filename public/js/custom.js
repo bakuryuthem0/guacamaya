@@ -12,7 +12,17 @@ jQuery(document).ready(function($) {
 		}
 	});	
 });
-
+jQuery(document).ready(function($) {
+	$('.btnShowInfoItem').click(function(event) {
+		var x = $(this);
+		$('.itemNameModal').html('<label>Articulo: </label><p>'+x.attr('data-name'))
+		$('.itemTallaModal').html('<label>Talla: </label><p>'+x.attr('data-talla')+'</p>')
+		$('.itemColorModal').html('<label>Color: </label><p>'+x.attr('data-color')+'</p>')
+		$('.itemPrecioModal').html('<label>Precio: </label><p>'+x.attr('data-precio')+'</p>')
+		$('.itemSubtotalModal').html('<label>Sub-Total: </label><p>'+x.attr('data-subtotal')+'</p>')
+		$('.itemQtylModal').html('<label>Cantidad: </label><p>'+x.attr('data-qty')+'</p>')
+	});
+});
 jQuery(document).ready(function($) {
 	/*-------------------------------------------registro de usuario-------------------------------------------*/
 	var estado = $('#estado');

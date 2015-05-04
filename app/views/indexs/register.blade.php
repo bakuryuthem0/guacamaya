@@ -1,10 +1,10 @@
 @extends('layouts.default')
 @section('content')
-<div class="container contenedorUnico">
+<div class="container contenedorUnico containerMovil">
 	<div class="row">
 		<div class="col-xs-12">
 			
-			<div class="col-xs-8 contForm contdeColor contCentrado" style="margin-top:2em;">
+			<div class="col-xs-8 contForm contdeColor contCentrado containerMovil" style="margin-top:2em;">
 				@if (Session::has('error'))
 				<div class="col-xs-6">
 					<div class="alert alert-danger">
@@ -38,6 +38,8 @@
 								 @endforeach
 							@endif
 						</div>
+						<div class="clearfix"></div>
+						<p class="bg-info" style="padding:0.5em;margin-top:1em;">El Nombre de Usuario Debe Tener al menos 4 caracteres.</p>
 					</div>
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-6 inputRegister">
@@ -54,6 +56,8 @@
 								 @endforeach
 							@endif
 						</div>
+						<div class="clearfix"></div>
+						<p class="bg-info" style="padding:0.5em;margin-top:1em;">La contraseña debe tener al menos 6 caracteres.</p>
 					</div>
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-6 inputRegister">
@@ -122,7 +126,7 @@
 					
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-6 inputRegister">
-							<p class="textoPromedio">(*)Dirección</p>
+							<p class="textoPromedio">(*)Dirección de Envio</p>
 						</div>
 						<div class="col-xs-6 inputRegister">
 							<textarea class="form-control inputFondoNegro" placeholder="Dirección" name="dir">{{ Input::old('dir') }}</textarea>
@@ -137,6 +141,22 @@
 						</div>
 					</div>
 
+					<div class="col-xs-12 formulario">
+						<div class="col-xs-6 inputRegister">
+							<p class="textoPromedio">Dirección de facturacion</p>
+						</div>
+						<div class="col-xs-6 inputRegister">
+							<textarea class="form-control inputFondoNegro" placeholder="Dirección" name="dir2">{{ Input::old('dir2') }}</textarea>
+							@if ($errors->has('dir2'))
+								 @foreach($errors->get('dir2') as $err)
+								 	<div class="alert alert-danger">
+								 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								 		<p class="textoPromedio">{{ $err }}</p>
+								 	</div>
+								 @endforeach
+							@endif
+						</div>
+					</div>
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-6 inputRegister">
 							<p class="textoPromedio">Telefono</p>
@@ -198,27 +218,7 @@
 							@endif
 						</div>
 					</div>
-					<div class="col-xs-12 formulario">
-						<div class="col-xs-6 inputRegister">
-							<p class="textoPromedio">Parroquia:</p>
-						</div>
-						<div class="col-xs-6 inputRegister">
-							
-							<select name="parroquia" class="form-control inputFondoNegro" id="parroquia">
-								<option value="">Seleccione una parroquia</option>
-								
-							</select>
-							@if ($errors->has('parroquia'))
-								 @foreach($errors->get('parroquia') as $err)
-								 	<div class="alert alert-danger">
-								 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-								 		<p class="textoPromedio">{{ $err }}</p>
-								 	</div>
-								 @endforeach
-							@endif
-						</div>
 
-					</div>
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-6 inputRegister">
 							<p class="textoPromedio">captcha:</p>

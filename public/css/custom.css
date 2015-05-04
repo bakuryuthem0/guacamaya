@@ -364,7 +364,6 @@ a.aConFormato:hover{
 .logo
 {
 	padding: 1em;
-	max-height: 125px;
 	width: 100%;
 }
 .logo2
@@ -431,6 +430,7 @@ a.aConFormato:hover{
 	margin-left: 0px !important;
 	margin-right: 0px !important;
 }
+
 .slick-prev, .slick-next
 {
 	background-color: transparent !important;
@@ -477,6 +477,9 @@ a.aConFormato:hover{
 .table-striped>tbody>tr:nth-of-type(odd) {
 	background-color: #6EB52F !important;
   color: #f9f9f9 !important;
+}
+.table-striped>tbody>tr:nth-of-type(even) {
+  background-color: #FFF !important;
 }
 .table-striped>tbody>tr:nth-of-type(odd)>td>a
 {
@@ -1246,7 +1249,22 @@ animated buttons - animate the text inside prev and next buttons
   transform: translateX(-50%) rotate(180deg) translateY(50px);
 }
 
-
+.contDescMovil
+{
+  display: none;
+}
+.cd-3d-trigger,.cd-3d-trigger:hover,.cd-3d-trigger:focus
+{
+  background-color: transparent !important;
+}
+.header > .headerIn > .contBtn
+{
+  display: none;
+}
+.onlyMovil
+{
+  display: none;
+}
 @media(min-width: 767px) and (max-width: 991px){
   .input-group-btn
   {
@@ -1255,5 +1273,214 @@ animated buttons - animate the text inside prev and next buttons
   .contArtPrinc
   {
     width: 32.33%;
+  }
+  .contProm
+  {
+    width: 100%;
+  }
+  .contProm > div
+  {
+    width: 50%;
+    text-align: center;
+  }
+  .contCategorias
+  {
+    width: 30%;
+  }
+  .header > .headerIn > .col-xs-6
+  {
+    text-align: center;
+  }
+  .inputRegister {
+    width: 100%;
+  }
+  #body
+  {
+    padding-top: 30%;
+  }
+  #contCarrito
+  {
+    width: 85%;
+    left: 15%;
+    top: 225px !important;
+  }
+  
+  .contDescItem
+  {
+    display: none;
+  }
+  .contImageItem
+  {
+    width: 48%;
+  }
+  .contPrecItem
+  {
+    width: 48%;
+  }
+  .contDescMovil
+  {
+    width: 100%;
+    display: block;
+  }
+  .containerMovil
+  {
+    width: 100% !important;
+  }
+  .mdfSub 
+  {
+    margin: 0 !important; 
+  }
+}
+@media(max-width: 766px){
+  .contBtn
+  {
+    display: inline-block;
+  }
+  #body
+  {
+    padding-top: 40%;
+  }
+  
+  .header > .headerIn > .col-xs-6
+  {
+    display: none;
+  }
+  .header > .headerIn > .col-xs-3
+  {
+    display: table-cell;
+    width: 50%;
+    text-align: center;
+  }
+  .containerMovil
+  {
+    width: 100% !important;
+  }
+  .contProm
+  {
+    width: 100%;
+  }
+  .contProm > div
+  {
+    width: 100%;
+    text-align: center;
+  }
+  .navbar-toggle
+  {
+    border: 1px solid black;
+    float: none;
+  }
+  .navbar-toggle > .icon-bar
+  {
+    background-color: #333;
+  }
+  .navbar-collapse
+  {
+    position: absolute;
+  }
+  .header > .headerIn > .navbar-collapse
+  {
+    left: 5%;
+    width: 50% !important;
+  }
+  .bannerNegro
+  {
+    font-size: 1.3em !important;
+    letter-spacing: 5px;
+  }
+  .contCategorias
+  {
+    width: 100%;
+    text-align: center;
+    margin: 2em 0;
+  }
+  .contItems
+  {
+    width: 80%;
+    float: none;
+    display: block;
+    margin: 0 auto;
+  }
+  .contItems > a > .contArtPrinc
+  {
+    width: 100%;
+    margin: 1em 0;
+
+  }
+  .PubPeq
+  {
+    width: 100%;
+  }
+  .contFooter
+  {
+    width: 100%;
+  }
+  .contRedes
+  {
+    width: 100%;
+  }
+  .contDescItem
+  {
+    display: none;
+  }
+  .contDescMovil
+  {
+    width: 100%;
+    display: block;
+  }
+  .contImageItem
+  {
+    width: 100%;
+  }
+  .contPrecItem
+  {
+    width: 100%;
+  }
+  .carImg
+  {
+    max-width: 50%;
+  }
+  #contCarrito
+  {
+    width: 100%;
+    left: 0;
+  }
+  .noMovil
+  {
+    display: none;
+  }
+  .inputRegister {
+    width: 100%;
+  }
+  .g-recaptcha > div > div > iframe,.g-recaptcha > div > div
+  {
+    width: 100% !important;
+  }
+  .redes
+  {
+    font-size: 2.5em !important;
+  }
+  .contRedes
+  {
+    text-align: center;
+  }
+  .forgotPass 
+  {
+    width: 95%;
+  }
+  .fb-like
+  {
+    display: none;
+  }
+  .onlyMovil
+  {
+    display: table-cell;
+  }
+  .contEm
+  {
+    padding: 1em !important;
+  }
+  .noPadding
+  {
+    padding: 0 !important;
   }
 }

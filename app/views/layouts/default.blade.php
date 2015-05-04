@@ -20,23 +20,14 @@
         {{ HTML::style('css/custom.css') }}
         {{ HTML::style('js/slick/slick.css') }}
         {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') }}
-        <script>
-            window.fbAsyncInit = function() {
-              FB.init({
-                appId      : '1640851839462151',
-                xfbml      : true,
-                version    : 'v2.3'
-              });
-            };
-
-            (function(d, s, id){
-               var js, fjs = d.getElementsByTagName(s)[0];
-               if (d.getElementById(id)) {return;}
-               js = d.createElement(s); js.id = id;
-               js.src = "//connect.facebook.net/en_US/sdk.js";
-               fjs.parentNode.insertBefore(js, fjs);
-             }(document, 'script', 'facebook-jssdk'));
-          </script>
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v2.3";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
           <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
     <body id="body">
@@ -62,7 +53,15 @@
                   
                   </form>
                 </div>
-               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="display:inline-block !important;">
+                <div class="col-xs-3 contBtn">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                </div>
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="display:inline-block !important;">
                 <table class="nav navbar-nav table table-striped table-hover textoPromedio nav navbar-nav">
                    @if(!Auth::check())
                     <tr>
@@ -130,10 +129,10 @@
                   <th>
                    Artículo
                   </th>
-                  <th>
+                  <th class="noMovil">
                    Talla
                   </th>
-                  <th>
+                  <th class="noMovil">
                    Color
                   </th>
                   <th>
@@ -142,13 +141,13 @@
                   <th>
                     Precio Unitario
                   </th>
-                  <th>
+                  <th class="noMovil">
                     Sub-total
                   </th>
-                   <th>
+                   <th class="noMovil">
                     Agregar
                   </th>
-                   <th>
+                   <th class="noMovil">
                     Restar
                   </th>
                   <th>
@@ -165,10 +164,10 @@
                   <td class="carItem">
                     {{ $cart->name }}
                   </td>
-                  <td class="carItem">
+                  <td class="carItem noMovil">
                     {{ $cart->options['talla_desc'] }}
                   </td>
-                  <td class="carItem">
+                  <td class="carItem noMovil">
                     {{ $cart->options['color_desc'] }}
                   </td>
                   <td class="carItem">
@@ -177,20 +176,20 @@
                   <td class="carItem">
                     {{ $cart->price }}
                   </td>
-                  <td class="carItem">
+                  <td class="carItem noMovil">
                     {{ $cart->subtotal }}
                   </td>
-                  <th class="carItem">
+                  <th class="carItem noMovil">
                     <button class="btn btn-success btn-xs btnAdd btn-carrito" data-url-value="agregar-item" value="{{ $cart->rowid }}">
                       Agregar
                     </button>
                   </th>
-                  <th class="carItem">
+                  <th class="carItem noMovil">
                     <button class="btn btn-warning btn-xs btnRestar btn-carrito" data-url-value="restar-item" value="{{ $cart->rowid }}">
                       Restar
                     </button>
                   </th>
-                  <th class="carItem">
+                  <th class="carItem noMovil">
                     <button class="btn btn-danger btn-xs btnQuitar btn-carrito" data-url-value="quitar-item" value="{{ $cart->rowid }}">
                       Quitar
                     </button>
@@ -204,7 +203,7 @@
         <footer>
           <div class="col-xs-9 contFoot">
               <div class="col-xs-12 contList contCentrado">
-                <div class="col-xs-6 textoPromedio">
+                <div class="col-xs-6 textoPromedio contFooter">
                   <label><h3>Acerca de guacamaya</h3></label>
                   <ul class="ulNoStyle">
                     <li><a href="{{ URL::to('') }}" class="aConFormato">Quiénes somos</a></li>
@@ -243,9 +242,7 @@
         {{ HTML::script("js/main.js") }}
         {{ HTML::script('js/slick/slick.min.js') }}
         {{ HTML::script('js/custom.js') }}
-        {{ HTML::script('js/jquery.elevateZoom-3.0.8.min.js') }}
-        {{ HTML::script('js/jquery-ui-1.9.2.custom.min.js') }}
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

@@ -3,7 +3,7 @@
 @section('content')
 <div class="row" style="margin-top:2em;">
     <div class="col-xs-12">
-      <div class="col-xs-2">
+      <div class="col-xs-3">
         <div class="col-xs-12" style="border:1px solid black;border-radius:16px;">
           <legend>Categorías</legend>
           @foreach($cat as $c)
@@ -23,7 +23,7 @@
         </div>
      
       </div>
-      <div class="col-xs-10 contdeColor" style="padding-right: 0px;">
+      <div class="col-xs-9 contdeColor" style="padding-right: 0px;">
         @if(count($art)>0)
         @if(!isset($type))
         <div class="alert alert-success">

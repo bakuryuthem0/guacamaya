@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container contenedorUnico">
+<div class="container contenedorUnico containerMovil">
 	<div class="row">
 		
 		<div class="col-xs-12 formContactUs contAnaranjado" style="margin-top:2em;">
@@ -18,7 +18,7 @@
 			</div>
 			<div class="clearfix"></div>
 
-			<div class="col-xs-6 contCentrado contdeColor" style="margin-top:2em;">
+			<div class="col-xs-8 contCentrado contdeColor containerMovil" style="margin-top:2em;">
 				<legend>Formulario de contacto</legend>
 				<p class="textoPromedio">Llene el siguiente formulario y en breve nuestro personal se pondrá en contacto con usted.</p>
 				<form method="POST" action="{{ URL::to('contactenos') }}">

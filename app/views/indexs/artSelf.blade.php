@@ -5,21 +5,16 @@
 		<div class="col-xs-12">
 			<div class="col-xs-12 contCentrado contdeColor">
 				<legend>{{ $art->item_nomb.' - '.$art->item_cod }}</legend>
-				<div class="col-xs-4 textoPromedio">
+				<div class="col-xs-4 textoPromedio contDescItem">
 					<div class="col-xs-12" style="word-break: break-word;">
 						<label class="description">Descripción</label>
 						{{ $art->item_desc }}
 						<div id="fb-root"></div>
-						<div style="margin-top:2em;margin-bottom:2em;"
-						  class="fb-like"
-						  data-share="true"
-						  data-width="450"
-						  data-show-faces="true">
-						</div>
+						<div class="fb-like" data-href="{{ Request::url() }}" data-layout="box_count" data-action="like" data-show-faces="true" data-share="true"></div>
 						<a href="{{ URL::previous() }}" class="btn btn-volver">Volver</a>
 					</div>
 				</div>
-				<div class="col-xs-4">
+				<div class="col-xs-4 contImageItem">
 					<ul id="cd-gallery-items" class="cd-container">
 						<li>
 							<ul class="cd-item-wrapper">
@@ -69,12 +64,12 @@
 								</ul>
 							</nav>
 
-							<a class="cd-3d-trigger cd-img-replace" href="#0">Open</a>
+							<a class="cd-3d-trigger cd-img-replace" href="#0" data-toggle="popover" data-placement="bottom" data-content="Click aqui para activar la rotación" title="" data-original-title="Atención"></a>
 						</li>
 					</ul>				
 				</div>
 
-				<div class="col-xs-4 textoPromedio">
+				<div class="col-xs-4 textoPromedio contPrecItem">
 					<div class="col-xs-12">
 						<label>PRECIO EN GUACAMAYA STORES:</label>
 
@@ -135,6 +130,14 @@
 						<div class="col-xs-4 fa-container"><i class="fa fa-truck"></i><br><p>Envios Gratis a Todo el Pais</p></div>
 					</div>
 				</div>
+				<div class="contDescMovil textoPromedio">
+					<div class="col-xs-12" style="word-break: break-word;">
+						<label class="description">Descripción</label>
+						{{ $art->item_desc }}
+						<div class="fb-like" data-href="{{ Request::url() }}" data-layout="box_count" data-action="like" data-show-faces="true" data-share="true"></div>
+						<a href="{{ URL::previous() }}" class="btn btn-volver">Volver</a>
+					</div>
+				</div>
 				<div class="clearfix"></div>
 			</div>
 		</div>
@@ -187,6 +190,13 @@
 
 @section('postscript')
 <script type="text/javascript">
-	//	$(".zoom_item").elevateZoom({scrollZoom : true});
+	jQuery(document).ready(function($) {
+		if ($(window).width()<991) {
+			$('.cd-3d-trigger').popover('show');
+			$('.popover').click(function(event) {
+				$('.popover').remove();
+			});
+		}
+	});
 </script>
 @stop

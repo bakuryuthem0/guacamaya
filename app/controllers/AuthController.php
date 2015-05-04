@@ -79,8 +79,8 @@ class AuthController extends BaseController {
 			'username'   			 => 'required|min:4|unique:usuario',
 			'pass'      		 	 => 'required|min:6|confirmed',
 			'pass_confirmation'      => 'required',
-			'name'       			 => 'required|min:4',
-			'lastname'   			 => 'required|min:4',
+			'name'       			 => 'required',
+			'lastname'   			 => 'required',
 			'email'      			 => 'required|email|unique:usuario',
 			'dir' 			 		 => 'required',
 			'estado'				 => 'required',
@@ -120,13 +120,14 @@ class AuthController extends BaseController {
 		$user->apellido 	 = $input['lastname'];
 		$user->estado  		 = $input['estado'];
 		$user->municipio     = $input['municipio'];
-		$user->role 		 = 3;
-		if (!empty($input['parroquia'])) {
-			$user->parroquia  		 = $input['parroquia'];	
+		if (!empty($input['dir2'])) {
+			$user->dir_fac = $input['dir2'];
 		}
 		if (!empty($input['telefono'])) {
 			$user->telefono = $input['telefono'];
 		}
+		$user->role 		 = 3;
+
 		$user->role          = 'Usuario';
 		
 		if ($user->save()) {

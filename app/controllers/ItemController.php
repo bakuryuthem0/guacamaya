@@ -123,12 +123,19 @@ class ItemController extends BaseController {
 	{
 		$id = Input::get('dir');
 		if ($id == 'user_id') {
-			$dir = new Dir;
-			$dir->user_id = Auth::user()->id;
-			$dir->email   = Auth::user()->email;
-			$dir->dir 	  = Auth::user()->dir;
-			$dir->save();
-			$id = $dir->id;
+			$dir = Dir::where('user_id','=',Auth::user()->id)->where('user_dir','=',1)->first();
+			if (count($dir)>0) {
+				$id = $dir->id;
+			}else
+			{
+				$dir = new Dir;
+				$dir->user_id = Auth::user()->id;
+				$dir->email   = Auth::user()->email;
+				$dir->dir 	  = Auth::user()->dir;
+				$dir->user_dir= 1;
+				$dir->save();
+				$id = $dir->id;
+			}
 		}
 		$fac = new Facturas;
 		$fac->user_id =  Auth::user()->id;
@@ -226,7 +233,7 @@ class ItemController extends BaseController {
 		}
 		$total = 0;
 		$method= "hola";
-		$mp = new MP('8718886882978199','K1SlqcrxB2kKnnrhxt6PCyLtC6RuSuux');
+		/*$mp = new MP('8718886882978199','K1SlqcrxB2kKnnrhxt6PCyLtC6RuSuux');
 		$preference_data = array(
     			"items" => array(
        			array(
@@ -237,7 +244,8 @@ class ItemController extends BaseController {
        			)
     			)
 		);
-		$preference = $mp->create_preference ($preference_data);
+		$preference = $mp->create_preference ($preference_data);*/
+		$preference = '';
 		$bancos = Bancos::where('deleted','=',0)->get();
 		return View::make('indexs.showCart')
 		->with('title',$title)

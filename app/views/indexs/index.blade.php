@@ -12,11 +12,11 @@
 </div>  
 <div class="row" style="margin-top:2em;">
     <div class="col-xs-12">
-      <div class="col-xs-2">
+      <div class="col-xs-2 contCategorias">
         <div class="col-xs-12" style="border:1px solid black;border-radius:16px;">
           <legend>Categorías</legend>
           @foreach($cat as $c)
-            <label class="textoSmall"><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#expand{{ $c->id }}"></i> 
+            <label class="textoSmall" style="display:block;"><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#expand{{ $c->id }}"></i> 
               <a href="{{ URL::to('categorias/'.$c->id) }}" class="aSinFormato">{{ $c->cat_nomb }}</a></label>
             <ul class="collapse textoPromedio" id="expand{{ $c->id }}">
               @foreach($subcat[$c->id] as $j => $s)
@@ -32,7 +32,7 @@
         </div>
      
       </div>
-      <div class="col-xs-8" style="padding-right: 0px;">
+      <div class="col-xs-8 contItems" style="padding-right: 0px;">
         @if(count($art)>0)
         @foreach($art as $a)
           <a href="{{ URL::to('articulo/'.$a->id) }}">
@@ -134,7 +134,7 @@
           </ul>
         </nav> <!-- cd-pagination-wrapper -->
       </div>
-      <div class="col-xs-2">
+      <div class="col-xs-2 contProm">
         <div class="col-xs-12">
           @if($first->active == 1)
             <a href="{{ URL::to('articulos/promocion/'.$first->id) }}"><img src="{{ asset('images/pub/'.$first->image) }}"></a>
@@ -153,8 +153,8 @@
   <div class="col-xs-12" style="margin-bottom:1em;">
     <img src="{{ asset('images/pub/'.$top->image) }}" style="width:100%;">
   </div>
-  <div class="col-xs-6"><img src="{{ asset('images/pub/'.$left->image) }}" style="width:100%;"></div>
-  <div class="col-xs-6"><img src="{{ asset('images/pub/'.$right->image) }}" style="width:100%;"></div>
+  <div class="col-xs-6 PubPeq"><img src="{{ asset('images/pub/'.$left->image) }}" style="width:100%;"></div>
+  <div class="col-xs-6 PubPeq"><img src="{{ asset('images/pub/'.$right->image) }}" style="width:100%;"></div>
 </div>
 <div class="clearfix"></div>
 @stop
