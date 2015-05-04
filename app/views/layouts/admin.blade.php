@@ -96,6 +96,24 @@
                               </li>
                             </ul>
                           </li>
+                           <li class="dropdown-submenu">
+                            <a href="#" >
+                              Tallas
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                              <li>
+                                <a href="{{ URL::to('talla/nueva') }}">
+                                  <i class="fa fa-plus"></i> Nueva
+                                </a>
+                              </li>
+                              <li>
+                                <a href="{{ URL::to('talla/ver-tallas') }}">
+                                  <i class="fa fa-money"></i>
+                                  Modificar
+                                </a>
+                              </li>
+                            </ul>
+                          </li>
                           <li class="dropdown-submenu">
                             <a href="#" >
                               Articulos

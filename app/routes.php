@@ -108,6 +108,13 @@ Route::group(array('before' =>'auth'),function()
 
 		//eliminar
 		Route::post('colores/eliminar','AdminController@postElimColor');
+
+		Route::get('talla/nueva','AdminController@getNewTalla');
+		Route::post('talla/nueva/enviar','AdminController@postNewTalla');
+		Route::get('talla/ver-tallas','AdminController@getShowTallas');
+		Route::post('talla/eliminar','AdminController@postElimTalla');
+		Route::get('administrador/ver-tallas/{id}','AdminController@getMdfTalla');
+		Route::post('talla/modificar/enviar/{id}','AdminController@postMdfTalla');
 		//pagos
 		Route::get('administrador/ver-pagos','AdminController@getPayment');
 		Route::get('administrador/ver-factura/{id}','AdminController@getPurchases');

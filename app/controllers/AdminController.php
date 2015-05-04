@@ -307,6 +307,94 @@ class AdminController extends BaseController {
 		return View::make('admin.newCat')
 		->with('title',$title);
 	}
+	public function getNewTalla()
+	{
+		$title = "Nueva Talla";
+		return View::make('admin.newTalla')
+		->with('title',$title);
+	}
+	public function postNewTalla()
+	{
+		$inp = Input::all();
+		$rules = array(
+			'name_talla' => 'required',
+			'desc_talla' => 'required'
+		);
+		$msg = array(
+			'required' => 'El campo es obligatorio'
+		);
+		$validator = Validator::make($inp, $rules, $msg);
+		if ($validator->fails()) {
+			
+			return Redirect::back()->withErrors($validator)->withInput();
+		}
+		$talla = New Tallas;
+
+		$talla->talla_nomb = $inp['name_talla'];
+		$talla->talla_desc = $inp['desc_talla'];
+		if ($talla->save()) {
+			Session::flash('success','Talla creada satisfactoriamente');
+			return Redirect::to('administrador/inicio');
+		}else
+		{
+			Session::flash('danger', 'Error al crear la talla');
+			return Redirect::back();
+		}
+	}
+	public function getShowTallas()
+	{
+		$title = "Ver tallas";
+		$tallas = Tallas::where('deleted','=',0)->get();
+		return View::make('admin.showTallas')
+		->with('talla',$tallas)
+		->with('title',$title);
+	}
+	public function postElimTalla()
+	{
+		if (Request::ajax()) {
+			$id = Input::get('id');
+			$tallas = Tallas::find($id);
+			$tallas->deleted = 1;
+			$tallas->save();
+			return Response::json(array('type' => 'success','msg' => 'Categoría eliminada correctamente'));
+		}
+	}
+	public function getMdfTalla($id)
+	{
+		$talla = Tallas::find($id);
+		$title = "Modificar talla: ".$talla->talla_nomb;
+		return View::make('admin.mdfTalla')
+		->with('title',$title)
+		->with('talla',$talla);
+	}
+	public function postMdfTalla($id)
+	{
+		$inp = Input::all();
+		$rules = array(
+			'name_talla' => 'required',
+			'desc_talla' => 'required'
+		);
+		$msg = array(
+			'required' => 'El campo es obligatorio'
+		);
+		$validator = Validator::make($inp, $rules, $msg);
+		if ($validator->fails()) {
+			
+			return Redirect::back()->withErrors($validator)->withInput();
+		}
+		$talla = Tallas::find($id);
+
+		$talla->talla_nomb = $inp['name_talla'];
+		$talla->talla_desc = $inp['desc_talla'];
+		if ($talla->save()) {
+			Session::flash('success','Talla modificada satisfactoriamente');
+			return Redirect::to('administrador/inicio');
+		}else
+		{
+			Session::flash('danger', 'Error al modificar la talla');
+			return Redirect::back();
+		}
+	}
 	public function postNewCat()
 	{
 		$input = Input::all();
