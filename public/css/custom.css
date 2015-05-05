@@ -320,6 +320,10 @@ a.aConFormato:hover{
 {
 	width: 100%;
 }
+#MP-Checkout-dialog
+{
+  z-index: 9999999999 !important;
+}
 .imgProd
 {
 	height: 400px;

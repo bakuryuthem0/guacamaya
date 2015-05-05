@@ -39,7 +39,7 @@
 							@endif
 						</div>
 						<div class="clearfix"></div>
-						<p class="bg-info" style="padding:0.5em;margin-top:1em;">El Nombre de Usuario Debe Tener al menos 4 caracteres.</p>
+						<p class="bg-info textoPromedio" style="text-align:center;padding:0.5em;margin-top:1em;">El Nombre de Usuario Debe Tener al menos 4 caracteres.</p>
 					</div>
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-6 inputRegister">
@@ -57,7 +57,7 @@
 							@endif
 						</div>
 						<div class="clearfix"></div>
-						<p class="bg-info" style="padding:0.5em;margin-top:1em;">La contraseña debe tener al menos 6 caracteres.</p>
+						<p class="bg-info textoPromedio" style="text-align:center;padding:0.5em;margin-top:1em;">La contraseña debe tener al menos 6 caracteres.</p>
 					</div>
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-6 inputRegister">
@@ -123,7 +123,22 @@
 							@endif
 						</div>
 					</div>
-					
+					<div class="col-xs-12 formulario">
+						<div class="col-xs-6 inputRegister">
+							<p class="textoPromedio">(*) Cedula</p>
+						</div>
+						<div class="col-xs-6 inputRegister">
+							{{ Form::text('cedula', Input::old('lastname'),array('class' => 'form-control inputFondoNegro','placeholder' => 'Cedula','required' => 'required')) }}
+							@if ($errors->has('cedula'))
+								 @foreach($errors->get('cedula') as $err)
+								 	<div class="alert alert-danger">
+								 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								 		<p class="textoPromedio">{{ $err }}</p>
+								 	</div>
+								 @endforeach
+							@endif
+						</div>
+					</div>
 					<div class="col-xs-12 formulario">
 						<div class="col-xs-6 inputRegister">
 							<p class="textoPromedio">(*)Dirección de Envio</p>
@@ -179,15 +194,13 @@
 							<p class="textoPromedio">(*) Estado:</p>
 						</div>
 						<div class="col-xs-6 inputRegister">
-							<?php $arr = array(
-							'' => 'Seleccione la sub-categoría');
-							 ?>
-							@foreach ($estados as $estado)
-								<?php $arr = $arr+array($estado->id => $estado->nombre);  ?>
-							@endforeach
-							{{ Form::select('estado',$arr,'',array('class' => 'form-control inputFondoNegro','id' => 'estado','requied' => 'required')
-								)}}
-							
+							<select name="estado" class="form-control inputFondoNegro" id="estado" required>
+								<option value="">Seleccione un estado</option>
+								@foreach ($estados as $estado)
+									<option value="{{ $estado->id }}">{{ $estado->nombre }}</option>
+								@endforeach
+							</select>
+								
 							@if ($errors->has('estado'))
 								 @foreach($errors->get('estado') as $err)
 								 	<div class="alert alert-danger">

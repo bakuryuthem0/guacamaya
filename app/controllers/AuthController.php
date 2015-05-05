@@ -116,20 +116,19 @@ class AuthController extends BaseController {
 		$user->username 	 = $input['username'];
 		$user->password    	 = Hash::make($input['pass']);
 		$user->email    	 = $input['email'];
+		$user->dir 			 = $input['dir'];
 		$user->nombre    	 = $input['name'];
 		$user->apellido 	 = $input['lastname'];
+		$user->cedula		 = $input['cedula'];
 		$user->estado  		 = $input['estado'];
 		$user->municipio     = $input['municipio'];
 		if (!empty($input['dir2'])) {
-			$user->dir_fac = $input['dir2'];
+			$user->dir2 	= $input['dir2'];
 		}
 		if (!empty($input['telefono'])) {
 			$user->telefono = $input['telefono'];
 		}
 		$user->role 		 = 3;
-
-		$user->role          = 'Usuario';
-		
 		if ($user->save()) {
 			Session::flash('success', 'Su cuenta fue creada satisfractoriamente, inicie sesión para disfrutar de nuestros servicios.');
 			return Redirect::to('iniciar-sesion');

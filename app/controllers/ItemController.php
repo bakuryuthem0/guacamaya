@@ -223,7 +223,7 @@ class ItemController extends BaseController {
 			$b->precio = $a->item_precio;
 			$b->item_talla = Tallas::where('id','=',$a->item_talla)->pluck('talla_desc');
 			$b->item_color = Colores::where('id','=',$a->item_color)->pluck('color_desc');
-			$auxT = $auxT+($b->qty*$b->item_precio);
+			$auxT = $auxT+($b->qty*$b->precio);
 			$auxQ = $auxQ+$b->qty;
 			$aux = Misc::where('item_id','=',$a->item_id)->where('deleted','=',0)->first();
 			$b->img = Images::where('misc_id','=',$aux->id)->where('deleted','=',0)->first(); 
@@ -233,7 +233,7 @@ class ItemController extends BaseController {
 		}
 		$total = 0;
 		$method= "hola";
-		/*$mp = new MP('8718886882978199','K1SlqcrxB2kKnnrhxt6PCyLtC6RuSuux');
+		$mp = new MP('2291620271746489','XOIuIPSJW1nZHpm0Yo88TxB6PgQLicuv');
 		$preference_data = array(
     			"items" => array(
        			array(
@@ -244,8 +244,8 @@ class ItemController extends BaseController {
        			)
     			)
 		);
-		$preference = $mp->create_preference ($preference_data);*/
-		$preference = '';
+		$preference = $mp->create_preference ($preference_data);
+
 		$bancos = Bancos::where('deleted','=',0)->get();
 		return View::make('indexs.showCart')
 		->with('title',$title)

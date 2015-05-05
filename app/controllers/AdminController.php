@@ -696,7 +696,7 @@ class AdminController extends BaseController {
 			);
 			Mail::send('emails.newAdmin', $data, function ($message) use ($input){
 				    $message->subject('Correo creacion de usuario guacamayastores.com.ve');
-				    $message->to('someemail@guacamayastores.com.ve');
+				    $message->to('admin@guacamayastores.com.ve');
 				});
 			Session::flash('success', 'El usuario fue creado satisfactoriamente');
 			return Redirect::to('administrador/crear-nuevo');
@@ -747,6 +747,7 @@ class AdminController extends BaseController {
             $img->interlace()
 	           ->save('images/slides-top/'.$miImg);
             if($miImg != $file->getClientOriginalName()){
+
             	$images->image = $miImg;
             }
 		}else
@@ -1042,7 +1043,29 @@ class AdminController extends BaseController {
 		{
 			$pub = Publicidad::find(3);
 		}
-
+		$file = Input::file('img');
+		if (file_exists('images/pub/'.$file->getClientOriginalName())) {
+			//guardamos la imagen en public/imgs con el nombre original
+            $i = 0;//indice para el while
+            //separamos el nombre de la img y la extensión
+            $info = explode(".",$file->getClientOriginalName());
+            //asignamos de nuevo el nombre de la imagen completo
+            $miImg = $file->getClientOriginalName();
+            //mientras el archivo exista iteramos y aumentamos i
+            while(file_exists('images/pub/'.$miImg)){
+                $i++;
+                $miImg = $info[0]."(".$i.")".".".$info[1];              
+            }
+            //guardamos la imagen con otro nombre ej foto(1).jpg || foto(2).jpg etc
+            $file->move("images/pub/",$miImg);
+            if($miImg != $file->getClientOriginalName()){
+            	$pub->image = $file->getClientOriginalName();
+            }
+		}else
+		{
+			$file->move("images/pub/",$file->getClientOriginalName());				
+          	$pub->image = $file->getClientOriginalName();
+			}
 		
 		if($pub->save())
 		{
@@ -1335,9 +1358,9 @@ class AdminController extends BaseController {
 				'fac'  	   => $id,
 				'fecha'	   => date('d-m-Y',time())
 			);
-			Mail::send('emails.aprob', $data, function ($message) use ($id){
+			Mail::send('emails.aprob', $data, function ($message) use ($id,$user){
 				    $message->subject('Correo de aviso guacamayastores.com.ve');
-				    $message->to('someemail@guacamayastores.com.ve');
+				    $message->to($user->email);
 			});
 			return Response::json(array('type' => 'success','msg' => 'Pago Aprovado correctamente.'));
 		}else
@@ -1370,9 +1393,9 @@ class AdminController extends BaseController {
 				'fecha'	   => date('d-m-Y',time()),
 				'motivo'   => $motivo,
 			);
-			Mail::send('emails.reject', $data, function ($message) use ($id,$motivo){
+			Mail::send('emails.reject', $data, function ($message) use ($id,$motivo,$user){
 				    $message->subject('Correo de aviso guacamayastores.com.ve');
-				    $message->to('someemail@guacamayastores.com.ve');
+				    $message->to($user->email);
 			});
 			return Response::json(array('type' => 'success','msg' => 'Pago Aprovado correctamente.'));
 		}else
@@ -1394,9 +1417,9 @@ class AdminController extends BaseController {
 				'fecha'	   => date('d-m-Y',time()),
 				'motivo'   => $motivo,
 			);
-			Mail::send('emails.reject', $data, function ($message) use ($id,$motivo){
+			Mail::send('emails.reject', $data, function ($message) use ($id,$motivo,$user){
 				    $message->subject('Correo de aviso guacamayastores.com.ve');
-				    $message->to('someemail@guacamayastores.com.ve');
+				    $message->to($user->email);
 			});
 			return Response::json(array('type' => 'success','msg' => 'Pago Aprovado correctamente.'));
 		}else

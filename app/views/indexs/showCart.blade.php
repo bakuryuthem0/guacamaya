@@ -166,7 +166,6 @@
     @if(!isset($method))
     <div class="collapse contdeColor col-xs-12 scrollTo" id="continuar" style="margin-top:2em;">
       <div class="col-xs-6 containerMovil">
-      
        @if((!empty(Auth::user()->dir) && !is_null(Auth::user()->dir)) || count($dir) > 0)
        <h3>Usar dirección existente</h3>
        <hr>
@@ -281,8 +280,25 @@
       <div class="col-xs-6 containerMovil">
         <h3><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#mpago"></i> Mercado pago</h3>
         <div class="col-xs-12 collapse" id="mpago" style="padding:2em;">
-          <a href="<?php// echo $preference['response']['init_point']; ?>" name="MP-Checkout" class="lightblue-M-Ov-ArOn">Pagar</a>
+          <a href="<?php echo $preference['response']['init_point']; ?>" name="MP-Checkout" class="lightblue-M-Ov-ArOn" onreturn="execute_my_onreturn">Pagar</a>
           <script type="text/javascript" src="https://www.mercadopago.com/org-img/jsapi/mptools/buttons/render.js"></script>
+          <script type="text/javascript">
+            function execute_my_onreturn (json) {
+              if (json.collection_status=='approved'){
+                
+                $('.responseDanger').addClass('alert-success').css('display', 'block').animate({'opacity':1}, 250).html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><p class="textoPromedio">Su pago fue aprobado, por favor envienos el numero de comprobante mediante nuestro formulario de transferencia en linea</p>')
+              } else if(json.collection_status=='in_process'){    
+                $('.responseDanger').addClass('alert-primary').css('display', 'block').animate({'opacity':1}, 250).html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><p class="textoPromedio">Pago en proceso, una vez su pago sea aprobado por favor envienos el numero de comprobante mediante nuestro formulario de transferencia en linea</p>')
+              }else if(json.collection_status=='rejected'){
+                alert ('El pago fué rechazado, puede intentar nuevamente el pago');
+              } 
+            }
+            </script>
+            <div class="alert responseDanger">
+              
+              
+            </div>
+
         </div>
       </div>
     </div>
@@ -334,3 +350,6 @@
 </div>
 @stop
 
+@section('postscript')
+
+@stop

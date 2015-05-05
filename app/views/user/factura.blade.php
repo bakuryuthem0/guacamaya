@@ -22,52 +22,73 @@
     </head>
     <body >
         <div class="row">
-          <div class="container">
+          <div class="container" style="padding: 5em;">
             <div class="col-xs-12">
-              <h1>Factura digital guacamayastores.com.ve</h1>
-              <h3>Datos del Cliente</h3>
-              <ul class="textoPromedio">
-                <li>Cliente:{{ $user->nombre.' '.$user->apellido }}</li>
-                <li>Direccion: {{ $user->dir }}</li>
-                <li>CI/RIF: {{ $user->cedula }}</li>
-              </ul>
-              <h3 style="text-align:center;">FACTURA</h3>
-              <br>
-              <table class="table table-hover textoPromedio">
-                <tr><td>FACTURA</td><td>{{ $factura->id }}</td></tr>
-                <tr><td>FECHA</td><td>{{ $factura->updated_at }}</td></tr>
-              </table>
-              <table class="table table-hover">
-                <thead>
-                  <tr class="textoPromedio">
-                    <th>Codigo del articulo</th>
-                    <th>Cantidad de articulos</th>
-                    <th>Precio unitario</th>
-                    <th>Subtotal</th>
-                  </tr>
-                </thead>
-                <tbody>
+              <div class="col-xs-12">
+                <div class="col-xs-6">
+                  <img src="{{ asset('images/logo-01.png') }}">
+                </div>
+                <div class="col-xs-6 contdeColor" style="text-align:center;">
+                  <h1>Factura Electronica <br>N° {{ $factura->id }}</h1>
+                </div>
+                <div class="col-xs-12" style="text-align:right;">
+                  <h2>{{ date('d-m-Y',strtotime($factura->updated_at)) }}</h2>
+                </div>
+              </div>
+              <div class="col-xs-12 formulario">
+                <div class="col-xs-6">
+                  <ul class="textoPromedio" style="padding:0;">
+                    <li>Cliente:{{ $user->nombre.' '.$user->apellido }}</li>
+                    <li>Direccion: {{ $user->dir }}</li>
+                    <li>CI/RIF: {{ $user->cedula }}</li>
+                  </ul>
+                </div>
+                <div class="col-xs-6">
+                  <ul class="textoPromedio">
+                    <li>Telefono: {{ $user->telefono }}</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-xs-12 formulario">
+                <div class="col-xs-12 contdeColor textoPromedio">
+                  <div class="col-xs-3" style="text-align:center;">
+                    Codigo del articulo
+                  </div>
+                  <div class="col-xs-3" style="text-align:center;">
+                    Cantidad de articulos
+                  </div>
+                  <div class="col-xs-3" style="text-align:center;">
+                    Descripción
+                  </div>
+                  <div class="col-xs-3" style="text-align:center;">
+                    Subtotal
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 formulario">
+                <div class="col-xs-12 contdeColor">
                   <? $total = 0; ?>
                   @foreach($fact as $f)
-                  <tr class="textoPromedio">
-                    <td>{{ $f->item_cod }}</td>
-                    <td>{{ $f->qty }}</td>
-                    <td>{{ $f->item_precio }}</td>
-                    <td>{{ $f->qty*$f->item_precio }}</td>
+                    <div class="col-xs-3 textoPromedio" style="text-align:center;">{{ $f->item_cod }}</div>
+                    <div class="col-xs-3 textoPromedio" style="text-align:center;">{{ $f->qty }}</div>
+                    <div class="col-xs-3 textoPromedio" style="text-align:center;">{{ $f->item_nomb }}</div>
+                    <div class="col-xs-3 textoPromedio" style="text-align:center;">{{ $f->qty*$f->item_precio }}</div>
                     <? $total += $f->qty*$f->item_precio; ?>
-                  </tr>
                   @endforeach
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td><h3>Total:</h3></td>
-                    <td><h3 class="precio">{{ $total }}</h3></td>
-                  </tr>
-                </tbody>
-              </table>
-
+                </div>
+              </div>
+              <div class="col-xs-3" style="float:right;text-align:right;">
+                <h3 style="display:inline;">Total:</h3>
+                <h3 class="precio" style="display:inline;">{{ $total }}</h3>
+              </div>
+            </div>
+            <div class="col-xs-12">
+              <div class="col-xs-12">
+                <h1>Gracias por su compra</h1>
+              </div>
             </div>
           </div>
+          <div class="textoPromedio" style="width:100%;height:50px;background:black;text-align:center;color:white;padding-top:1em;"><p>Guacamaya Stores 2015, C.A. RIF: J-40566930-6</p></div>
         </div>          
           
         {{ HTML::script("http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js") }}
