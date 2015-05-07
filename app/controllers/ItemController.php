@@ -287,7 +287,7 @@ class ItemController extends BaseController {
 				'monto'   => $input['total'],
 				'num_trans' => $input['transNumber']
 			);
-			$to_Email = 'ejemplo@gmail.com';
+			$to_Email = 'guacamaya.store@gmail.com';
 			Mail::send('emails.newPayment', $data, function($message) use ($input,$to_Email,$subject)
 			{
 				$message->to($to_Email)->from('sistema@guacamayastores.com.ve')->subject($subject);
