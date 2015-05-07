@@ -214,7 +214,31 @@ jQuery(document).ready(function($) {
 });
 
 jQuery(document).ready(function($) {
+	$('.imgPrinc').hover(function(event) {
+		$('.zoomed').attr('src', $(this).attr('src'));
+		$('.zoomed').css({
+			'display':'block',
+			'height' : $(this).css('height')
+		}).stop().animate({'opacity':1}, 250)
+		$(this).stop().animate({'opacity':0}, 250)
+		$(this).mousemove(function(event) {
+			var x = event.pageX - $(this).offset().left -100;
+			var y = event.pageY - $(this).offset().top  -100;
 
+			$('.zoomed').css({
+				'transform-origin': x+'px '+y+'px'
+			});
+			
+		});
+	}, function(event) {
+		$('.zoomed').stop().animate({'opacity':0}, 250,function()
+		{
+			$(this).css({
+				'display':'none'
+			})
+		})
+		$(this).stop().animate({'opacity':1}, 250)
+	});
 	$('.imgMini').on('mouseover',function() {
 		var esto = $(this);
 		if ($('.imgMini').length > 1) {
