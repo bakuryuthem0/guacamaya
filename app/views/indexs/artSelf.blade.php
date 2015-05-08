@@ -11,14 +11,14 @@
 						{{ $art->item_desc }}
 						<div id="fb-root"></div>
 						<div class="fb-like" data-href="{{ Request::url() }}" data-layout="box_count" data-action="like" data-show-faces="true" data-share="true"></div>
-						<a href="{{ URL::previous() }}" class="btn btn-volver">Volver</a>
+						<a href="{{ URL::previous() }}" class="btn btn-success btn-volver">Volver</a>
 					</div>
 				</div>
 				<div class="col-xs-4 contImageItem">
 					<div class="cien">
 		              <img src="" class="zoomed">
 		            </div>
-					<img src="{{ asset('images/items/'.$art->images[0][0]->image) }}" class="imgPrinc" data-zoom-image="{{ asset('images/items/'.$art->images[0][0]->image) }}">				
+					<img src="{{ asset('images/items/'.$art->images[0][0]->image) }}" class="imgPrincSelf" data-zoom-image="{{ asset('images/items/'.$art->images[0][0]->image) }}">				
 				</div>
 
 				<div class="col-xs-4 textoPromedio contPrecItem">

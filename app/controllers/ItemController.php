@@ -110,12 +110,23 @@ class ItemController extends BaseController {
 	public function getRefresh()
 	{
 		if (Request::ajax()) {
-			$id = Input::get('id');
-			$qty = Input::get('qty');
-			$cart = Cart::get($id);
+			$item_id= Input::get('item_id');
+			$id 	= Input::get('id');
+			$qty 	= Input::get('qty');
+			$talla 	= Input::get('talla');
+			$color 	= Input::get('color'); 
+			$misc = Misc::where('item_talla','=',$talla)
+			->where('item_id','=',$item_id)
+			->where('item_color','=',$color)
+			->get();
+			return Response::json($misc);
+			if ($misc <1) {
+				return Response::json(array('type' => 'danger'));
+			}
+			$cart 	= Cart::get($id);
 			Cart::update($id,$qty);
-			$count = Cart::count();
-			$total = Cart::total();
+			$count 	= Cart::count();
+			$total 	= Cart::total();
 			return Response::json(array('type' => 'success','count' => $count,'total' => $total,'qty' => $cart->qty,'id' => $cart->id,'subtotal'=>$cart->subtotal));
 		}
 	}

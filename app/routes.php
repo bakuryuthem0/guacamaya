@@ -27,7 +27,7 @@ Route::post('articulo/buscar/colores','HomeController@getColors');
 Route::get('categorias/{subcat}/{id}','HomeController@getSubCatBuscar');
 Route::get('categorias/{id}','HomeController@getCatBuscar');
 
-Route::post('busqueda','HomeController@search');
+Route::get('busqueda','HomeController@search');
 
 Route::get('administrador', 'AdminController@getLogin');
 Route::post('administrador/iniciar-sesion/autenticar','AdminController@postLogin');

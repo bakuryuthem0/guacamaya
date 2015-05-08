@@ -320,7 +320,7 @@ a.aConFormato:hover{
   display: inline-block;
   margin:1em;
 }
-.imgPrinc
+.imgPrinc,.imgPrincSelf
 {
 	width: 100%;
 }
@@ -530,6 +530,10 @@ a.aConFormato:hover{
 	display: none;
 	opacity: 0;
 }
+.ui-widget-header
+{
+  background-color: #6EB52F !important;
+}
 /*Zoom*/
 .zoomed
 {
@@ -551,7 +555,6 @@ a.aConFormato:hover{
 }
 .btn-volver
 {
-  background-color: #EC0808;
   color: white;
 }
 .btn-success,.btn-warning,.btn-danger

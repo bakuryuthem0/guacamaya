@@ -22,6 +22,7 @@
 				<div class="col-xs-12">
 					<p class="bg-info textoPromedio" style="padding:0.5em;">Información del articulo</p>
 				</div>
+				<input type="hidden" name="item" value="{{ $item->id }}">
 				<div class="col-xs-6 inputForm">
 					<label class="textoPromedio">(*) Codigo del articulo</label>
 					<input type="text" name="item_cod" value="{{ $item->item_cod }}" class="form-control">
@@ -96,7 +97,7 @@
 						 @endforeach
 					@endif
 				</div>
-				<div class="col-xs-6 inputForm">	
+				<div class="col-xs-12 inputForm">	
 					<label class="textoPromedio">(*) Precio del artículo</label>
 					{{ Form::text('item_precio', $item->item_precio, array('class' => 'form-control','placeholder' => 'Precio del artículo')) }}
 					@if ($errors->has('item_precio'))
@@ -108,18 +109,7 @@
 						 @endforeach
 					@endif
 				</div>
-				<div class="col-xs-6 inputForm">	
-					<label class="textoPromedio">(*) Cantidad de artículos</label>
-					{{ Form::text('item_stock', $item->item_stock, array('class' => 'form-control','placeholder' => 'Cantidad de artículos')) }}
-					@if ($errors->has('item_stock'))
-						 @foreach($errors->get('item_stock') as $err)
-						 	<div class="alert alert-danger">
-						 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-						 		<p class="textoPromedio ">{{ $err }}</p>
-						 	</div>
-						 @endforeach
-					@endif
-				</div>
+				
 				<div class="clearfix"></div>
 				<div class="col-xs-12">
 					<button class="btn btn-success" style="margin-top:1em;">Enviar</button>
@@ -138,6 +128,18 @@
 					@foreach($item->misc as $m)
 					<div class="col-xs-12" style="margin-top:2em;margin-bottom:2em;"></div>
 					<form method="POST" action="{{ URL::to('administrador/modificar-miscelania') }}">
+						<div class="col-xs-12 inputForm">	
+						<label class="textoPromedio">(*) Cantidad de artículos</label>
+						{{ Form::text('item_stock', $m->item_stock, array('class' => 'form-control','placeholder' => 'Cantidad de artículos')) }}
+						@if ($errors->has('item_stock'))
+							 @foreach($errors->get('item_stock') as $err)
+							 	<div class="alert alert-danger">
+							 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							 		<p class="textoPromedio ">{{ $err }}</p>
+							 	</div>
+							 @endforeach
+						@endif
+					</div>
 						<div class="col-xs-6 inputForm">
 							<label class="textoPromedio">Seleccione la talla</label>
 							<select name="talla" class="form-control" required>

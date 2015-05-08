@@ -47,7 +47,7 @@
                 </li>
                 <li>
                   @if(!is_null($a->percent))
-                    <p class="precio" style="color:red;">Percio de Promoción: Bs.{{ $a->item_precio-($a->item_precio*$a->percent/100) }}</p>
+                    <p class="precio" style="color:red;">Precio de Promoción: Bs.{{ $a->item_precio-($a->item_precio*$a->percent/100) }}</p>
                     <li class="disabled">Precio Anterior: Bs.{{ $a->item_precio }}</li>
                   @else
                     <p class="precio" style="color:red;">Bs.{{ $a->item_precio }}</p>

@@ -17,6 +17,7 @@
         {{ HTML::style('css/bootstrap.min.css') }}
         {{ HTML::style('css/bootstrap-theme.min.css') }}
         {{ HTML::script("js/vendor/modernizr-2.6.2.min.js") }}
+        {{ HTML::style('css/jquery-ui-1.9.2.custom.min.css') }}
         {{ HTML::style('css/custom.css') }}
         {{ HTML::style('js/slick/slick.css') }}
         {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') }}
@@ -40,7 +41,7 @@
                 </div>
 
                 <div class="col-xs-6">
-                  <form method="POST" action="{{ URL::to('busqueda') }}">
+                  <form method="GET" action="{{ URL::to('busqueda') }}">
                     <div class="input-group-btn">
                       <button type="button" class="btn dropdown-toggle btn-buscar-cat" data-toggle="dropdown" aria-expanded="false">Categorias <span class="caret"></span></button>
                       <ul class="dropdown-menu" role="menu">
@@ -109,7 +110,7 @@
                     </tr>
                     <tr>
                       <td style="text-align:center;">
-                        <label><i class="fa fa-money"></i> Total: Bs.<span class="total">{{ Cart::total() }} </span><a type="button" class="btn btn-success btn-xs @if(Cart::count()>0) btn-comprar @else btn-no @endif" href="{{ URL::to('comprar/ver-carrito') }}">Comprar</a></label>
+                        <label><i class="fa fa-money"></i> Total: Bs.<span class="total">{{ Cart::total() }} </span><a type="button" class="btn btn-danger btn-xs @if(Cart::count()>0) btn-comprar @else btn-no @endif" href="{{ URL::to('comprar/ver-carrito') }}">Comprar</a></label>
                       </td>
                     </tr>
                   @endif
@@ -241,6 +242,7 @@
         {{ HTML::script("js/plugins.js") }}
         {{ HTML::script("js/main.js") }}
         {{ HTML::script('js/slick/slick.min.js') }}
+        {{ HTML::script('js/jquery-ui-1.9.2.custom.min.js') }}
         {{ HTML::script('js/custom.js') }}
          <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

@@ -257,15 +257,38 @@ class AdminController extends BaseController {
 		if ($validator->fails()) {
 			return Redirect::to('administrador/nuevo-articulo/continuar/'.$input['art'].'/'.$input['misc'])->withErrors($validator);
 		}
-		$misc = Misc::find($input['misc']);
-		$misc->item_talla = $input['talla'];
-		$misc->item_color = $input['color'];
-		$misc->item_stock = $input['item_stock'];
-		if ($misc->save()) {
-			$misc = new Misc;
-			$misc->item_id = $input['art'];
-			$misc->save();
+		
+		
+		if ($input['color'] == 'all') {
+			$col = Colores::all();
+			$j = 0;
+			foreach ($col as $c) {
+				if ($j == 0) {
+					$misc = Misc::find($input['misc']);
+				}else
+				{
+					$misc = new Misc;
+					$misc->item_id = $input['art'];
+				}
+				$misc->item_talla = $input['talla'];
+				$misc->item_color = $c->id;
+				$misc->item_stock = $input['item_stock'];
+				$misc->save();
+				$j++;
+			}
 			return Redirect::to('administrador/nuevo-articulo/continuar/'.$input['art'].'/'.$misc->id);
+		}else
+		{
+			$misc = Misc::find($input['misc']);
+			$misc->item_talla = $input['talla'];
+			$misc->item_color = $input['color'];
+			$misc->item_stock = $input['item_stock'];
+			if ($misc->save()) {
+				$misc = new Misc;
+				$misc->item_id = $input['art'];
+				$misc->save();
+				return Redirect::to('administrador/nuevo-articulo/continuar/'.$input['art'].'/'.$misc->id);
+			}
 		}
 	}
 	public function postSaveNew(){
@@ -280,14 +303,39 @@ class AdminController extends BaseController {
 		if ($validator->fails()) {
 			return Redirect::to('administrador/nuevo-articulo/continuar/'.$input['art'].'/'.$input['misc'])->withErrors($validator);
 		}
-		$misc = Misc::find($input['misc']);
-		$misc->item_talla = $input['talla'];
-		$misc->item_color = $input['color'];
-		$misc->item_stock = $input['item_stock'];
-		if ($misc->save()) {
-			Session::flash('success', 'Articulo creado correctamente.');
-			return Redirect::to('administrador/inicio');
+		if ($input['color'] == 'all') {
+			$col = Colores::all();
+			$j = 0;
+			foreach ($col as $c) {
+				if ($j == 0) {
+					$misc = Misc::find($input['misc']);
+				}else
+				{
+					$misc = new Misc;
+					$misc->item_id = $input['art'];
+				}
+				$misc->item_talla = $input['talla'];
+				$misc->item_color = $c->id;
+				$misc->item_stock = $input['item_stock'];
+				$misc->save();
+				$j++;
+			}
+			if ($misc->save()) {
+				Session::flash('success', 'Articulo creado correctamente.');
+				return Redirect::to('administrador/inicio');
+			}
+		}else
+		{
+			$misc = Misc::find($input['misc']);
+			$misc->item_talla = $input['talla'];
+			$misc->item_color = $input['color'];
+			$misc->item_stock = $input['item_stock'];
+			if ($misc->save()) {
+				Session::flash('success', 'Articulo creado correctamente.');
+				return Redirect::to('administrador/inicio');
+			}
 		}
+		
 	}
 	public function getShowArt()
 	{
@@ -1133,14 +1181,13 @@ class AdminController extends BaseController {
 			'item_nomb' 	=> 'required',
 			'item_desc' 	=> 'required',
 			'item_precio' 	=> 'required',
-			'item_stock' 	=> 'required',
 		);
 		$msg = array(
 			'required' => 'El campo no debe estar vacio'
 		);
 		$validator = Validator::make($inp, $rules, $msg);
 		if ($validator->fails()) {
-			return Redirect::back()->withErrors($validation);
+			return Redirect::back()->withErrors($validator);
 		}
 		$item = Items::find($inp['item']);
 
@@ -1154,9 +1201,8 @@ class AdminController extends BaseController {
 		$item->item_nomb 	= $inp['item_nomb'];
 		$item->item_desc 	= $inp['item_desc'];
 		$item->item_precio	= $inp['item_precio'];
-		$item->item_stock   = $inp['item_stock'];
 
-		if ($misc->save() && $item->save()) {
+		if ($item->save()) {
 			Session::flash('success', 'Articulo modificado satisfactoriamente.');
 			return Redirect::to('administrador/ver-articulo');
 		}else
@@ -1173,6 +1219,9 @@ class AdminController extends BaseController {
 			$misc->item_talla = $inp['talla'];
 		}elseif (!empty($inp['color']) && $inp['color'] != $misc->item_color) {
 			$misc->item_color = $inp['color'];
+		}elseif(!empty($inp['item_stock']) && $inp['item_stock'] != $misc->item_stock)
+		{
+			$misc->item_stock = $inp['item_stock'];
 		}
 		if($misc->save())
 		{
@@ -1473,6 +1522,7 @@ class AdminController extends BaseController {
 		$inp 	= Input::all();
 		$rules  = array(
 			'banco' 		=> 'required',
+			'url'			=> 'required|url',
 			'numCuenta'		=> 'required',
 			'tipoCuenta'	=> 'required',
 			'img'			=> 'required|image|max:3000'
@@ -1481,7 +1531,8 @@ class AdminController extends BaseController {
 		$msg 	= array(
 			'required'	=> 'El campo es obligatorio',
 			'image'		=> 'El archivo debe ser una imagen',
-			'max'		=> 'El archivo no debe tener mas de 3Mb'
+			'max'		=> 'El archivo no debe tener mas de 3Mb',
+			'url'		=> 'El link debe ser valido: http://example.com'
 		);
 		$validator = Validator::make($inp,$rules,$msg);
 		if ($validator->fails()) {
@@ -1492,6 +1543,7 @@ class AdminController extends BaseController {
 		$banco->banco 		= $inp['banco'];
 		$banco->num_cuenta	= $inp['numCuenta'];
 		$banco->tipo 		= $inp['tipoCuenta'];
+		$banco->link 		= $inp['url'];
 		$file = Input::file('img');
 		if (file_exists('images/bancos/'.$file->getClientOriginalName())) {
 			//guardamos la imagen en public/imgs con el nombre original
@@ -1526,7 +1578,7 @@ class AdminController extends BaseController {
 		}else
 		{
 			$file->move("images/bancos/",$file->getClientOriginalName());
-			$blank = Image::make('images/blank.jpg');
+			$blank = Image::make('images/blank400x200.jpg');
 			$img = Image::make('images/bancos/'.$file->getClientOriginalName());
             if ($img->width() > $img->height()) {
             	$img->widen(400);
@@ -1571,11 +1623,13 @@ class AdminController extends BaseController {
 		$rules  = array(
 			'banco' 		=> 'required',
 			'numCuenta'		=> 'required',
-			'tipoCuenta'	=> 'required'
+			'tipoCuenta'	=> 'required',
+			'url'			=> 'required|url'
 		);
 
 		$msg 	= array(
-			'required'	=> 'El campo es obligatorio'
+			'required'	=> 'El campo es obligatorio',
+			'url'		=> 'El link debe ser valido: http://example.com'
 		);
 		$validator = Validator::make($inp,$rules,$msg);
 		if ($validator->fails()) {
@@ -1586,6 +1640,7 @@ class AdminController extends BaseController {
 		$banco->banco 		= $inp['banco'];
 		$banco->num_cuenta	= $inp['numCuenta'];
 		$banco->tipo 		= $inp['tipoCuenta'];
+		$banco->link 		= $inp['url'];
 		if (Input::hasFile('img')) {
 			$file = Input::file('img');
 			if (file_exists('images/bancos/'.$file->getClientOriginalName())) {
