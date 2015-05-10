@@ -239,6 +239,16 @@
 						<div class="col-xs-6 inputRegister">
 							
 							<div class="g-recaptcha" data-sitekey="6LeqSAUTAAAAAES98bSzQFzMWkQDlbednSpve05r"></div>
+							<div class="clearfix"></div>
+							@if ($errors->has('g-recaptcha-response'))
+									
+									 @foreach($errors->get('g-recaptcha-response') as $err)
+									 	<div class="alert alert-danger">
+									 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+									 		<p class="textoPromedio">{{ $err }}</p>
+									 	</div>
+									 @endforeach
+							@endif
 						</div>
 						
 					</div>

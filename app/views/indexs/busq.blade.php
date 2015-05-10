@@ -7,7 +7,7 @@
         <div class="col-xs-12" style="border:1px solid black;border-radius:16px;">
           <legend>Categorías</legend>
           @foreach($cat as $c)
-            <label class="textoSmall"><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#expand{{ $c->id }}"></i> 
+            <label class="textoSmall" style="display:block;"><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#expand{{ $c->id }}"></i> 
               <a href="{{ URL::to('categorias/'.$c->id) }}" style="color:black;">{{ $c->cat_nomb }}</a></label>
             <ul class="collapse textoPromedio" id="expand{{ $c->id }}">
               @foreach($subcat[$c->id] as $j => $s)

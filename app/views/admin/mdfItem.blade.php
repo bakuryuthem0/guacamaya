@@ -22,6 +22,7 @@
 				<div class="col-xs-12">
 					<p class="bg-info textoPromedio" style="padding:0.5em;">Información del articulo</p>
 				</div>
+				<input type="hidden" name="item" value="{{ $item->id }}">
 				<div class="col-xs-6 inputForm">
 					<label class="textoPromedio">(*) Codigo del articulo</label>
 					<input type="text" name="item_cod" value="{{ $item->item_cod }}" class="form-control">
@@ -127,6 +128,18 @@
 					</div>
 					@foreach($item->misc as $m)
 					<form method="POST" action="{{ URL::to('administrador/modificar-miscelania') }}">
+						<div class="col-xs-12 inputForm">	
+						<label class="textoPromedio">(*) Cantidad de artículos</label>
+						{{ Form::text('item_stock', $m->item_stock, array('class' => 'form-control','placeholder' => 'Cantidad de artículos')) }}
+						@if ($errors->has('item_stock'))
+							 @foreach($errors->get('item_stock') as $err)
+							 	<div class="alert alert-danger">
+							 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							 		<p class="textoPromedio ">{{ $err }}</p>
+							 	</div>
+							 @endforeach
+						@endif
+					</div>
 						<div class="col-xs-6 inputForm">
 							<label class="textoPromedio">Seleccione la talla</label>
 							<select name="talla" class="form-control" required>

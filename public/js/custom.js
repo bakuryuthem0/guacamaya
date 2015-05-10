@@ -214,19 +214,43 @@ jQuery(document).ready(function($) {
 });
 
 jQuery(document).ready(function($) {
+	$('.imgPrincSelf').hover(function(event) {
+		$('.zoomed').attr('src', $(this).attr('src'));
+		$('.zoomed').css({
+			'display':'block',
+			'height' : $(this).css('height')
+		}).stop().animate({'opacity':1}, 250)
+		$(this).stop().animate({'opacity':0}, 250)
+		$(this).mousemove(function(event) {
+			var x = event.pageX - $(this).offset().left -100;
+			var y = event.pageY - $(this).offset().top  -100;
 
+			$('.zoomed').css({
+				'transform-origin': x+'px '+y+'px'
+			});
+			
+		});
+	}, function(event) {
+		$('.zoomed').stop().animate({'opacity':0}, 250,function()
+		{
+			$(this).css({
+				'display':'none'
+			})
+		})
+		$(this).stop().animate({'opacity':1}, 250)
+	});
 	$('.imgMini').on('mouseover',function() {
 		var esto = $(this);
 		if ($('.imgMini').length > 1) {
-			$('.imgPrinc').stop().animate({
+			$('.imgPrincSelf').stop().animate({
 				
 				'opacity':0.5},
 				150, function() {
 					var imgHover = esto.attr('src');
 					console.log(imgHover)
-					$('.imgPrinc').attr('src',imgHover);
+					$('.imgPrincSelf').attr('src',imgHover);
 
-					$('.imgPrinc').stop().animate({
+					$('.imgPrincSelf').stop().animate({
 						
 						'opacity':1},
 						150);	
@@ -586,6 +610,8 @@ jQuery(document).ready(function($) {
 	});
 	$('.btnAgg').click(function(event) {
 		$(this).unbind('click');
+
+		$('.btnAdd')
 			var id		= $(this).val();
 			var name  	= $(this).attr('data-name-value');
 			var price 	= $(this).attr('data-price-value');
@@ -620,6 +646,7 @@ jQuery(document).ready(function($) {
 							500);
 					},
 					success:function(response){
+
 						$('.loading').animate({
 							'opacity': 0},
 							500,function(){
@@ -632,6 +659,7 @@ jQuery(document).ready(function($) {
 								$('.colorModal').append('<option class="removable" value="'+response[i].id+'">'+response[i].color_desc+' - '+response[i].item_stock+'</option>')
 							}	
 						};
+
 					}
 				})		
 			}
@@ -676,6 +704,7 @@ jQuery(document).ready(function($) {
 					},
 					success:function(response)
 					{
+						
 						$('.carritoAgregado').popover('show');
 						$('.carritoAgregado').click(function(){
 							$('.popover').remove();
@@ -744,7 +773,7 @@ jQuery(document).ready(function($) {
 							$('#'+response.id+'> .carItem:nth-child(7)').html(response.subtotal);
 							
 						}
-						
+						window.location.reload();
 					}
 				})
 			}
@@ -829,7 +858,10 @@ jQuery(document).ready(function($) {
 					dataType: 'json',
 					data: {
 						'id' :boton.val(),
-						'qty':inp.val() },
+						'qty':inp.val(),
+						'talla':boton.attr('data-talla'),
+						'color':boton.attr('data-color'),
+						'item_id':boton.attr('data-id') },
 					beforeSend:function()
 					{
 						boton.after('<img src="../images/loading.gif" class="loading">');
@@ -861,11 +893,16 @@ jQuery(document).ready(function($) {
 										'opacity': 1},
 										250);
 								});
-						$('#'+response.id+'> .carItem:nth-child(5)').html(response.qty);
-						$('#'+response.id+'> .carItem:nth-child(7)').html(response.subtotal);
-						$(boton.attr('data-field-value')+'_subtotal').html(response.subtotal);
-						$('.catnArt').html(response.count)
-						$('.total').html(response.total)				
+						if (response.type == "success") {
+							$('#'+response.id+'> .carItem:nth-child(5)').html(response.qty);
+							$('#'+response.id+'> .carItem:nth-child(7)').html(response.subtotal);
+							$(boton.attr('data-field-value')+'_subtotal').html(response.subtotal);
+							$('.catnArt').html(response.count)
+							$('.total').html(response.total)				
+
+						}else{
+							alert('No hay inventario suficiente para abarcar esta solicitud');
+						}
 					}
 				})
 		}

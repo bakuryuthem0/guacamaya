@@ -90,7 +90,7 @@
                     Bs.{{ $cart->subtotal }} 
                   </td>
                   <th class="carItem">
-                    <button class="btn btn-success btn-xs btnActualizar btn-carrito" data-field-value="#input{{ $cart->id }}" value="{{ $cart->rowid }}">
+                    <button class="btn btn-success btn-xs btnActualizar btn-carrito" data-field-value="#input{{ $cart->id }}" data-talla="{{ $cart->options['color_desc'] }}" data-color="{{$cart->options['color_desc']}}" data-id="{{ $cart->id }}" value="{{ $cart->rowid }}">
                       Actualizar
                     </button>
                   </th>
@@ -241,6 +241,11 @@
         <h3><i class="fa fa-plus-circle iconToggle" data-toggle="collapse" href="#transferencia"></i> Transferencia en linea</h3>
         <div class="col-xs-12 collapse noPadding" id="transferencia" style="padding:2em;">
           <p class="textoPromedio">Una vez haya realizado su pago, introduzca el número de transacción en la casilla</p>
+          <p class="textoPromedio">Datos</p>
+          <ul class="textoPromedio">
+            <li>Empresa: guacamaya stores 2015, c.a.</li>
+            <li>Rif: J-40566930-6</li>
+          </ul>
           <form method="post" action="{{ URL::to('usuario/publicaciones/pago/enviar') }}">
             <div class="col-xs-12 noPadding">
               <div class="col-xs-12 formulario textoPromedio">
@@ -272,7 +277,7 @@
                 @endif
               <button class="btn btn-success" style="margin-top:1em;">Enviar</button>
                 <a class="btn btn-primary"  data-toggle="modal" data-target="#myModalBancos" style="margin-top:1em;">CUENTAS Y ENTIDADES BANCARIAS.</a>
-                
+                <a href="#" data-toggle="modal" data-target="#myImageTransf" class="btn btn-primary" style="margin-top:1em;">?</a>
             </div>
           </form>
         </div>
@@ -311,12 +316,17 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
           <h4 class="modal-title" id="myModalLabel">Lista de bancos.</h4>
+          <p class="textoPromedio">Datos</p>
+          <ul class="textoPromedio">
+            <li>Empresa: guacamaya stores 2015, c.a.</li>
+            <li>Rif: J-40566930-6</li>
+          </ul>
           @if(isset($bancos))
           @foreach($bancos as $b)
           <div class="col-xs-12 formulario textoPromedio">
             <label>{{ $b->banco }}</label>
             <li>Numero de cuenta: {{ $b->num_cuenta.' - Tipo de cuenta: '.$b->tipo }}</li>
-            <img src="{{ URL::to('images/bancos/'.$b->imagen) }}" style="  margin: 0 auto;display: block;">
+            <a href="{{ URL::to($b->link) }}" target="_blank"><img src="{{ URL::to('images/bancos/'.$b->imagen) }}" style="  margin: 0 auto;display: block;"></a>
           </div>
           @endforeach
           @endif
@@ -348,8 +358,24 @@
       </div>
     </div>
 </div>
+<div class="modal fade" id="myImageTransf" tabindex="-1" role="dialog" aria-labelledby="myModalBancos" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <p class="textoPromedio">Numero de transaccion, ejemplo.</p>
+        <img src="{{ asset('images/transf.jpg') }}" style="width:100%;display:block;margin:0 auto;">        
+      </div>
+    </div>
+</div>
 @stop
 
 @section('postscript')
-
+ <script>
+   $( "#fecha" ).datepicker({
+      inline: true,
+      showAnim: 'fadeIn',
+      dateFormat: 'dd-mm-yy',
+      showOtherMonths: true,
+      selectOtherMonths: true
+    });
+  </script>
 @stop

@@ -11,62 +11,14 @@
 						{{ $art->item_desc }}
 						<div id="fb-root"></div>
 						<div class="fb-like" data-href="{{ Request::url() }}" data-layout="box_count" data-action="like" data-show-faces="true" data-share="true"></div>
-						<a href="{{ URL::previous() }}" class="btn btn-volver">Volver</a>
+						<a href="{{ URL::previous() }}" class="btn btn-success btn-volver">Volver</a>
 					</div>
 				</div>
 				<div class="col-xs-4 contImageItem">
-					<ul id="cd-gallery-items" class="cd-container">
-						<li>
-							<ul class="cd-item-wrapper">
-								<?php 
-									$k = 0; 
-									$c = count($art->images);
-									$total = 0;
-									if ($c>1)
-									{
-										foreach ($art->images as $a)
-										{
-											$total += count($a);
-										}
-									}else
-									{
-										$total = count($art->images[0]);
-									}
-									for($i = 0;$i<count($art->images);$i++)
-									{
-										for ($j=0; $j <count($art->images[$i]) ; $j++) { 
-											$l = $art->images[$i][$j];
-								?>
-										<li class="
-										@if($k == 0) 
-											cd-item-front 
-										@elseif($k == 1)
-											cd-item-middle 
-										@elseif($k+1 == $total)
-											cd-item-back 
-										@else cd-item-out cd-item-{{ $k }} @endif">
-											<a href="#0">
-												<img src="{{ asset('images/items/'.$l->image) }}" alt="{{ $art->item_nomb }}">
-											</a>
-										</li>
-								<?php
-											$k++;
-										}
-									}
-								?>
-								
-							</ul> <!-- cd-item-wrapper -->
-
-							<nav>
-								<ul class="cd-item-navigation">
-									<li><a class="cd-img-replace" href="#0"><i class="fa fa-caret-right navItemIcon"></i><span class="navButtom">Prev</span></a></li>
-									<li><a class="cd-img-replace" href="#0"><i class="fa fa-caret-right navItemIcon"></i><span class="navButtom">Next</span></a></li>
-								</ul>
-							</nav>
-
-							<a class="cd-3d-trigger cd-img-replace" href="#0" data-toggle="popover" data-placement="bottom" data-content="Click aqui para activar la rotación" title="" data-original-title="Atención"></a>
-						</li>
-					</ul>				
+					<div class="cien">
+		              <img src="" class="zoomed">
+		            </div>
+					<img src="{{ asset('images/items/'.$art->images[0][0]->image) }}" class="imgPrincSelf" data-zoom-image="{{ asset('images/items/'.$art->images[0][0]->image) }}">				
 				</div>
 
 				<div class="col-xs-4 textoPromedio contPrecItem">
@@ -129,6 +81,13 @@
 						<div class="col-xs-4 fa-container"><i class="fa fa-refresh"></i><br><p>Transferencia y Depósito Bancario</p></div>
 						<div class="col-xs-4 fa-container"><i class="fa fa-truck"></i><br><p>Envios Gratis a Todo el Pais</p></div>
 					</div>
+				</div>
+				<div class="col-xs-12 contImagesMini">
+					@foreach($art->images as $images)
+						@foreach($images as $i)
+							<img src="{{ asset('images/items/'.$i->image) }}" class="imgMini">
+						@endforeach
+					@endforeach
 				</div>
 				<div class="contDescMovil textoPromedio">
 					<div class="col-xs-12" style="word-break: break-word;">

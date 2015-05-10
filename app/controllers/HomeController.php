@@ -17,8 +17,7 @@ class HomeController extends BaseController {
 
 	public function getFront()
 	{
-		$title = "Portada";
-		return View::make('indexs.portada')->with('title',$title); 
+		return Redirect::to('inicio');
 	}
 	public function getIndex()
 	{
@@ -290,7 +289,10 @@ class HomeController extends BaseController {
 		$id = Input::get('id');
 		$item_id = Input::get('item_id');
 		$col = Misc::join('colores','colores.id','=','miscelanias.item_color')
-		->where('miscelanias.item_id','=',$item_id)->where('miscelanias.item_talla','=',$id)->get();
+		->where('miscelanias.item_id','=',$item_id)
+		->where('miscelanias.item_talla','=',$id)
+		->where('miscelanias.item_stock','>',0)
+		->get();
 		return Response::json($col);
 	}
 	public function getPromotions($id)
