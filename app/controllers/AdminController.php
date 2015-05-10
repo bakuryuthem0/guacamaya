@@ -1133,14 +1133,13 @@ class AdminController extends BaseController {
 			'item_nomb' 	=> 'required',
 			'item_desc' 	=> 'required',
 			'item_precio' 	=> 'required',
-			'item_stock' 	=> 'required',
 		);
 		$msg = array(
 			'required' => 'El campo no debe estar vacio'
 		);
 		$validator = Validator::make($inp, $rules, $msg);
 		if ($validator->fails()) {
-			return Redirect::back()->withErrors($validation);
+			return Redirect::back()->withErrors($validator);
 		}
 		$item = Items::find($inp['item']);
 
@@ -1154,9 +1153,8 @@ class AdminController extends BaseController {
 		$item->item_nomb 	= $inp['item_nomb'];
 		$item->item_desc 	= $inp['item_desc'];
 		$item->item_precio	= $inp['item_precio'];
-		$item->item_stock   = $inp['item_stock'];
 
-		if ($misc->save() && $item->save()) {
+		if ($item->save()) {
 			Session::flash('success', 'Articulo modificado satisfactoriamente.');
 			return Redirect::to('administrador/ver-articulo');
 		}else
@@ -1173,6 +1171,9 @@ class AdminController extends BaseController {
 			$misc->item_talla = $inp['talla'];
 		}elseif (!empty($inp['color']) && $inp['color'] != $misc->item_color) {
 			$misc->item_color = $inp['color'];
+		}
+		elseif (!empty($inp['item_stock']) && $inp['item_stock'] != $misc->item_stock) {
+			$misc->item_stock = $inp['item_stock'];
 		}
 		if($misc->save())
 		{
@@ -1657,6 +1658,33 @@ class AdminController extends BaseController {
 			{
 				return Response::json(array('type' => 'danger','msg' => 'Error al eliminar el banco'));
 			}
+		}
+	}
+	public function newCategoriaMdf()
+	{
+		$input = Input::all();
+		$rules = array(
+			'item_stock' 	=> 'required|min:1',
+			'talla' 		=> 'required',
+			'color' 		=> 'required'
+		);
+		$msg = array('required' => 'El campo :attribute es obligatorio');
+		$validator = Validator::make($input, $rules,$msg);
+		if ($validator->fails()) {
+			return Redirect::back()->withInput()->withErrors($validator);
+		}
+		$misc = new Misc;
+		$misc->item_id 	  = $input['art'];
+		$misc->item_talla = $input['talla'];
+		$misc->item_color = $input['color'];
+		$misc->item_stock = $input['item_stock'];
+		if ($misc->save()) {
+			Session::flash('success', 'Categorai añadida satisfactoriamente');
+			return Redirect::back();
+		}else
+		{
+			Session::flash('danger', 'error al articulo satisfactoriamente');
+			return Redirect::back();
 		}
 	}
 }
