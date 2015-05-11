@@ -78,6 +78,7 @@ Route::group(array('before' =>'auth'),function()
 		Route::get('administrador/ver-articulo/{id}','HomeController@getShowItem');
 		Route::post('administrador/ver-articulo/eliminar','AdminController@postElimItem');
 		Route::get('administrador/editar-articulo/{id}','AdminController@getMdfItem');
+		Route::post('administrador/agregar-nueva-categoria','AdminController@newCategoriaMdf');
 		/*Categorias*/
 		/*nueva*/
 		Route::get('categoria/nueva','AdminController@getNewCat');
