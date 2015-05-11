@@ -20,6 +20,12 @@
                    Artículo
                   </th>
                   <th>
+                    Talla
+                  </th>
+                  <th>
+                    Color
+                  </th>
+                  <th>
                     Cantidad
                   </th>
                   <th>
@@ -36,6 +42,12 @@
                   </td>
                   <td class="carItem">
                     <img src="{{ asset('images/items/'.$cart->img->image) }}" class="carImg">
+                  </td>
+                  <td class="carItem">
+                    {{$cart->talla}}
+                  </td>
+                  <td class="carItem">
+                    {{$cart->color}}
                   </td>
                   <td class="carItem">
                     {{ $cart->item_nomb }}

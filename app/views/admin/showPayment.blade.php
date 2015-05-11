@@ -98,6 +98,7 @@
 						<input type="hidden" class="username-{{ $f->id }}" value="{{ $f->username }}">
 						<input type="hidden" class="name-{{ $f->id }}" value="{{ $f->nombre.' '.$f->apellido }}">
 						<input type="hidden" class="email-{{ $f->id }}" value="{{ $f->email }}">
+						<input type="hidden" class="cedula-{{ $f->id }}" value="{{ $f->cedula }}">
 						<input type="hidden" class="dir-{{ $f->id }}" value="{{ $f->user_dir }}">
 						<input type="hidden" class="phone-{{ $f->id }}" value="{{ $f->telefono }}">
 						<input type="hidden" class="est-{{ $f->id }}" value="{{ $f->est }}">
@@ -135,6 +136,7 @@
 							<td class="textoMedio"><button class="btn btn-primary btn-xs ver" data-toggle="modal" data-target="#showUserData" value="{{ $f->id }}">Ver</button></td>
 							<input type="hidden" class="username-{{ $f->id }}" value="{{ $f->username }}">
 							<input type="hidden" class="name-{{ $f->id }}" value="{{ $f->nombre.' '.$f->apellido }}">
+							<input type="hidden" class="cedula-{{ $f->id }}" value="{{ $f->cedula }}">
 							<input type="hidden" class="email-{{ $f->id }}" value="{{ $f->email }}">
 							<input type="hidden" class="dir-{{ $f->id }}" value="{{ $f->user_dir }}">
 							<input type="hidden" class="phone-{{ $f->id }}" value="{{ $f->telefono }}">
@@ -181,6 +183,12 @@
 				<div class="col-xs-12">
 					<p class="textoPromedio"><label>Nombre y apellido</label></p>
 					<p class="textoPromedio nameModal">
+
+					</p>
+				</div>
+				<div class="col-xs-12">
+					<p class="textoPromedio"><label>Cedula</label></p>
+					<p class="textoPromedio cedulaModal">
 
 					</p>
 				</div>

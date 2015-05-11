@@ -1330,6 +1330,7 @@ class AdminController extends BaseController {
 				'usuario.nombre',
 				'usuario.apellido',
 				'usuario.telefono',
+				'usuario.cedula',
 				'usuario.email',
 				'estado.nombre as est',
 				'municipio.nombre as mun',
@@ -1356,6 +1357,7 @@ class AdminController extends BaseController {
 				'usuario.nombre',
 				'usuario.apellido',
 				'usuario.telefono',
+				'usuario.cedula',
 				'usuario.email',
 				'estado.nombre as est',
 				'municipio.nombre as mun',
@@ -1376,13 +1378,17 @@ class AdminController extends BaseController {
 
 		$fac = Facturas::find($id);
 		$x 	 = FacturaItem::where('factura_id','=',$id)->sum('item_qty');
-		$aux = FacturaItem::where('factura_id','=',$id)->get(array('item_id','item_qty'));
+		$aux = FacturaItem::where('factura_id','=',$id)->get(array('item_id','item_qty','item_talla','item_color'));
 		$i = 0;
 		foreach ($aux as $a) {
 			$b = Items::find($a->item_id);
 			$b->qty = $a->item_qty;
 			$aux = Misc::where('item_id','=',$a->item_id)->where('deleted','=',0)->first();
-			$b->img = Images::where('misc_id','=',$aux->id)->where('deleted','=',0)->first(); 
+			$talla = Tallas::where('id','=',$a->item_talla)->pluck('talla_desc');
+			$color = Colores::where('id','=',$a->item_color)->pluck('color_desc');
+			$b->talla = $talla;
+			$b->color = $color;
+			$b->img = Images::where('misc_id','=',$aux->id)->where('deleted','=',0)->first();
 			$item[$i] = $b;
 			$i++;
 
@@ -1494,6 +1500,7 @@ class AdminController extends BaseController {
 				'usuario.dir as user_dir',
 				'usuario.nombre',
 				'usuario.apellido',
+				'usuario.cedula',
 				'usuario.telefono',
 				'usuario.email',
 				'estado.nombre as est',

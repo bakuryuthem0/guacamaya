@@ -140,7 +140,6 @@ class HomeController extends BaseController {
 			$subcat[$c->id] = $aux->toArray();
 		}
 		$art = Items::leftJoin('miscelanias as m','m.item_id','=','item.id')
-		->leftJoin('images as i','m.id','=','i.misc_id')
 		->groupBy('item.id')
 		->where('item.item_cat','=',$id)
 		->where('item.deleted','=',0)
@@ -150,8 +149,11 @@ class HomeController extends BaseController {
 				'item.item_desc',
 				'item.item_precio',
 				'item.item_cod',
-				'i.image'
 			));
+		$img = array();
+		foreach ($art as $a) {
+			$img[$a->id] = Images::where('deleted','=',0)->where('misc_id','=',$a->misc_id)->first(array('image'));
+		}
 		$type = "hola";
 		return View::make('indexs.busq')
 		->with('title',$title)
@@ -159,7 +161,8 @@ class HomeController extends BaseController {
 		->with('cat',$cat)
 		->with('subcat',$subcat)
 		->with('type',$type)
-		->with('busq',$auxcat->cat_desc);
+		->with('busq',$auxcat->cat_desc)
+		->with('img',$img);
 	}
 	public function getSubCatBuscar($subcat,$id)
 	{
@@ -175,7 +178,6 @@ class HomeController extends BaseController {
 			$subcat[$c->id] = $aux->toArray();
 		}
 		$art = Items::leftJoin('miscelanias as m','m.item_id','=','item.id')
-		->leftJoin('images as i','m.id','=','i.misc_id')
 		->groupBy('item.id')
 		->where('item.item_subcat','=',$id)
 		->where('item.deleted','=',0)
@@ -186,15 +188,19 @@ class HomeController extends BaseController {
 				'item.item_nomb',
 				'item.item_precio',
 				'item.item_cod',
-				'i.image'
 			)
 		);
+		$img = array();
+		foreach ($art as $a) {
+			$img[$a->id] = Images::where('deleted','=',0)->where('misc_id','=',$a->misc_id)->first(array('image'));
+		}
 		return View::make('indexs.busq')
 		->with('title',$title)
 		->with('art',$art)
 		->with('cat',$cat)
 		->with('subcat',$subcat)
-		->with('busq',$auxcat->sub_desc);
+		->with('busq',$auxcat->sub_desc)
+		->with('img',$img);
 
 	}
 	public function search()
@@ -321,5 +327,17 @@ class HomeController extends BaseController {
 		->with('title',$title)
 		->with('art',$art)
 		->with('img',$img);
+	}
+	public function getNosotros()
+	{
+		$title = "Quienes somos";
+		return View::make('indexs.terms')
+		->with('title',$title);
+	}
+	public function getConditions()
+	{
+		$title = "Terminos y condiciones";
+		return View::make('indexs.condition')
+		->with('title',$title);
 	}
 }

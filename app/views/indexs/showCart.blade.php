@@ -242,10 +242,7 @@
         <div class="col-xs-12 collapse noPadding" id="transferencia" style="padding:2em;">
           <p class="textoPromedio">Una vez haya realizado su pago, introduzca el número de transacción en la casilla</p>
           <p class="textoPromedio">Datos</p>
-          <ul class="textoPromedio">
-            <li>Empresa: guacamaya stores 2015, c.a.</li>
-            <li>Rif: J-40566930-6</li>
-          </ul>
+
           <form method="post" action="{{ URL::to('usuario/publicaciones/pago/enviar') }}">
             <div class="col-xs-12 noPadding">
               <div class="col-xs-12 formulario textoPromedio">
@@ -256,6 +253,10 @@
                       <option value="{{ $b->id }}">{{ $b->banco.' - '.$b->num_cuenta }}</option>
                     @endforeach
                   </select>
+              </div>
+              <div class="col-xs-12 formulario textoPromedio">
+                <label>Banco Emisor</label>
+                <input type="text" class="form-control" name="emisor">
               </div>
               <div class="col-xs-12 formulario textoPromedio">
                 <label>Fecha de transacción</label>

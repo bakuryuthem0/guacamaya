@@ -1400,6 +1400,7 @@ jQuery(document).ready(function($) {
 		var username = $('.username-'+id).val();
 		var name = $('.name-'+id).val();
 		var email = $('.email-'+id).val();
+		var ced   = $('.cedula-'+id).val();
 		var phone = $('.phone-'+id).val();
 		var dir = $('.dir-'+id).val();
 		var pagWeb = $('.est-'+id).val();
@@ -1408,6 +1409,7 @@ jQuery(document).ready(function($) {
 		$('.usernameModal').html(username);
 		$('.nameModal').html(name);
 		$('.emailModal').html(email);
+		$('.cedulaModal').html(ced);
 		$('.dirModal').html(dir);
 		$('.phoneModal').html(phone);
 		$('.pagWebModal').html(pagWeb);

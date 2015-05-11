@@ -207,8 +207,8 @@
                 <div class="col-xs-6 textoPromedio contFooter">
                   <label><h3>Acerca de guacamaya</h3></label>
                   <ul class="ulNoStyle">
-                    <li><a href="{{ URL::to('') }}" class="aConFormato">Quiénes somos</a></li>
-                    <li><a href="{{ URL::to('') }}" class="aConFormato">Términos y Condiciones</a></li>
+                    <li><a href="{{ URL::to('nosotros') }}" class="aConFormato">Quiénes somos</a></li>
+                    <li><a href="{{ URL::to('terminos-y-condiciones') }}" class="aConFormato">Términos y Condiciones</a></li>
                     <li><a href="{{ URL::to('') }}" class="aConFormato">Cómo comprar</a></li>
                     <li><a href="{{ URL::to('') }}" class="aConFormato">Cupones y Códigos de Promoción</a></li>
                     <li><a href="{{ URL::to('') }}" class="aConFormato">Politicas de protección de datos</a></li>

@@ -289,6 +289,10 @@ class ItemController extends BaseController {
 		$fac->num_trans = $input['transNumber'];
 		$fac->banco 	= $input['banco'];
 		$fac->fech_trans= $input['fecha'];
+		if (!empty($input['emisor'])) {
+			$fac->banco_emisor = $input['emisor'];
+			
+		}
 		$fac->pagada 	= -1;
 		if ($fac->save()) {
 			$subject = "Correo de administrador";

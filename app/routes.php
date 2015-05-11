@@ -14,6 +14,8 @@ Route::get('/', 'HomeController@getFront');
 Route::get('inicio', 'HomeController@getIndex');
 Route::get('contactenos','HomeController@getContact');
 Route::post('contactenos','HomeController@postContact');
+Route::get('nosotros','HomeController@getNosotros');
+Route::get('terminos-y-condiciones','HomeController@getConditions');
 Route::group(array('before' =>'no_auth'),function()
 {
 	Route::get('iniciar-sesion','HomeController@getLogin');
